@@ -36,6 +36,12 @@
   body.no-select{user-select:none;-webkit-user-select:none}
   @keyframes secIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
   .detail-sec{animation:secIn .25s ease}
+  .act{border-left:3px solid var(--accent-2);padding:1px 0 1px 14px;margin-bottom:20px}
+  .act-t{font-weight:700;font-size:16.5px;margin-bottom:2px}
+  .act-w{color:var(--ink-2);font-size:14.5px;margin-bottom:3px}
+  .act-n{font-size:14.5px}
+  .act-n span{color:var(--accent);font-weight:700}
+  .act-m{font-size:13px;color:var(--ink-3);margin-top:3px}
   mark{background:var(--mark);color:inherit;border-radius:2px;padding:0 1px}
   a{color:var(--accent);text-decoration:none}
 
@@ -1361,6 +1367,19 @@ const ACTIONS = [
   }
 ];
 
+const ACTION_LAYERS = [
+  { name: "赚钱", note: "经验变现，收款先行", sec: "赚钱" },
+  { name: "管线升级", note: "本职的杠杆，做一次长期受益", sec: "管线升级" },
+  { name: "省力", note: "协调交给智能体，你只做判断", sec: "省力" },
+  { name: "家庭（地基）", note: "孩子成长与老人健康，是一切的底座", sec: "家庭：孩子与老人" }
+];
+const ACTION_GROUPS = [
+  { name: "赚钱", from: ["赚钱"] },
+  { name: "管线升级", from: ["管线升级"] },
+  { name: "省力", from: ["省力"] },
+  { name: "家庭：孩子与老人", from: ["孩子成长", "老人健康"] }
+];
+
 const navTree = document.getElementById("navTree");
 const searchInput = document.getElementById("search");
 const clearBtn = document.getElementById("clearBtn");
@@ -1533,19 +1552,19 @@ function renderDigest(cat){
 }
 
 function renderActions(){
-  const groups = [...new Set(ACTIONS.map(a => a.group))];
+  activeLayerSec = null;
   let html = '<div class="fade"><h1 class="page-title">我的行动页</h1>' +
-    '<p class="lead">只留对你加分的事：赚钱、管线升级、省力、孩子、老人。每条都给了最小下一步，你动一下，剩下的我来。</p>';
-  groups.forEach(g => {
-    html += '<div class="detail-sec"><h3>' + esc(g) + "</h3>" +
-      ACTIONS.filter(a => a.group === g).map(a =>
-        '<div style="border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-bottom:12px;background:#fff">' +
-        '<div style="font-weight:700;font-size:16.5px;margin-bottom:4px">' + esc(a.title) + "</div>" +
-        '<p style="color:var(--ink-2);font-size:14.5px;margin-bottom:6px">' + esc(a.why) + "</p>" +
-        '<p style="font-size:13.5px;color:var(--ink-3);margin-bottom:6px">成本：' + esc(a.cost) + "</p>" +
-        '<p style="font-size:14.5px"><span style="color:var(--accent);font-weight:700">最小下一步：</span>' + esc(a.next) + "</p>" +
-        (a.basedOn.length ? '<p style="font-size:13px;margin-top:6px">依据：' + a.basedOn.map(id => { const e = ENTRIES.find(x => x.id === id); return e ? '<a href="#/e/' + esc(id) + '">' + esc(e.title) + "</a>" : ""; }).join(" · ") + "</p>" : "") +
-        "</div>"
+    '<p class="lead">只留对你加分的事。先看图：上面是结果，下面是底座；点任意一层，下面只留那一层的事。</p>' +
+    layerDiagram({ layers: ACTION_LAYERS });
+  ACTION_GROUPS.forEach(g => {
+    html += '<div class="detail-sec" data-sec="' + esc(g.name) + '"><h3>' + esc(g.name) + "</h3>" +
+      ACTIONS.filter(a => g.from.includes(a.group)).map(a =>
+        '<div class="act"><div class="act-t">' + esc(a.title) + "</div>" +
+        '<p class="act-w">' + esc(a.why) + "</p>" +
+        '<p class="act-n"><span>最小下一步：</span>' + esc(a.next) + "</p>" +
+        '<p class="act-m">成本：' + esc(a.cost) +
+        (a.basedOn.length ? ' · 依据：' + a.basedOn.map(id => { const en = ENTRIES.find(x => x.id === id); return en ? '<a href="#/e/' + esc(id) + '">' + esc(en.title) + "</a>" : ""; }).join(" · ") : "") +
+        "</p></div>"
       ).join("") + "</div>";
   });
   html += "</div>";
@@ -1600,7 +1619,8 @@ function applyLayerFilter(){
   });
 }
 main.addEventListener("click", ev => {
-  if(currentRoute().type !== "digest") return;
+  const rt = currentRoute().type;
+  if(rt !== "digest" && rt !== "actions") return;
   const g = ev.target.closest ? ev.target.closest("[data-layer-g]") : null;
   if(g){
     const t = g.getAttribute("data-layer-g");
