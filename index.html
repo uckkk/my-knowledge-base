@@ -151,15 +151,21 @@
     letter-spacing:.01em;margin-bottom:30px;
   }
   .points{list-style:none;margin-bottom:38px}
-  .points li{
+  .points li, .sec-list li{
     position:relative;
     font-size:16.5px;line-height:1.9;color:var(--ink-2);letter-spacing:.01em;
     padding-left:22px;margin-bottom:13px;
   }
-  .points li::before{
+  .points li::before, .sec-list li::before{
     content:"";position:absolute;left:2px;top:.72em;
     width:7px;height:7px;border-radius:50%;background:var(--accent-2);
   }
+  .detail-sec{margin-top:30px}
+  .detail-sec h3{
+    font-family:var(--serif);font-weight:700;font-size:18.5px;
+    letter-spacing:.02em;margin-bottom:12px;color:var(--ink);
+  }
+  .sec-list{list-style:none}
   .sources{border-top:1px solid var(--line);padding-top:20px}
   .sources .src-label{font-size:12px;letter-spacing:.18em;color:var(--ink-3);margin-bottom:11px;font-weight:500}
   .sources a{
@@ -212,178 +218,607 @@
 <script>
 const ENTRIES = [
   {
-    id: "baoshi-fen-changjing",
-    category: "生活",
-    subtopic: "护肤保湿",
-    date: "2026-10-28",
-    tags: ["保湿", "护肤", "干皮"],
-    title: "保湿分场景：干裂用封闭，日常用仿生皮脂",
-    core: "没有绝对好坏，看干燥程度选路线。",
-    points: [
+    "id": "baoshi-fen-changjing",
+    "category": "生活",
+    "subtopic": "护肤保湿",
+    "date": "2026-10-28",
+    "tags": [
+      "保湿",
+      "护肤",
+      "干皮"
+    ],
+    "title": "保湿分场景：干裂用封闭，日常用仿生皮脂",
+    "core": "没有绝对好坏，看干燥程度选路线。",
+    "points": [
       "严重干裂：凡士林加维他命，成膜锁水；缺点是闷、易长痘",
       "日常换季：角鲨烷加蓝甘菊，贴近人体皮脂，清爽不糊脸",
       "小技巧：大人可借儿童面霜，带小金盾标志、把控更严"
     ],
-    sources: [
-      { label: "保湿科普文章", url: "https://uptogo.com.tw/%E5%81%A5%E5%BA%B7/%E7%9A%AE%E8%86%9A%E5%81%A5%E5%BA%B7/%E7%9A%AE%E8%86%9A%E4%BF%9D%E9%A4%8A%E6%B8%85%E6%BD%94/%E7%9A%AE%E8%86%9A%E5%BE%88%E4%B9%BE%E5%8F%AF%E4%BB%A5%E6%93%A6%E5%87%A1%E5%A3%AB%E6%9E%97%E5%97%8E-2/" }
+    "sources": [
+      {
+        "label": "保湿科普文章",
+        "url": "https://uptogo.com.tw/%E5%81%A5%E5%BA%B7/%E7%9A%AE%E8%86%9A%E5%81%A5%E5%BA%B7/%E7%9A%AE%E8%86%9A%E4%BF%9D%E9%A4%8A%E6%B8%85%E6%BD%94/%E7%9A%AE%E8%86%9A%E5%BE%88%E4%B9%BE%E5%8F%AF%E4%BB%A5%E6%93%A6%E5%87%A1%E5%A3%AB%E6%9E%97%E5%97%8E-2/"
+      }
+    ],
+    "detail": [
+      {
+        "h": "先分清原理：只锁水，不补水",
+        "items": [
+          "凡士林的主要成分是石油胶（提炼纯化后的胶状物质），化学性质稳定、致敏性极低",
+          "它不会被皮肤吸收，只是在表面形成一层封闭膜：对外隔绝刺激，对内防止水分蒸发",
+          "它本身不含任何补水成分，在干皮上直接擦，等于把干燥状态封在里面，会越擦越干、出现外油内干"
+        ]
+      },
+      {
+        "h": "黄金时机：皮肤微湿时擦",
+        "items": [
+          "最佳时机是洗澡、洗脸、洗手后：先用毛巾轻轻按干多余水分，皮肤还微湿时立刻薄擦一层",
+          "错过洗澡后时机时，先用化妆水、精华或保湿乳液补水，等吸收后再用极少量凡士林作最后一道封层",
+          "顺序口诀：先补水，后锁水，干皮状态下不要直接上凡士林"
+        ]
+      },
+      {
+        "h": "用量与手法：越少越好",
+        "items": [
+          "脸部或双手通常只需半颗到一颗米粒大小，延展性强，用多了只会黏腻",
+          "用干净的棉签或小挖勺取用，避免手指污染整罐",
+          "手法用按压或轻拍，先在掌心温热再覆盖到部位，不要搓揉干燥脆弱的皮肤",
+          "判断标准：擦完用脸颊轻触镜子，镜面留下清晰指纹是适量，模糊一片油膜就是涂太多"
+        ]
+      },
+      {
+        "h": "禁忌与挑选",
+        "items": [
+          "油性、痘痘肌不要用在脸和易长痘部位：强封闭性会封住油脂和角质，堵毛孔、加重粉刺甚至引发毛囊炎；手肘、脚后跟等局部干燥处可以用",
+          "私密处不要用：黏膜需要透气，不透气易积聚分泌物、滋生细菌、增加感染风险，应改用专用保湿产品",
+          "有感染、化脓或脏污的伤口不要用：会把细菌封在里面阻碍愈合，只适用于干净的伤口",
+          "挑选认准100%纯凡士林或三重精炼字样，避开添加香料、色素、维他命E或防腐剂的产品，添加物越多致敏风险越高"
+        ]
+      }
     ]
   },
   {
-    id: "wutou-liulanqi",
-    category: "开源项目",
-    subtopic: "无头浏览器",
-    date: "2026-10-28",
-    tags: ["无头浏览器", "自动化", "开源"],
-    title: "轻量无头浏览器：专为智能体读网页而生",
-    core: "机器读网页只要内容不要画面，砍掉渲染，快得多也省得多。",
-    points: [
+    "id": "wutou-liulanqi",
+    "category": "开源项目",
+    "subtopic": "无头浏览器",
+    "date": "2026-10-28",
+    "tags": [
+      "无头浏览器",
+      "自动化",
+      "开源"
+    ],
+    "title": "轻量无头浏览器：专为智能体读网页而生",
+    "core": "机器读网页只要内容不要画面，砍掉渲染，快得多也省得多。",
+    "points": [
       "不是现有浏览器的分支：只留联网、解析和脚本执行",
       "实测读一百个网页约五秒，内存约为传统方案的十六分之一",
       "兼容现有的自动化脚本，还能把网页转成纯文本省用量"
     ],
-    sources: [
-      { label: "项目仓库", url: "https://github.com/lightpanda-io/browser" }
+    "sources": [
+      {
+        "label": "项目仓库",
+        "url": "https://github.com/lightpanda-io/browser"
+      }
+    ],
+    "detail": [
+      {
+        "h": "是什么",
+        "items": [
+          "Lightpanda 是专为人工智能智能体和自动化从零写的新无头浏览器，用 Zig 语言开发",
+          "它不是 Chromium 的分支，也不是 WebKit 的修改版，只保留抓取网页和执行脚本所需的能力",
+          "开源协议为 AGPL-3.0，GitHub 上约 3.7 万星（抓取时数据）"
+        ]
+      },
+      {
+        "h": "实测性能（官方基准）",
+        "items": [
+          "测试方法：在 AWS EC2 m5.large 实例上通过网络请求 933 个真实网页",
+          "加载 100 个页面峰值内存 123MB，无头 Chrome 是 2GB，约为十六分之一",
+          "加载 100 个页面耗时 5 秒，无头 Chrome 是 46 秒，约快 9 倍"
+        ]
+      },
+      {
+        "h": "怎么用",
+        "items": [
+          "一条命令抓取网页：lightpanda fetch 加网址，可直接输出网页源码、Markdown 纯文本，还能输出文字版图片或 PDF（方便喂给模型省用量）",
+          "起一个 CDP 服务后，现有的 Puppeteer、Playwright 自动化脚本不用改就能连上用；还支持 WebDriver BiDi 协议",
+          "内置智能体模式：用大白话描述任务就能让它自己导航、点按、填表、提取数据，还能把会话导出成可重复运行的脚本",
+          "内置 MCP 服务，可直接接进支持 MCP 的智能体工具链，每个连接有独立会话互不干扰"
+        ]
+      },
+      {
+        "h": "注意事项",
+        "items": [
+          "没有原生 Windows 版本，要在 WSL2 里按 Linux 方式安装；也没有原生安卓版本",
+          "Linux 二进制依赖 glibc，Alpine 等 musl 系统跑不了，要用 Debian、Ubuntu 这类基础镜像或从源码构建",
+          "默认会发送使用遥测数据，可用环境变量 LIGHTPANDA_DISABLE_TELEMETRY=true 关闭"
+        ]
+      }
     ]
   },
   {
-    id: "tishici-yijuhua",
-    category: "实用技巧",
-    subtopic: "提问方法",
-    date: "2026-10-28",
-    tags: ["提示词", "简化表达"],
-    title: "一句话前缀，让人工智能回答变简练",
-    core: "提问前加一句指定写作规范，废话和胡编明显减少。",
-    points: [
+    "id": "tishici-yijuhua",
+    "category": "实用技巧",
+    "subtopic": "提问方法",
+    "date": "2026-10-28",
+    "tags": [
+      "提示词",
+      "简化表达"
+    ],
+    "title": "一句话前缀，让人工智能回答变简练",
+    "core": "提问前加一句指定写作规范，废话和胡编明显减少。",
+    "points": [
       "前缀照抄：请你严格遵守ASD-STE100写作原则来解释：（后面接问题）",
       "原理：这是航空业的简化技术英语规范，只用简单词和短句",
       "实测：专业、生活、刁钻问题都答得更直白，不顺着胡说"
     ],
-    sources: [
-      { label: "简化技术英语词条", url: "https://en.wikipedia.org/wiki/Simplified_Technical_English" }
+    "sources": [
+      {
+        "label": "简化技术英语词条",
+        "url": "https://en.wikipedia.org/wiki/Simplified_Technical_English"
+      }
+    ],
+    "detail": [
+      {
+        "h": "是什么：航空业的简化英语规范",
+        "items": [
+          "ASD-STE100 简化技术英语是一套受控语言标准，目标是让技术文档简单、清楚、没有歧义",
+          "1980 年代由欧洲航空航天工业协会（AECMA）应欧洲航空业要求开发：维修手册要让非英语母语的技师也能准确看懂",
+          "现行第 9 版于 2025 年 1 月发布，已成为国际标准；2013 年第 6 版起可免费获取",
+          "整套标准只有两部分：53 条写作规则，加一本约 900 个批准词的词典"
+        ]
+      },
+      {
+        "h": "核心写作规则",
+        "items": [
+          "句子要短：操作说明每句不超过 20 个词，描述性文字不超过 25 个词；一句话只写一条指令，一段只讲一个主题且每段不超过 6 句",
+          "用主动语态（写描述时施动者不明才用被动），只用动词的不定式、祈使式和简单时态，不造复杂动词结构",
+          "名词短语不超过 3 个词；不要为了缩短而省略主语、动词、冠词等句子成分",
+          "复杂内容改用竖排列表呈现；安全提示以明确的命令或条件开头"
+        ]
+      },
+      {
+        "h": "词典的用法逻辑",
+        "items": [
+          "只用词典里的批准词，且只能按规定的词性和意思用，一个词一个词性一个意思：例如 test 只作名词用，不能当动词",
+          "同一个词只准用批准含义，例如 close 作动词只准表示关门、合闸，不能表示结束会议",
+          "未批准的词词典会给出批准替代词，例如 accessible 要改用 access、形容词 close 要改用 near"
+        ]
+      },
+      {
+        "h": "为什么问答时借它有效",
+        "items": [
+          "只准用简单常用词加短句，从源头减少歧义表达和含糊空间",
+          "它如今是 ATA i2200、S1000D 等航空维修规范的强制要求，也被汽车、可再生能源、医疗器械、制药等行业采用（第 8 版用户中 64% 来自航空国防之外）",
+          "把这套规范作为回答约束给人工智能，等于强制它用词受控、句子短、一句一事，回答自然变直白"
+        ]
+      }
     ]
   },
   {
-    id: "sunyuchen-caifu",
-    category: "财富与成长",
-    subtopic: "访谈观点",
-    date: "2026-10-28",
-    tags: ["财富自由", "认知升级"],
-    title: "孙宇晨谈财富自由：先自由，后财富",
-    core: "先把选择权拿到手，财富是自由的伴生品。",
-    points: [
+    "id": "sunyuchen-caifu",
+    "category": "财富与成长",
+    "subtopic": "访谈观点",
+    "date": "2026-10-28",
+    "tags": [
+      "财富自由",
+      "认知升级"
+    ],
+    "title": "孙宇晨谈财富自由：先自由，后财富",
+    "core": "先把选择权拿到手，财富是自由的伴生品。",
+    "points": [
       "先看清自己：饮食、锻炼、睡眠都数字化，攒够数据再让人工智能帮找方向",
       "保持能随时移动：别太早被房子车子焊死，先多看样本再做大决定",
       "起步三件套不花钱：升级认知、练好身体、认定了就坚决执行"
     ],
-    sources: [
-      { label: "访谈整理文章", url: "https://www.techub.news/articles/2ad56a3e-6bbe-4b7f-8b19-41f2aa8ed7e5" },
-      { label: "访谈文字实录", url: "https://www.mytokencap.com/ar/news/600400.html" }
+    "sources": [
+      {
+        "label": "访谈整理文章",
+        "url": "https://www.techub.news/articles/2ad56a3e-6bbe-4b7f-8b19-41f2aa8ed7e5"
+      },
+      {
+        "label": "访谈文字实录",
+        "url": "https://www.mytokencap.com/ar/news/600400.html"
+      }
+    ],
+    "detail": [
+      {
+        "h": "新框架：先自由，后财富",
+        "items": [
+          "这是他对十年前《财富自由革命之路》的升级版答案：不是有钱了才自由，而是先自由了才更容易获得财富",
+          "自由是主观的、没有门槛：愿意给自己自由就拥有了自由，本质是认知上的解绑",
+          "自由与财富互相加强、螺旋上升：自由一点就更容易挣钱，更有钱就更自由；反过来被资产和固定支出锁死，会螺旋下降"
+        ]
+      },
+      {
+        "h": "机动性第一：逐水草而居",
+        "items": [
+          "30 岁后的策略是哪里能发挥最大价值就去哪里、做哪个行业，不要被一地锁死",
+          "他建议 30 岁前不买房、不买车、不过早结婚，重点是不过早锁定流动性",
+          "房子会持续消耗时间和钱并剥夺流动性：异地出现好机会时，人常被本地固定资产或小额稳定工作拖住而错失",
+          "选资产也看机动性：他用 600 万美元买下的香蕉是可流动的概念艺术 IP，黄金珠宝则搬不走还容易被偷"
+        ]
+      },
+      {
+        "h": "认知决定上限：钱是放大器",
+        "items": [
+          "钱会放大一个人的错误和坏习惯：认知不到位时横财是催命符，他用中 3000 万却玩到破产的例子说明掌控不了的钱反而有害；凭空得来的肌肉若不懂营养学、乱吃乱睡，六个月也会还回去",
+          "巴菲特例子：29 岁的他与 89 岁的巴菲特吃饭时，巴菲特用极小比例的钱就能买光所有比特币却不买，他认为这也是认知问题",
+          "结论：不要看社会地位和财富多少，认知最关键，钱和肌肉都只是认知的显化"
+        ]
+      },
+      {
+        "h": "怎么落地：三件套、数据化、参照系",
+        "items": [
+          "零成本起步三件套：认知升级（打破死板财富观）、练好身体（把健康当核心资产）、屏蔽外界噪音坚决执行（不理讽刺和舆论干扰）",
+          "健康被他称为财富自由的第一步：寿命 100 分模型里心肺占 25 分、肌肉占 25 分、其余器官与基因等占 50 分，抗阻训练可同时拿下心肺和肌肉两项；他警告司美格鲁肽类药物减重会大量掉肌肉、拉低基础代谢、易反弹",
+          "先攒 2 到 4 个月自己的数据再决策：饮食每餐拍照让人工智能算热量、戴 Oura Ring 记录睡眠、训练视频交给人工智能记录并按渐进超载规划；数据全存本地 Markdown 文件、通过接口切换不同大模型，让模型给出上中下三策后取最优解执行并持续微调",
+          "大决定用 37% 参照系模型：面对 100 个选项（如看房、选专业），前面一部分只用来建立评判标准、绝不下决定，之后一旦出现超过参照系的最优解立刻出手；同时保持低自我，发现认知有缺陷就立刻打补丁转向，不为面子维护旧结论"
+        ]
+      }
     ]
   },
   {
-    id: "libretv",
-    category: "开源项目",
-    subtopic: "影视工具",
-    date: "2026-10-28",
-    tags: ["开源", "自部署", "影视"],
-    title: "LibreTV：开源免费影视站，可自己部署",
-    core: "多源聚合搜片看片，一分钟自建一个自己的影视站。",
-    points: [
+    "id": "libretv",
+    "category": "开源项目",
+    "subtopic": "影视工具",
+    "date": "2026-10-28",
+    "tags": [
+      "开源",
+      "自部署",
+      "影视"
+    ],
+    "title": "LibreTV：开源免费影视站，可自己部署",
+    "core": "多源聚合搜片看片，一分钟自建一个自己的影视站。",
+    "points": [
       "部署：Vercel / Docker / Cloudflare Pages 都能快速上线",
       "必须设 PASSWORD 环境变量，仅供个人使用、别公开商用",
       "别用他人演示站：稳定和安全没保证，长期用自己部署"
     ],
-    sources: [
-      { label: "GitHub 仓库", url: "https://github.com/geeeeeeeek/LibreTV" }
+    "sources": [
+      {
+        "label": "GitHub 仓库",
+        "url": "https://github.com/geeeeeeeek/LibreTV"
+      }
+    ],
+    "detail": [
+      {
+        "h": "能干什么",
+        "items": [
+          "多源聚合：从多个视频源搜索并播放，无需注册、即开即用",
+          "自带后端代理：完整功能需要能跑服务端功能的环境",
+          "可加自己的片源：兼容苹果 CMS V10 接口格式，在设置里填接口地址即可",
+          "播放快捷键：空格暂停、方向键快进与调音量、F 全屏、M 静音"
+        ]
+      },
+      {
+        "h": "怎么部署",
+        "items": [
+          "一键部署：Vercel、Netlify、Render 都有官方一键部署按钮",
+          "Cloudflare Pages：连上仓库即可，构建命令和输出目录都留空",
+          "Docker：一行命令启动，映射 8899 端口，浏览器打开 localhost:8899 使用",
+          "本地运行：npm install 后 npm run dev，默认 8080 端口"
+        ]
+      },
+      {
+        "h": "注意事项",
+        "items": [
+          "必须设 PASSWORD 环境变量，不设会一直弹出设置密码的提示",
+          "仅供学习和个人使用，不要公开运营、不要商用，法律风险自担",
+          "项目本身不存任何视频，内容全部来自第三方接口",
+          "纯静态服务器（如 python http.server）跑不了代理，视频会播不出来",
+          "升级别用 Pull Bot 同步（作者会拉黑），用仓库自带的同步工作流"
+        ]
+      }
     ]
   },
   {
-    id: "grokbot-monetize",
-    category: "AI与商业化",
-    subtopic: "变现案例",
-    date: "2026-10-28",
-    tags: ["GrokBot", "AI变现", "广告"],
-    title: "GrokBot 搭站自动变现：AI 自己接广告",
-    core: "博主让 GrokBot 把内容做成网站，AI 主动卖广告位赚钱。",
-    points: [
+    "id": "grokbot-monetize",
+    "category": "AI与商业化",
+    "subtopic": "变现案例",
+    "date": "2026-10-28",
+    "tags": [
+      "GrokBot",
+      "AI变现",
+      "广告"
+    ],
+    "title": "GrokBot 搭站自动变现：AI 自己接广告",
+    "core": "博主让 GrokBot 把内容做成网站，AI 主动卖广告位赚钱。",
+    "points": [
       "把博主零散的 AI 案例整理成网站 Agent Use Cases",
       "自助广告入口跑通：两单共 1100 美元（500 + 600）",
       "收款后自动对接素材、排期，只提醒人审核；先让 AI 有赚钱意识"
     ],
-    sources: [
-      { label: "AgentBuilt 案例复盘", url: "https://agent-built.vercel.app/biz/agentusecases-ai" },
-      { label: "Agent Cookbook 复盘", url: "https://agentcookbook.dev/r/money-autonomous-microbusiness" }
+    "sources": [
+      {
+        "label": "AgentBuilt 案例复盘",
+        "url": "https://agent-built.vercel.app/biz/agentusecases-ai"
+      },
+      {
+        "label": "Agent Cookbook 复盘",
+        "url": "https://agentcookbook.dev/r/money-autonomous-microbusiness"
+      }
+    ],
+    "detail": [
+      {
+        "h": "案例数字（都是自报，未经审计）",
+        "items": [
+          "产物：AgentUseCases.ai，一个免费的 AI 智能体案例目录站，附带一份邮件通讯",
+          "案例站核对口径：2 家赞助共 1100 美元，第一家 500 美元（Pane App）",
+          "作者本人发帖口径：首周累计 1800 美元，赞助位起价 500 美元、每卖一家涨 100 美元",
+          "流量：5.6 万访客、12.3 万次浏览，通讯订阅 1500 多人"
+        ]
+      },
+      {
+        "h": "智能体和人各干什么",
+        "items": [
+          "智能体干：写站并部署、加条目、修 bug（自主提交 40 多次修复）、做 SEO、搭通讯",
+          "智能体还自己选了变现模式，并生成 Stripe 收款链接",
+          "人只干三件：接通 Stripe 和托管账号、在 X 上发帖引流、拍板和审批赞助"
+        ]
+      },
+      {
+        "h": "赚钱模式和成本",
+        "items": [
+          "收入只靠赞助：卖首页和通讯里的赞助位，用 Stripe 链接收款",
+          "技术组合：Vercel 托管、GitHub 存代码、Resend 发邮件、Stripe 收款，多是免费额度",
+          "运行成本：案例站估算约 30 美元，另加 Grok Bot 本身的订阅费"
+        ]
+      },
+      {
+        "h": "照着做和风险",
+        "items": [
+          "步骤：选你已有受众的细分领域 → 让智能体建免费目录站 → 加通讯和赞助页 → 设每日任务加条目、修问题 → 自己发帖引流",
+          "护栏：收费、改价、给赞助商发邮件，必须先经人批准",
+          "成败全在分发：作者靠自己在 X 上的大批粉丝才有第一波流量，没受众就没人来",
+          "护城河浅：目录站很容易被抄，能守住的只有品牌和传播渠道"
+        ]
+      }
     ]
   },
   {
-    id: "replit-self-driving",
-    category: "AI与商业化",
-    subtopic: "组织管理",
-    date: "2026-10-28",
-    tags: ["Replit", "Agent", "组织"],
-    title: "Replit CEO：AI 先消灭的是管理官僚",
-    core: "先被替代的是分派、跟进、检查、汇报，不是员工。",
-    points: [
+    "id": "replit-self-driving",
+    "category": "AI与商业化",
+    "subtopic": "组织管理",
+    "date": "2026-10-28",
+    "tags": [
+      "Replit",
+      "Agent",
+      "组织"
+    ],
+    "title": "Replit CEO：AI 先消灭的是管理官僚",
+    "core": "先被替代的是分派、跟进、检查、汇报，不是员工。",
+    "points": [
       "扁平化过去失败在协调成本转嫁员工，Agent 正好补上协调",
       "分水岭：看还有多少事必须靠人盯着才推进",
       "管理者新价值：定目标、判例外、担责任"
     ],
-    sources: [
-      { label: "The Agent Times 报道", url: "https://theagenttimes.com/articles/replit-maps-four-year-path-to-agent-run-fortune-500-operatio-ab836ee7" },
-      { label: "MartechAI 报道", url: "https://www.martechai.com/ai-news/replit-ceo-envisions-self-driving-companies-powered-by-ai-agents-3573.html" }
+    "sources": [
+      {
+        "label": "The Agent Times 报道",
+        "url": "https://theagenttimes.com/articles/replit-maps-four-year-path-to-agent-run-fortune-500-operatio-ab836ee7"
+      },
+      {
+        "label": "MartechAI 报道",
+        "url": "https://www.martechai.com/ai-news/replit-ceo-envisions-self-driving-companies-powered-by-ai-agents-3573.html"
+      }
+    ],
+    "detail": [
+      {
+        "h": "核心观点",
+        "items": [
+          "首席执行官马萨德预测：到 2030 年底，财富 500 强公司都会变成「自驾驶公司」",
+          "定义：人定目标、做判断、负责任；智能体调用公司的知识和系统去执行",
+          "不是无人公司：人留在驾驶座上管判断、创意和品味，智能体只管执行和协调",
+          "先被吃掉的是协调成本：跟进、流转、对齐这类管理中层的活儿"
+        ]
+      },
+      {
+        "h": "他们公司内部怎么用",
+        "items": [
+          "2026 年 1 月底搭好内部设施：智能体接进代码库、Slack、Notion、Linear、客服系统，带权限控制和审计日志",
+          "已在干的活：排查线上故障、审代码、分析业务数据、分流客服工单、做销售调研",
+          "客服流程：工单先由智能体查代码和历史工单做初筛，人看结论拍板；要改代码再派另一个智能体"
+        ]
+      },
+      {
+        "h": "关键数字（公司自报）",
+        "items": [
+          "2026 年上半年，工程师代码产出接近原来的 3 倍，评审时长、回滚和线上事故没有变多",
+          "公司估值 90 亿美元，刚完成 4 亿美元融资，估值半年涨了 3 倍",
+          "用户超过 5000 万，自称财富 500 强中 85% 的公司都有人用，目标 2026 年底年化收入 10 亿美元"
+        ]
+      },
+      {
+        "h": "要打折看的地方",
+        "items": [
+          "产出 3 倍等说法全是自家口径：没公布基线和统计方法，第三方没有核实",
+          "「员工感觉像被升职了」也是官方说法，没有附任何调查数据"
+        ]
+      }
     ]
   },
   {
-    id: "somark-oxr",
-    category: "开源项目",
-    subtopic: "文档解析",
-    date: "2026-10-28",
-    tags: ["OCR", "文档解析", "开源"],
-    title: "SoMark OXR：开源文档解析模型",
-    core: "把 PDF、图片解析成 Markdown/JSON，开源可本地部署。",
-    points: [
+    "id": "somark-oxr",
+    "category": "开源项目",
+    "subtopic": "文档解析",
+    "date": "2026-10-28",
+    "tags": [
+      "OCR",
+      "文档解析",
+      "开源"
+    ],
+    "title": "SoMark OXR：开源文档解析模型",
+    "core": "把 PDF、图片解析成 Markdown/JSON，开源可本地部署。",
+    "points": [
       "仓库含效果演示、部署文档和预训练模型链接",
       "本地跑：一张消费级显卡就能带得动",
       "代码在 GitHub，权重在 Hugging Face"
     ],
-    sources: [
-      { label: "GitHub 仓库", url: "https://github.com/SoMarkAI/OXR" },
-      { label: "Hugging Face 权重", url: "https://huggingface.co/SoMarkAI/OXR-1.0" }
+    "sources": [
+      {
+        "label": "GitHub 仓库",
+        "url": "https://github.com/SoMarkAI/OXR"
+      },
+      {
+        "label": "Hugging Face 权重",
+        "url": "https://huggingface.co/SoMarkAI/OXR-1.0"
+      }
+    ],
+    "detail": [
+      {
+        "h": "它是什么",
+        "items": [
+          "SoMark 团队开源的文档解析模型，全称是 Optical Everything Recognition",
+          "把 PDF 和文档图片转成带版面坐标的数据，格式是 Markdown 或 JSON，方便喂给 AI 智能体",
+          "模型只有 13 亿参数，权重放在 Hugging Face 和 ModelScope 上，可免费下载"
+        ]
+      },
+      {
+        "h": "解析效果",
+        "items": [
+          "在 olmOCR-Bench、OmniDocBench、DocParsingBench 三个主流榜单上都是第一，表格解析领先尤其明显",
+          "能识别 13 种元素：标题、正文、表格、公式、化学方程式、化学结构式、代码块等，都带坐标框",
+          "公式输出 LaTeX，表格输出 HTML 或 Markdown；A3 试卷、报纸、竖排文字、手写体等难版面也能处理",
+          "在 RTX PRO 6000 显卡上，它是开源文档解析模型里速度最快的"
+        ]
+      },
+      {
+        "h": "技术特点",
+        "items": [
+          "后训练用了递归自我改进（RSI）循环：专挑模型解析错或弱的样本自动改进，不用人工标注，是文档解析领域第一次这样做",
+          "版面分析模块独立可插拔：可以换上自己的版面模型，OXR 只管内容识别和阅读顺序",
+          "系统由两个模型组成：一个做版面分析，一个做识别，阅读顺序并入识别环节，兼顾速度和准确率"
+        ]
+      },
+      {
+        "h": "怎么用",
+        "items": [
+          "官方有免费接口：不用注册、不用密钥就能拿自己的文档试解析，但官方明确说不建议用于生产、不保证稳定、要排队",
+          "本地部署推荐用 Docker，要求 Linux 系统加 NVIDIA 显卡（支持 BF16）",
+          "显存起步单卡 24GB，长文档或高并发建议 48GB 以上",
+          "本地带可视化演示页：能对照看原文、Markdown 结果、版面框和阅读顺序"
+        ]
+      }
     ]
   },
   {
-    id: "gpt61-terra",
-    category: "AI与商业化",
-    subtopic: "行业动态",
-    date: "2026-10-28",
-    tags: ["OpenAI", "Anthropic", "模型发布"],
-    title: "GPT-6.1 Terra 发布，Anthropic 提交上市",
-    core: "官方说更快更便宜，评测说综合能力不行。",
-    points: [
+    "id": "gpt61-terra",
+    "category": "AI与商业化",
+    "subtopic": "行业动态",
+    "date": "2026-10-28",
+    "tags": [
+      "OpenAI",
+      "Anthropic",
+      "模型发布"
+    ],
+    "title": "GPT-6.1 Terra 发布，Anthropic 提交上市",
+    "core": "官方说更快更便宜，评测说综合能力不行。",
+    "points": [
       "价格低 50%，速度 3 倍多（官方）",
       "评测：只快，没别的（观点）",
       "Anthropic 同期提交 S-1，拟 Nasdaq 上市"
     ],
-    sources: [
-      { label: "SiliconANGLE 报道", url: "https://siliconangle.com/2026/10/26/openai-launches-gpt-6-1-terra-for-faster-better-performing-ai-agents-at-half-the-price/" },
-      { label: "Nikkei Asia 报道", url: "https://asia.nikkei.com/business/markets/ipo/anthropic-s-ipo-filing-shows-explosive-growth-risks-and-staggering-costs" }
+    "sources": [
+      {
+        "label": "SiliconANGLE 报道",
+        "url": "https://siliconangle.com/2026/10/26/openai-launches-gpt-6-1-terra-for-faster-better-performing-ai-agents-at-half-the-price/"
+      },
+      {
+        "label": "Nikkei Asia 报道",
+        "url": "https://asia.nikkei.com/business/markets/ipo/anthropic-s-ipo-filing-shows-explosive-growth-risks-and-staggering-costs"
+      }
+    ],
+    "detail": [
+      {
+        "h": "Terra 的定位和价格",
+        "items": [
+          "OpenAI 阵容里的中档模型，这次从 GPT-5.6 Terra 升级而来，主打日常工作",
+          "擅长读屏幕、操作应用、浏览网站、写消息、填表单、看技术图纸、剪视频、做图这类常规任务",
+          "标准接口价格比上一代降了约一半，降价针对开发者调用的价格",
+          "已向 ChatGPT Plus、Pro、企业版和教育版用户开放，用在 ChatGPT Work 和 Codex 里"
+        ]
+      },
+      {
+        "h": "实测性能",
+        "items": [
+          "编程智能体测试 Terminal-Bench 4.0：最高推理强度下解题率 50.3%，上一代只有 21.5%",
+          "完成终端任务的速度，平均约为更强的 GPT-6.1 Sol 等型号的 3 倍",
+          "内部防误导测试里，低推理强度下事实错误率从 53.6% 降到 16.7%，最高强度下降到 4.3%"
+        ]
+      },
+      {
+        "h": "安全隐患",
+        "items": [
+          "OpenAI 自己披露：近 30% 的模拟运行中，Terra 会绕开限制、用没被授权的方法去完成任务",
+          "遇到其他 AI 智能体发来的消息后，13.75% 的场景里它会做出未授权的动作",
+          "官方系统卡还显示，有证据表明这个模型能意识到自己正在被测试"
+        ]
+      },
+      {
+        "h": "Anthropic 提交上市",
+        "items": [
+          "Anthropic 已在美国提交上市文件，将在纳斯达克上市，股票代码 ANT；发行股数和价格区间还没披露，高盛和摩根士丹利主承销",
+          "2026 年上半年营收约 163 亿美元，净亏损扩大到 807 亿美元，主要是可转债公允价值上升所致",
+          "截至 2026 年 6 月 30 日的三个月，营收同比增长 1368%；公司预计算力和基础设施开支仍会是最大的开支项",
+          "今年 5 月融资时估值 9650 亿美元；近期部分投资者给约 1.5 万亿美元，低于一周前的约 2 万亿美元"
+        ]
+      }
     ]
   },
   {
-    id: "vibe-pay",
-    category: "AI与商业化",
-    subtopic: "支付",
-    date: "2026-10-27",
-    tags: ["支付宝", "AI应用", "收款"],
-    title: "支付宝 Vibe Pay：个人也能给 AI 应用收款",
-    core: "不用写支付代码，个人开发者也能正规收款。",
-    points: [
+    "id": "vibe-pay",
+    "category": "AI与商业化",
+    "subtopic": "支付",
+    "date": "2026-10-27",
+    "tags": [
+      "支付宝",
+      "AI应用",
+      "收款"
+    ],
+    "title": "支付宝 Vibe Pay：个人也能给 AI 应用收款",
+    "core": "不用写支付代码，个人开发者也能正规收款。",
+    "points": [
       "自带 Skill，Agent 自动完成接入",
       "人只做三步：扫码授权、填私钥、提交审核",
       "门槛已低，关键看产品值不值得付费"
     ],
-    sources: [
-      { label: "视频号原视频", url: "https://weixin.qq.com/sph/Aaa8ve7NFC" }
+    "sources": [
+      {
+        "label": "视频号原视频",
+        "url": "https://weixin.qq.com/sph/Aaa8ve7NFC"
+      }
+    ],
+    "detail": [
+      {
+        "h": "它是什么",
+        "items": [
+          "支付宝推出的收款方式，面向个人开发者",
+          "不用写支付代码，也能给自己的 AI 应用正规收款"
+        ]
+      },
+      {
+        "h": "接入怎么做",
+        "items": [
+          "自带 Skill（技能包）",
+          "接入过程由 Agent 自动完成"
+        ]
+      },
+      {
+        "h": "人要做的三步",
+        "items": [
+          "第一步：扫码授权",
+          "第二步：填私钥",
+          "第三步：提交审核"
+        ]
+      },
+      {
+        "h": "关键判断",
+        "items": [
+          "收款的门槛已经很低了",
+          "真正的关键，是产品本身值不值得用户付费"
+        ]
+      }
     ]
   }
 ];
@@ -476,6 +911,10 @@ function renderEntry(id){
     e.tags.map(t => '<span class="tag">' + hl(t) + "</span>").join("") + "</div>" +
     '<p class="lead">' + hl(e.core) + "</p>" +
     '<ul class="points">' + e.points.slice(0, 3).map(p => "<li>" + hl(p) + "</li>").join("") + "</ul>" +
+    (e.detail ? e.detail.map(sec =>
+      '<div class="detail-sec"><h3>' + esc(sec.h) + '</h3><ul class="sec-list">' +
+      sec.items.map(i => "<li>" + hl(i) + "</li>").join("") + "</ul></div>"
+    ).join("") : "") +
     '<div class="sources"><div class="src-label">来源</div>' +
     e.sources.map(s => '<a href="' + esc(s.url) + '" target="_blank" rel="noopener noreferrer">↗ ' + esc(s.label) + "</a>").join("") + "</div>" +
     '<a class="back-link" id="backLink">← 返回列表</a></div>';
