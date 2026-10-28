@@ -97,6 +97,7 @@
     width:100%;text-align:left;font-family:inherit;
   }
   .nav-cat-name:hover{color:var(--accent);background:var(--accent-soft)}
+  .nav-cat-name.active{color:var(--accent);background:var(--accent-soft)}
   .nav-cat-name .arrow{font-size:10px;color:var(--ink-3);transition:transform .25s ease}
   .nav-cat.closed .arrow{transform:rotate(-90deg)}
   .nav-cat.closed .nav-items{display:none}
@@ -121,7 +122,8 @@
   }
   .page-sub{color:var(--ink-2);font-size:16px;margin-bottom:8px}
 
-  .entry-list{margin-top:26px;border-top:1px solid var(--line)}
+  .entry-list{margin-top:4px;border-top:1px solid var(--line)}
+  .search-note{color:var(--ink-3);font-size:14px;margin-bottom:14px}
   .entry-row{
     padding:22px 4px 20px;border-bottom:1px solid var(--line);
     cursor:pointer;
@@ -132,8 +134,8 @@
     margin-bottom:6px;transition:color .18s ease;
   }
   .entry-row:hover h2{color:var(--accent)}
-  .entry-row .core{font-size:15.5px;color:var(--ink-2);line-height:1.7}
-  .entry-row .tags{margin-top:9px;display:flex;gap:6px;flex-wrap:wrap}
+  .entry-row .core{font-size:15px;color:#8f8a83;line-height:1.7}
+  .entry-row .tags{margin-top:8px;display:flex;gap:14px;flex-wrap:wrap}
   .empty{padding:70px 0;text-align:center;color:var(--ink-3);font-size:15.5px}
 
   /* 文章页 */
@@ -142,10 +144,8 @@
     color:var(--ink-3);font-size:14px;margin-bottom:26px;
   }
   .article-meta .dot{opacity:.5}
-  .tag{
-    font-size:12.5px;color:var(--accent);
-    background:var(--accent-soft);border-radius:999px;padding:2px 11px;line-height:1.6;
-  }
+  .tag{font-size:13px;color:var(--ink-3);line-height:1.6}
+  .tag::before{content:"#";opacity:.55;margin-right:1px}
   .lead{
     font-size:17.5px;line-height:1.95;color:var(--ink);
     letter-spacing:.01em;margin-bottom:30px;
@@ -430,7 +430,7 @@ function renderNav(activeId){
   cats.forEach(c => {
     const closed = closedCats.has(c) ? " closed" : "";
     html += '<div class="nav-cat' + closed + '">' +
-      '<button class="nav-cat-name" data-cat="' + esc(c) + '"><span class="arrow">▾</span>' + esc(c) + "</button>" +
+      '<button class="nav-cat-name' + (activeCat === c ? " active" : "") + '" data-cat="' + esc(c) + '"><span class="arrow">▾</span>' + esc(c) + "</button>" +
       '<ul class="nav-items">' +
       ENTRIES.filter(e => e.category === c).map(e =>
         '<li data-open="' + esc(e.id) + '"' + (e.id === activeId ? ' class="active"' : "") + ">" + esc(e.title) + "</li>"
@@ -457,10 +457,8 @@ function renderNav(activeId){
 
 function renderList(){
   let list = ENTRIES.filter(e => (activeCat === "全部" || e.category === activeCat) && entryMatches(e));
-  const title = keyword ? "搜索：" + keyword : (activeCat === "全部" ? "我的知识库" : activeCat);
-  let html = '<div class="fade"><div class="crumb"><a href="#/">我的知识库</a>' +
-    (activeCat !== "全部" && !keyword ? '<span class="sep">›</span>' + esc(activeCat) : "") + "</div>" +
-    '<h1 class="page-title">' + esc(title) + "</h1>";
+  let html = '<div class="fade">';
+  if(keyword) html += '<div class="search-note">搜索「' + esc(keyword) + "」</div>";
   if(list.length === 0){
     html += '<div class="empty">没有找到相关内容</div>';
   } else {
@@ -486,7 +484,7 @@ function renderEntry(id){
   if(!e){ renderList(); return; }
   activeCat = e.category;
   main.innerHTML =
-    '<div class="fade"><div class="crumb"><a href="#/">我的知识库</a><span class="sep">›</span><a href="#/" data-cat-link="' + esc(e.category) + '">' + esc(e.category) + '</a><span class="sep">›</span>' + esc(e.subtopic) + "</div>" +
+    '<div class="fade"><div class="crumb"><a href="#/" data-cat-link="' + esc(e.category) + '">' + esc(e.category) + '</a><span class="sep">›</span>' + esc(e.subtopic) + "</div>" +
     '<h1 class="page-title">' + hl(e.title) + "</h1>" +
     '<div class="article-meta"><span>' + fmtDate(e.date) + '</span><span class="dot">·</span><span>' + esc(e.category) + " / " + esc(e.subtopic) + "</span>" +
     e.tags.map(t => '<span class="tag">' + hl(t) + "</span>").join("") + "</div>" +
