@@ -34,6 +34,8 @@
   }
   ::selection{background:#d7e5df}
   body.no-select{user-select:none;-webkit-user-select:none}
+  @keyframes secIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+  .detail-sec{animation:secIn .25s ease}
   mark{background:var(--mark);color:inherit;border-radius:2px;padding:0 1px}
   a{color:var(--accent);text-decoration:none}
 
@@ -965,19 +967,23 @@ const DIGESTS = {
     "layers": [
       {
         "name": "组织重构",
-        "note": "管理协调先被替代"
+        "note": "管理协调先被替代",
+        "sec": "链条四：组织先变"
       },
       {
         "name": "自动变现",
-        "note": "人只做审批和引流"
+        "note": "人只做审批和引流",
+        "sec": "链条三：个人自动变现"
       },
       {
         "name": "收款接入",
-        "note": "个人也能正规收款"
+        "note": "个人也能正规收款",
+        "sec": "链条二：收款变简单"
       },
       {
         "name": "模型能力（地基）",
-        "note": "便宜、够用，是上面一切的前提"
+        "note": "便宜、够用，是上面一切的前提",
+        "sec": "链条一：模型变便宜"
       }
     ]
   }
@@ -1108,26 +1114,27 @@ function renderEntry(id){
 
 function layerDiagram(d){
   if(!d.layers || !d.layers.length) return "";
-  const W = 720, H = 46, GAP = 10;
+  const W = 720, H = 50, GAP = 10;
   const widths = [300, 400, 500, 600];
+  const fills = ["#284b63", "#5f8296", "#a9c1cc", "#eef3f0"];
   let y = 4, parts = "";
   d.layers.forEach((l, i) => {
     const w = widths[Math.min(i, widths.length - 1)];
     const x = (W - w) / 2;
-    const isTop = i === 0, isBase = i === d.layers.length - 1;
-    const fill = isTop ? "var(--accent)" : isBase ? "var(--accent-soft)" : "var(--accent)";
-    const op = isTop || isBase ? "" : ' opacity="' + (0.62 - i * 0.13) + '"';
-    const tc = isTop ? "#fff" : "var(--ink)";
-    const sc = isTop ? "rgba(255,255,255,.85)" : "var(--ink-3)";
-    parts += '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + H + '" rx="8" fill="' + fill + '"' + op + ' stroke="var(--accent-2)" stroke-width="1"/>' +
-      '<text x="360" y="' + (y + 21) + '" text-anchor="middle" font-size="15.5" font-weight="700" fill="' + tc + '">' + esc(l.name) + "</text>" +
-      '<text x="360" y="' + (y + 39) + '" text-anchor="middle" font-size="12" fill="' + sc + '">' + esc(l.note) + "</text>";
+    const dark = i < 2;
+    const tc = dark ? "#ffffff" : "#2b2b2b";
+    const sc = dark ? "rgba(255,255,255,0.88)" : "#4e4e4e";
+    parts += '<g data-layer-g="' + esc(l.sec || "") + '" style="cursor:pointer;transition:opacity .25s ease">' +
+      '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + H + '" rx="8" fill="' + fills[Math.min(i, fills.length - 1)] + '" stroke="var(--accent-2)" stroke-width="1"/>' +
+      '<text x="360" y="' + (y + 22) + '" text-anchor="middle" font-size="16" font-weight="700" fill="' + tc + '">' + esc(l.name) + "</text>" +
+      '<text x="360" y="' + (y + 41) + '" text-anchor="middle" font-size="13" fill="' + sc + '">' + esc(l.note) + "</text></g>";
     y += H + GAP;
   });
   return '<svg viewBox="0 0 ' + W + " " + (y - GAP + 4) + '" style="width:100%;height:auto;display:block;margin:6px 0 26px" role="img">' + parts + "</svg>";
 }
 
 function renderDigest(cat){
+  activeLayerSec = null;
   const d = DIGESTS[cat];
   if(!d){ renderList(); return; }
   activeCat = cat;
@@ -1137,7 +1144,7 @@ function renderDigest(cat){
     '<p class="lead">' + esc(d.lead) + "</p>" +
     layerDiagram(d) +
     d.sections.map(sec =>
-      '<div class="detail-sec"><h3>' + esc(sec.h) + '</h3><ul class="sec-list">' +
+      '<div class="detail-sec" data-sec="' + esc(sec.h) + '"><h3>' + esc(sec.h) + '</h3><ul class="sec-list">' +
       sec.items.map(i => "<li>" + esc(i) + "</li>").join("") + "</ul></div>"
     ).join("") +
     '<div class="based-on"><div class="src-label">依据条目</div>' +
@@ -1185,6 +1192,29 @@ document.addEventListener("mouseup", gestureEnd);
 main.addEventListener("touchstart", e => { const t = e.touches[0]; gestureStart(t.clientX, t.clientY); }, { passive: true });
 main.addEventListener("touchmove", e => { const t = e.touches[0]; gestureMove(t.clientX, t.clientY, null); }, { passive: true });
 main.addEventListener("touchend", gestureEnd);
+let activeLayerSec = null;
+function applyLayerFilter(){
+  main.querySelectorAll(".detail-sec[data-sec]").forEach(s => {
+    s.style.display = (!activeLayerSec || s.getAttribute("data-sec") === activeLayerSec) ? "" : "none";
+  });
+  main.querySelectorAll("[data-layer-g]").forEach(g => {
+    g.style.opacity = (!activeLayerSec || g.getAttribute("data-layer-g") === activeLayerSec) ? "1" : "0.4";
+  });
+}
+main.addEventListener("click", ev => {
+  if(currentRoute().type !== "digest") return;
+  const g = ev.target.closest ? ev.target.closest("[data-layer-g]") : null;
+  if(g){
+    const t = g.getAttribute("data-layer-g");
+    activeLayerSec = (activeLayerSec === t) ? null : t;
+    applyLayerFilter();
+    return;
+  }
+  if(activeLayerSec && (ev.target === main || ev.target.classList.contains("fade"))){
+    activeLayerSec = null;
+    applyLayerFilter();
+  }
+});
 window.addEventListener("hashchange", render);
 document.getElementById("homeLink").addEventListener("click", () => {
   activeCat = "全部"; keyword = ""; searchInput.value = ""; clearBtn.classList.remove("show");
