@@ -144,8 +144,8 @@
     color:var(--ink-3);font-size:14px;margin-bottom:26px;
   }
   .article-meta .dot{opacity:.5}
-  .tag{font-size:13px;color:var(--ink-3);line-height:1.6}
-  .tag::before{content:"#";opacity:.55;margin-right:1px}
+  .tag{font-size:12.5px;color:#b7b2aa;line-height:1.6}
+  .tag::before{content:"#";opacity:.4;margin-right:1px}
   .lead{
     font-size:17.5px;line-height:1.95;color:var(--ink);
     letter-spacing:.01em;margin-bottom:30px;
@@ -407,8 +407,7 @@ function hl(text){
   return t.replace(new RegExp("(" + k + ")", "gi"), "<mark>$1</mark>");
 }
 function fmtDate(d){
-  const m = String(d).match(/^(\d{4})-(\d{2})-(\d{2})$/);
-  return m ? (m[1] + "年" + Number(m[2]) + "月" + Number(m[3]) + "日") : d;
+  return String(d).replace(/-/g, "/");
 }
 function categories(){
   return [...new Set(ENTRIES.map(e => e.category))];
@@ -424,18 +423,12 @@ function currentRoute(){
   return { type:"list" };
 }
 
-function renderNav(activeId){
+function renderNav(){
   const cats = categories();
-  let html = '<button class="nav-all' + (activeCat === "全部" && !activeId ? " active" : "") + '" data-all="1">全部条目</button>';
+  let html = '<button class="nav-all' + (activeCat === "全部" ? " active" : "") + '" data-all="1">全部条目</button>';
   cats.forEach(c => {
-    const closed = closedCats.has(c) ? " closed" : "";
-    html += '<div class="nav-cat' + closed + '">' +
-      '<button class="nav-cat-name' + (activeCat === c ? " active" : "") + '" data-cat="' + esc(c) + '"><span class="arrow">▾</span>' + esc(c) + "</button>" +
-      '<ul class="nav-items">' +
-      ENTRIES.filter(e => e.category === c).map(e =>
-        '<li data-open="' + esc(e.id) + '"' + (e.id === activeId ? ' class="active"' : "") + ">" + esc(e.title) + "</li>"
-      ).join("") +
-      "</ul></div>";
+    html += '<div class="nav-cat">' +
+      '<button class="nav-cat-name' + (activeCat === c ? " active" : "") + '" data-cat="' + esc(c) + '">' + esc(c) + "</button></div>";
   });
   navTree.innerHTML = html;
   navTree.querySelector("[data-all]").addEventListener("click", () => {
@@ -443,15 +436,8 @@ function renderNav(activeId){
     location.hash = "#/"; render();
   });
   navTree.querySelectorAll("[data-cat]").forEach(b => b.addEventListener("click", () => {
-    const c = b.getAttribute("data-cat");
-    if(window.innerWidth <= 900){
-      activeCat = c; location.hash = "#/"; render(); return;
-    }
-    if(activeCat === c && currentRoute().type === "list"){ closedCats.has(c) ? closedCats.delete(c) : closedCats.add(c); renderNav(null); return; }
-    activeCat = c; closedCats.delete(c); location.hash = "#/"; render();
-  }));
-  navTree.querySelectorAll("[data-open]").forEach(li => li.addEventListener("click", () => {
-    location.hash = "#/e/" + li.getAttribute("data-open");
+    activeCat = b.getAttribute("data-cat");
+    location.hash = "#/"; render();
   }));
 }
 
