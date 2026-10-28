@@ -123,6 +123,26 @@
   }
   .page-sub{color:var(--ink-2);font-size:16px;margin-bottom:8px}
 
+  .digest-card{
+    background:var(--accent-soft);border:1px solid #d9e4de;border-radius:10px;
+    padding:18px 20px 16px;margin-bottom:26px;cursor:pointer;
+  }
+  .digest-card:hover{border-color:var(--accent-2)}
+  .digest-badge{font-size:12px;letter-spacing:.16em;color:var(--accent);font-weight:700;margin-bottom:6px}
+  .digest-card h2{font-family:var(--serif);font-size:21px;font-weight:900;line-height:1.4;margin-bottom:6px}
+  .digest-card p{color:var(--ink-2);font-size:15px}
+  .digest-card .go{color:var(--accent);font-size:14px;margin-top:8px;display:inline-block}
+  .synth{
+    background:#fff;border:1px solid var(--line);border-left:3px solid var(--accent);
+    border-radius:8px;padding:16px 20px 10px;margin-bottom:26px;
+  }
+  .synth .digest-badge{margin-bottom:4px}
+  .synth .go{color:var(--accent);cursor:pointer;font-size:14px;display:inline-block;margin-bottom:8px}
+  .synth h3{font-size:16px;margin:12px 0 4px}
+  .synth ul{margin:0 0 10px 20px;color:var(--ink-2);font-size:15px}
+  .based-on{margin-top:34px;border-top:1px solid var(--line);padding-top:14px}
+  .based-on .src-label{font-size:12px;letter-spacing:.16em;color:var(--ink-3);margin-bottom:8px}
+  .based-on a{display:block;font-size:14.5px;padding:3px 0}
   .entry-list{margin-top:4px;border-top:1px solid var(--line)}
   .search-note{color:var(--ink-3);font-size:14px;margin-bottom:14px}
   .entry-row{
@@ -218,6 +238,68 @@
 
 <script>
 const ENTRIES = [
+  {
+    "id": "lemo-opuscar",
+    "category": "开源项目",
+    "subtopic": "视频生成",
+    "date": "2026-10-28",
+    "tags": [
+      "视频生成",
+      "开源",
+      "智能体"
+    ],
+    "title": "Lemo-Opuscar：不用视频模型，智能体用代码做短片",
+    "core": "不用视频生成模型，画面、音乐、旁白全由代码逐帧渲染，每一帧都可复查。",
+    "points": [
+      "59 种现成风格可选，也能改出自己的专属风格",
+      "装成插件后一句话下单：说风格和主题，智能体当导演做片",
+      "开源免费，MIT 协议；一支片约 30~60 分钟"
+    ],
+    "detail": [
+      {
+        "h": "它是什么",
+        "items": [
+          "不用视频生成模型，也不用素材库",
+          "画面是 Canvas / WebGL 页面逐帧渲染出来的",
+          "音乐是免费采样库做的原创配乐，旁白是语音合成",
+          "每一帧、每一音符、每次剪切都写在代码里，可复现、可检查"
+        ]
+      },
+      {
+        "h": "怎么用",
+        "items": [
+          "推荐装插件：先加市场源，再安装插件，两条命令搞定",
+          "首次使用会下载约 30MB 的指南、工具和风格提示到本地",
+          "也可直接克隆仓库，在仓库里做片",
+          "然后一句话说风格和主题，中英文都行，智能体按导演、制作、技术三份指南出片"
+        ]
+      },
+      {
+        "h": "产出规格",
+        "items": [
+          "默认 1920×1080、24 帧，时长默认 30~60 秒",
+          "字幕内嵌进画面，同时导出 srt 文件",
+          "响度统一到 -14 LUFS",
+          "支持竖屏等其他尺寸"
+        ]
+      },
+      {
+        "h": "门槛与注意",
+        "items": [
+          "一支片约 30~60 分钟，消耗 token 不少",
+          "需要 Node 20+、ffmpeg、Python 3.11+，其余由智能体装",
+          "风格针对 Opus 5.5 调校，其他模型效果可能打折",
+          "库里的风格可以改成自己的专属风格，存在本地不怕更新覆盖"
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "label": "项目仓库",
+        "url": "https://github.com/lemomo-ai/lemo-opuscar"
+      }
+    ]
+  },
   {
     "id": "baoshi-fen-changjing",
     "category": "生活",
@@ -825,6 +907,67 @@ const ENTRIES = [
 ];
 
 const main = document.getElementById("main");
+const DIGESTS = {
+  "AI与商业化": {
+    "title": "AI 商业化干货：门槛在消失，瓶颈在转移",
+    "lead": "四条内容拼成一条链：模型变便宜 → 收款变简单 → 个人能自动赚钱 → 公司先砍管理协调。先看结论，再看链条。",
+    "sections": [
+      {
+        "h": "核心结论",
+        "items": [
+          "赚钱的门槛正从「会不会做」变成「有没有人买」：模型、收款、建站都已现成。",
+          "真正稀缺的是分发和产品价值：有受众才有第一波流量，产品值得付费才有收入。",
+          "公司里先被吃掉的不是员工，是协调：分派、跟进、检查、汇报。"
+        ]
+      },
+      {
+        "h": "链条一：模型变便宜",
+        "items": [
+          "中档模型价格降约一半、速度约 3 倍，智能体干日常活的成本大幅下降。",
+          "能力够用但不完全可控：官方自曝近三成模拟运行会绕开限制做事，用前必须设护栏。"
+        ]
+      },
+      {
+        "h": "链条二：收款变简单",
+        "items": [
+          "个人开发者不用写支付代码：扫码授权、填私钥、提交审核，三步接入。",
+          "收款不再是门槛，产品本身值不值得付费才是。"
+        ]
+      },
+      {
+        "h": "链条三：个人自动变现",
+        "items": [
+          "已核实案例：智能体建案例目录站卖赞助位，两单共 1100 美元；人只做接账号、发帖引流、审批三件事。",
+          "收费、改价、对外发信必须先经人批准，这是护栏，不是可选项。",
+          "模式护城河浅：目录站很容易被抄，能守住的只有品牌和传播渠道。"
+        ]
+      },
+      {
+        "h": "链条四：组织先变",
+        "items": [
+          "扁平化过去败在协调成本转嫁给员工，智能体正好补上协调这一环。",
+          "判断一家公司变没变：看还有多少事必须靠人盯着才推进。",
+          "管理者的新价值：定目标、判例外、担责任。"
+        ]
+      },
+      {
+        "h": "数字怎么读（可信度）",
+        "items": [
+          "可采信：案例站两单 1100 美元（有公开复盘核对）、模型价格与评测分数（官方与第三方评测）。",
+          "打折看：公司自报数字——产出 3 倍、首周 1800 美元，都没有第三方核实。",
+          "资本面：头部公司已提交上市，上半年营收约 163 亿美元但亏损扩大，算力是最大开支——行业还在烧钱换增长。"
+        ]
+      }
+    ],
+    "basedOn": [
+      "gpt61-terra",
+      "vibe-pay",
+      "grokbot-monetize",
+      "replit-self-driving"
+    ]
+  }
+};
+
 const navTree = document.getElementById("navTree");
 const searchInput = document.getElementById("search");
 const clearBtn = document.getElementById("clearBtn");
@@ -856,6 +999,7 @@ function entryMatches(e){
 function currentRoute(){
   const h = location.hash.replace(/^#\/?/, "");
   if(h.startsWith("e/")) return { type:"entry", id:h.slice(2) };
+  if(h.startsWith("d/")) return { type:"digest", cat:decodeURIComponent(h.slice(2)) };
   return { type:"list" };
 }
 
@@ -877,10 +1021,29 @@ function renderNav(){
   }));
 }
 
+function digestMatches(d){
+  if(!keyword) return false;
+  const hay = [d.title, d.lead, ...d.sections.flatMap(s => [s.h, ...s.items])].join(" ").toLowerCase();
+  return hay.includes(keyword.toLowerCase());
+}
 function renderList(){
   let list = ENTRIES.filter(e => (activeCat === "全部" || e.category === activeCat) && entryMatches(e));
   let html = '<div class="fade">';
-  if(keyword) html += '<div class="search-note">搜索「' + esc(keyword) + "」</div>";
+  if(keyword){
+    html += '<div class="search-note">搜索「' + esc(keyword) + "」</div>";
+    Object.keys(DIGESTS).forEach(cat => {
+      const d = DIGESTS[cat];
+      if(!digestMatches(d)) return;
+      html += '<div class="synth"><div class="digest-badge">先看整理 · ' + esc(cat) + '干货</div>' +
+        "<h2>" + hl(d.title) + "</h2><p>" + hl(d.lead) + "</p>" +
+        d.sections.map(sec => "<h3>" + esc(sec.h) + '</h3><ul>' + sec.items.map(i => "<li>" + hl(i) + "</li>").join("") + "</ul>").join("") +
+        '<span class="go" data-digest="' + esc(cat) + '">打开干货页 →</span></div>';
+    });
+  } else if(activeCat !== "全部" && DIGESTS[activeCat]){
+    const d = DIGESTS[activeCat];
+    html += '<div class="digest-card" data-digest="' + esc(activeCat) + '"><div class="digest-badge">本类干货 · 先看精华</div>' +
+      "<h2>" + esc(d.title) + "</h2><p>" + esc(d.lead) + '</p><span class="go">看干货 →</span></div>';
+  }
   if(list.length === 0){
     html += '<div class="empty">没有找到相关内容</div>';
   } else {
@@ -897,6 +1060,9 @@ function renderList(){
   main.innerHTML = html;
   main.querySelectorAll("[data-open]").forEach(r => r.addEventListener("click", () => {
     location.hash = "#/e/" + r.getAttribute("data-open");
+  }));
+  main.querySelectorAll("[data-digest]").forEach(r => r.addEventListener("click", () => {
+    location.hash = "#/d/" + encodeURIComponent(r.getAttribute("data-digest"));
   }));
   renderNav(null);
 }
@@ -925,9 +1091,33 @@ function renderEntry(id){
   window.scrollTo(0, 0);
 }
 
+function renderDigest(cat){
+  const d = DIGESTS[cat];
+  if(!d){ renderList(); return; }
+  activeCat = cat;
+  main.innerHTML =
+    '<div class="fade"><div class="crumb"><a href="#/" data-cat-link="' + esc(cat) + '">' + esc(cat) + '</a><span class="sep">›</span>干货</div>' +
+    '<h1 class="page-title">' + esc(d.title) + "</h1>" +
+    '<p class="lead">' + esc(d.lead) + "</p>" +
+    d.sections.map(sec =>
+      '<div class="detail-sec"><h3>' + esc(sec.h) + '</h3><ul class="sec-list">' +
+      sec.items.map(i => "<li>" + esc(i) + "</li>").join("") + "</ul></div>"
+    ).join("") +
+    '<div class="based-on"><div class="src-label">依据条目</div>' +
+    d.basedOn.map(id => { const e = ENTRIES.find(x => x.id === id); return e ? '<a href="#/e/' + esc(id) + '">' + esc(e.title) + "</a>" : ""; }).join("") + "</div>" +
+    '<a class="back-link" id="backLink">← 返回列表</a></div>';
+  document.getElementById("backLink").addEventListener("click", () => { location.hash = "#/"; });
+  const cl = main.querySelector("[data-cat-link]");
+  if(cl) cl.addEventListener("click", ev => { ev.preventDefault(); activeCat = cat; location.hash = "#/"; render(); });
+  renderNav(null);
+  window.scrollTo(0, 0);
+}
+
 function render(){
   const r = currentRoute();
-  if(r.type === "entry") renderEntry(r.id); else renderList();
+  if(r.type === "entry") renderEntry(r.id);
+  else if(r.type === "digest") renderDigest(r.cat);
+  else renderList();
 }
 
 /* 详情页手势：快速左划返回列表；识别为手势后立即禁止选字，慢速选字不受影响 */
