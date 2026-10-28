@@ -903,7 +903,6 @@ function renderList(){
 function renderEntry(id){
   const e = ENTRIES.find(x => x.id === id);
   if(!e){ renderList(); return; }
-  activeCat = e.category;
   main.innerHTML =
     '<div class="fade"><div class="crumb"><a href="#/" data-cat-link="' + esc(e.category) + '">' + esc(e.category) + '</a><span class="sep">›</span>' + esc(e.subtopic) + "</div>" +
     '<h1 class="page-title">' + hl(e.title) + "</h1>" +
