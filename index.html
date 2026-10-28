@@ -930,22 +930,19 @@ const DIGESTS = {
       {
         "h": "链条二：收款变简单",
         "items": [
-          "个人开发者不用写支付代码：扫码授权、填私钥、提交审核，三步接入。",
-          "收款不再是门槛，产品本身值不值得付费才是。"
+          "个人开发者不用写支付代码：扫码授权、填私钥、提交审核，三步接入。"
         ]
       },
       {
         "h": "链条三：个人自动变现",
         "items": [
-          "已核实案例：智能体建案例目录站卖赞助位，两单共 1100 美元；人只做接账号、发帖引流、审批三件事。",
-          "收费、改价、对外发信必须先经人批准，这是护栏，不是可选项。",
+          "已核实案例：智能体建案例目录站卖赞助位，两单共 1100 美元；人只做接账号、发帖引流、审批，收费和改价必须先经人批准。",
           "模式护城河浅：目录站很容易被抄，能守住的只有品牌和传播渠道。"
         ]
       },
       {
         "h": "链条四：组织先变",
         "items": [
-          "扁平化过去败在协调成本转嫁给员工，智能体正好补上协调这一环。",
           "判断一家公司变没变：看还有多少事必须靠人盯着才推进。",
           "管理者的新价值：定目标、判例外、担责任。"
         ]
@@ -964,6 +961,24 @@ const DIGESTS = {
       "vibe-pay",
       "grokbot-monetize",
       "replit-self-driving"
+    ],
+    "layers": [
+      {
+        "name": "组织重构",
+        "note": "管理协调先被替代"
+      },
+      {
+        "name": "自动变现",
+        "note": "人只做审批和引流"
+      },
+      {
+        "name": "收款接入",
+        "note": "个人也能正规收款"
+      },
+      {
+        "name": "模型能力（地基）",
+        "note": "便宜、够用，是上面一切的前提"
+      }
     ]
   }
 };
@@ -1091,6 +1106,27 @@ function renderEntry(id){
   window.scrollTo(0, 0);
 }
 
+function layerDiagram(d){
+  if(!d.layers || !d.layers.length) return "";
+  const W = 720, H = 46, GAP = 10;
+  const widths = [300, 400, 500, 600];
+  let y = 4, parts = "";
+  d.layers.forEach((l, i) => {
+    const w = widths[Math.min(i, widths.length - 1)];
+    const x = (W - w) / 2;
+    const isTop = i === 0, isBase = i === d.layers.length - 1;
+    const fill = isTop ? "var(--accent)" : isBase ? "var(--accent-soft)" : "var(--accent)";
+    const op = isTop || isBase ? "" : ' opacity="' + (0.62 - i * 0.13) + '"';
+    const tc = isTop ? "#fff" : "var(--ink)";
+    const sc = isTop ? "rgba(255,255,255,.85)" : "var(--ink-3)";
+    parts += '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + H + '" rx="8" fill="' + fill + '"' + op + ' stroke="var(--accent-2)" stroke-width="1"/>' +
+      '<text x="360" y="' + (y + 21) + '" text-anchor="middle" font-size="15.5" font-weight="700" fill="' + tc + '">' + esc(l.name) + "</text>" +
+      '<text x="360" y="' + (y + 39) + '" text-anchor="middle" font-size="12" fill="' + sc + '">' + esc(l.note) + "</text>";
+    y += H + GAP;
+  });
+  return '<svg viewBox="0 0 ' + W + " " + (y - GAP + 4) + '" style="width:100%;height:auto;display:block;margin:6px 0 26px" role="img">' + parts + "</svg>";
+}
+
 function renderDigest(cat){
   const d = DIGESTS[cat];
   if(!d){ renderList(); return; }
@@ -1099,6 +1135,7 @@ function renderDigest(cat){
     '<div class="fade"><div class="crumb"><a href="#/" data-cat-link="' + esc(cat) + '">' + esc(cat) + '</a><span class="sep">›</span>干货</div>' +
     '<h1 class="page-title">' + esc(d.title) + "</h1>" +
     '<p class="lead">' + esc(d.lead) + "</p>" +
+    layerDiagram(d) +
     d.sections.map(sec =>
       '<div class="detail-sec"><h3>' + esc(sec.h) + '</h3><ul class="sec-list">' +
       sec.items.map(i => "<li>" + esc(i) + "</li>").join("") + "</ul></div>"
