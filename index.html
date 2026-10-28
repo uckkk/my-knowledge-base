@@ -33,6 +33,7 @@
     text-rendering:optimizeLegibility;
   }
   ::selection{background:#d7e5df}
+  body.no-select{user-select:none;-webkit-user-select:none}
   mark{background:var(--mark);color:inherit;border-radius:2px;padding:0 1px}
   a{color:var(--accent);text-decoration:none}
 
@@ -929,26 +930,34 @@ function render(){
   if(r.type === "entry") renderEntry(r.id); else renderList();
 }
 
-/* 详情页手势：快速左划（或左滑）返回列表 */
-let gestureX = null, gestureY = null, gestureT = 0, gestureFired = false;
-function gestureStart(x, y){ gestureX = x; gestureY = y; gestureT = Date.now(); gestureFired = false; }
-function gestureMove(x, y){
+/* 详情页手势：快速左划返回列表；识别为手势后立即禁止选字，慢速选字不受影响 */
+let gestureX = null, gestureY = null, gestureT = 0, gestureFired = false, gestureArmed = false;
+function gestureStart(x, y){ gestureX = x; gestureY = y; gestureT = Date.now(); gestureFired = false; gestureArmed = false; }
+function gestureEnd(){ gestureX = null; gestureArmed = false; document.body.classList.remove("no-select"); }
+function gestureMove(x, y, ev){
   if(gestureX === null || gestureFired) return;
   if(currentRoute().type !== "entry") return;
-  const sel = window.getSelection ? window.getSelection().toString() : "";
-  if(sel){ gestureX = null; return; }
-  const fast = Date.now() - gestureT < 400;
-  if(fast && gestureX - x > 48 && Math.abs(y - gestureY) < 60){
-    gestureFired = true;
-    location.hash = "#/";
+  if(!gestureArmed){
+    const sel = window.getSelection ? window.getSelection().toString() : "";
+    if(sel){ gestureX = null; return; }
+  }
+  const dx = gestureX - x, dt = Date.now() - gestureT;
+  if(!gestureArmed && dx > 24 && dt < 150 && Math.abs(y - gestureY) < 40){
+    gestureArmed = true;
+    document.body.classList.add("no-select");
+    if(window.getSelection) window.getSelection().removeAllRanges();
+  }
+  if(gestureArmed){
+    if(ev) ev.preventDefault();
+    if(dx > 48){ gestureFired = true; gestureEnd(); location.hash = "#/"; }
   }
 }
 main.addEventListener("mousedown", e => { if(e.button === 0) gestureStart(e.clientX, e.clientY); });
-document.addEventListener("mousemove", e => { if(e.buttons & 1) gestureMove(e.clientX, e.clientY); });
-document.addEventListener("mouseup", () => { gestureX = null; });
+document.addEventListener("mousemove", e => { if(e.buttons & 1) gestureMove(e.clientX, e.clientY, e); }, { passive: false });
+document.addEventListener("mouseup", gestureEnd);
 main.addEventListener("touchstart", e => { const t = e.touches[0]; gestureStart(t.clientX, t.clientY); }, { passive: true });
-main.addEventListener("touchmove", e => { const t = e.touches[0]; gestureMove(t.clientX, t.clientY); }, { passive: true });
-main.addEventListener("touchend", () => { gestureX = null; });
+main.addEventListener("touchmove", e => { const t = e.touches[0]; gestureMove(t.clientX, t.clientY, null); }, { passive: true });
+main.addEventListener("touchend", gestureEnd);
 window.addEventListener("hashchange", render);
 document.getElementById("homeLink").addEventListener("click", () => {
   activeCat = "全部"; keyword = ""; searchInput.value = ""; clearBtn.classList.remove("show");
