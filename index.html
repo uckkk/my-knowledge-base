@@ -42,6 +42,12 @@
   .act-n{font-size:14.5px}
   .act-n span{color:var(--accent);font-weight:700}
   .act-m{font-size:13px;color:var(--ink-3);margin-top:3px}
+  .ai-item{padding:17px 0 15px;border-bottom:1px solid var(--line)}
+  .ai-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+  .ai-t{font-size:17px;font-weight:700;line-height:1.4}
+  .ai-pill{flex:none;background:var(--accent);color:#fff;font-size:13.5px;font-weight:600;border-radius:999px;padding:5px 13px;margin-top:1px;white-space:nowrap}
+  .ai-why{font-size:14px;color:var(--ink-2);margin-top:5px}
+  .ai-meta{font-size:12.5px;color:var(--ink-3);margin-top:5px}
   table.kt{width:100%;border-collapse:collapse;margin-bottom:8px}
   table.kt th{font-size:12.5px;color:var(--ink-3);text-align:left;font-weight:500;padding:4px 10px 7px 0;border-bottom:1.5px solid var(--line)}
   table.kt td{padding:10px 10px 10px 0;border-bottom:1px solid var(--line);vertical-align:top;font-size:15px}
@@ -1295,90 +1301,117 @@ const ACTIONS = [
   {
     "group": "赚钱",
     "title": "把管线经验做成小站，卖赞助位",
-    "why": "你已验证的经验是现成内容，智能体建站维护，你只审批，等于睡后收入。",
-    "cost": "一个周末搭起来，后面每周看一眼",
-    "next": "回我一句你最想分享的管线主题，剩下的我来办",
-    "basedOn": [
-      "grokbot-monetize",
-      "vibe-pay"
+    "why": "经验是现成内容，我建站维护，你只审批。",
+    "cost": "一个周末起步",
+    "next": "回我一个主题",
+    "basis": [
+      {
+        "id": "grokbot-monetize",
+        "t": "GrokBot 案例"
+      },
+      {
+        "id": "vibe-pay",
+        "t": "Vibe Pay 收款"
+      }
     ]
   },
   {
     "group": "赚钱",
     "title": "先把个人收款通道备好",
-    "why": "三步接入、不用写代码；以后任何小产品想收费，当天就能开卖。",
-    "cost": "约 10 分钟，一次性的事",
-    "next": "挑个空闲时间说声「开收款」，我一步步带你点",
-    "basedOn": [
-      "vibe-pay"
+    "why": "以后任何小产品收费，当天能开卖。",
+    "cost": "约 10 分钟",
+    "next": "说声「开收款」",
+    "basis": [
+      {
+        "id": "vibe-pay",
+        "t": "Vibe Pay 收款"
+      }
     ]
   },
   {
     "group": "管线升级",
-    "title": "宣传片和概念预演改用代码做片",
-    "why": "每帧可控、可复查，比生成式视频稳，正合你对管线可控性的要求。",
-    "cost": "先拿一个小项目试一支 30 秒的",
-    "next": "把下支宣传片的需求发我，我先出样片",
-    "basedOn": [
-      "lemo-opuscar"
+    "title": "宣传片改用代码做片",
+    "why": "每帧可控可复查，比生成式视频稳。",
+    "cost": "先试一支 30 秒",
+    "next": "把下支片需求发我",
+    "basis": [
+      {
+        "id": "lemo-opuscar",
+        "t": "Lemo 做片"
+      }
     ]
   },
   {
     "group": "管线升级",
-    "title": "一句话前缀写进团队提需求规范",
-    "why": "全组给智能体下指令的质量一起涨，你少改稿、少返工。",
-    "cost": "一次群发通知，零后续维护",
-    "next": "我先把规范文本写好，你转发到组里即可",
-    "basedOn": [
-      "tishici-yijuhua"
+    "title": "一句话前缀写进团队规范",
+    "why": "全组输出一起涨，你少改稿。",
+    "cost": "一次群发",
+    "next": "转发到组里",
+    "basis": [
+      {
+        "id": "tishici-yijuhua",
+        "t": "一句话前缀"
+      }
     ]
   },
   {
     "group": "管线升级",
-    "title": "竞品和参考素材改成自动抓取",
-    "why": "无头浏览器专为机器读网页而生，调研从你日程里消失，只看结果。",
-    "cost": "我来搭，你只提想盯的名单",
-    "next": "发我 3 个想长期盯的竞品名字",
-    "basedOn": [
-      "wutou-liulanqi"
+    "title": "竞品素材自动抓取",
+    "why": "调研从日程里消失，你只看结果。",
+    "cost": "我来搭",
+    "next": "发我 3 个竞品名",
+    "basis": [
+      {
+        "id": "wutou-liulanqi",
+        "t": "无头浏览器"
+      }
     ]
   },
   {
     "group": "省力",
-    "title": "把分派、跟进、检查、汇报交给智能体",
-    "why": "先被替代的本就是协调工作；你只留定目标、判例外、担责任。",
-    "cost": "先挑一条例行汇报试一周",
-    "next": "告诉我你最烦的一条例行汇报是哪条",
-    "basedOn": [
-      "replit-self-driving"
+    "title": "协调工作交给智能体",
+    "why": "你只留定目标、判例外、担责任。",
+    "cost": "先试一周",
+    "next": "告诉我最烦的一条汇报",
+    "basis": [
+      {
+        "id": "replit-self-driving",
+        "t": "Replit 组织观"
+      }
     ]
   },
   {
     "group": "孩子成长",
-    "title": "这一组先攒内容，不硬给建议",
-    "why": "知识库里暂时没有儿童学习的内容，宁缺毋滥；你转发进来的孩子相关分享，我按「最短路径、最省成本」整理并给建议。",
-    "cost": "你只管随手转发，其余我来",
-    "next": "看到好的育儿或学习内容，照老办法复制链接发我",
-    "basedOn": []
+    "title": "先攒内容，不硬给建议",
+    "why": "库里暂无儿童内容；转发进来，我按最短、最省整理。",
+    "cost": "零",
+    "next": "随手转发给我",
+    "basis": []
   },
   {
     "group": "老人健康",
-    "title": "保湿两条路线转给老人直接照做",
-    "why": "老人皮肤干裂常见：干裂用凡士林锁水，日常用清爽路线，一张图就能讲清。",
-    "cost": "一次转发，零解释成本",
-    "next": "说声「发保湿图」，我把层级图整理成转发版",
-    "basedOn": [
-      "baoshi-fen-changjing"
+    "title": "保湿路线转给老人",
+    "why": "干裂急救、日常清爽，一图讲清。",
+    "cost": "一次转发",
+    "next": "说声「发保湿图」",
+    "basis": [
+      {
+        "id": "baoshi-fen-changjing",
+        "t": "保湿条目"
+      }
     ]
   },
   {
     "group": "老人健康",
-    "title": "提醒老人别盲目跟风减肥药",
-    "why": "访谈提到这类药会掉肌肉、易反弹（个人观点，非医疗建议）；老人减重先问医生。",
-    "cost": "一句话提醒的事",
-    "next": "需要时我把要点整理成一句话版本发你转述",
-    "basedOn": [
-      "sunyuchen-caifu"
+    "title": "提醒老人别跟风减肥药",
+    "why": "掉肌肉易反弹（个人观点，非医疗建议）。",
+    "cost": "一句话",
+    "next": "需要时说一声",
+    "basis": [
+      {
+        "id": "sunyuchen-caifu",
+        "t": "财富自由访谈"
+      }
     ]
   }
 ];
@@ -1400,54 +1433,54 @@ const AUTOCLOSE = {
   "赚钱": [
     {
       "t": "经验小站全托管",
-      "how": "我选题建站、持续更新、上赞助页，报价整理好等你点头；你只批主题、接一次收款。先说清：案例里的 1100 美元是别人的数字，我不承诺收益，只保证站一直在长。",
+      "how": "我建站、更新、上赞助页，报价备好等你点头。不承诺收益，只保证站一直在长。",
       "need": "批准一个主题"
     },
     {
       "t": "数字小产品代工",
-      "how": "把你的管线模板、提示词包做成能卖的小产品：我写内容、做产品页、管后续更新。",
+      "how": "模板和提示词包我做成产品：写内容、做页面、管更新。",
       "need": "你定个价"
     }
   ],
   "管线升级": [
     {
       "t": "样片直达",
-      "how": "你丢需求，我用代码做片出样片，自己查完光影音色再交付，你只审。",
-      "need": "给一个真实小需求"
+      "how": "我出样片，自查光影音色后交付，你只审。",
+      "need": "给一个小需求"
     },
     {
       "t": "竞品雷达",
-      "how": "名单给我，我定期抓取整理、更新进干货，有变化才提醒你。",
-      "need": "给 3 个竞品名字"
+      "how": "我定期抓取整理，有变化才提醒你。",
+      "need": "给 3 个名字"
     },
     {
       "t": "团队规范包",
-      "how": "规范正文、示例、答疑稿我全写好，你只负责转发到组里。",
+      "how": "正文、示例、答疑稿我全写好，你只转发。",
       "need": "说声开始"
     }
   ],
   "省力": [
     {
       "t": "收件闭环（已在跑）",
-      "how": "你复制链接，我整理、入库、更新干货和行动页，全程不用你管。",
-      "need": "无，继续用就行"
+      "how": "你发链接，我整理、入库、更新全站。",
+      "need": "不用启动"
     },
     {
       "t": "汇报代笔",
-      "how": "原始材料丢给我，我按简练规范出稿，你只改个别字。",
-      "need": "丢一份最近的汇报材料"
+      "how": "材料丢我，我按简练规范出稿，你改个别字。",
+      "need": "丢一份材料"
     }
   ],
   "家庭：孩子与老人": [
     {
       "t": "孩子学习路径筛选",
-      "how": "你转发进来的内容，我按最短、最省成本筛成路径清单，攒够一条推一条，不让你整页找。",
+      "how": "按最短、最省筛成清单，攒够一条推一条。",
       "need": "随手转发"
     },
     {
       "t": "老人健康转发包",
-      "how": "健康要点我做成大字图，你一键转发；体检报告发我，我整理成复查清单。",
-      "need": "发一份报告，或说声做图"
+      "how": "要点做成大字图；体检报告发我，整理成复查清单。",
+      "need": "发一份报告"
     }
   ]
 };
@@ -1631,20 +1664,21 @@ function renderActions(){
   ACTION_GROUPS.forEach(g => {
     const acts = ACTIONS.filter(a => g.from.includes(a.group));
     html += '<div class="detail-sec" data-sec="' + esc(g.name) + '"><h3>' + esc(g.name) + "</h3>" +
-      '<table class="kt"><tr><th>事项</th><th>你只需</th><th>成本</th></tr>' +
       acts.map(a =>
-        '<tr><td><span class="tt">' + esc(a.title) + '</span><div class="tw">' + esc(a.why) + "</div></td>" +
-        '<td class="nx">' + esc(a.next) + "</td>" +
-        '<td class="ct">' + esc(a.cost) +
-        (a.basedOn.length ? '<div class="bs">依据：' + a.basedOn.map(id => { const en = ENTRIES.find(x => x.id === id); return en ? '<a href="#/e/' + esc(id) + '">' + esc(en.title) + "</a>" : ""; }).join(" · ") + "</div>" : "") +
-        "</td></tr>"
-      ).join("") + "</table>" +
+        '<div class="ai-item"><div class="ai-top"><div class="ai-t">' + esc(a.title) + '</div>' +
+        '<span class="ai-pill">你只需：' + esc(a.next) + "</span></div>" +
+        '<p class="ai-why">' + esc(a.why) + "</p>" +
+        '<p class="ai-meta">成本：' + esc(a.cost) +
+        (a.basis.length ? ' · 依据：' + a.basis.map(b => '<a href="#/e/' + esc(b.id) + '">' + esc(b.t) + "</a>").join("、") : "") +
+        "</p></div>"
+      ).join("") +
       ((AUTOCLOSE[g.name] || []).length ?
         '<div class="close-h">我能自主闭环</div>' +
-        '<table class="kt"><tr><th>事项</th><th>怎么做</th><th>启动只要</th></tr>' +
         AUTOCLOSE[g.name].map(c =>
-          '<tr><td class="tt">' + esc(c.t) + '</td><td class="ct">' + esc(c.how) + '</td><td class="nx">' + esc(c.need) + "</td></tr>"
-        ).join("") + "</table>" : "") +
+          '<div class="ai-item"><div class="ai-top"><div class="ai-t">' + esc(c.t) + '</div>' +
+          '<span class="ai-pill">启动只要：' + esc(c.need) + "</span></div>" +
+          '<p class="ai-why">' + esc(c.how) + "</p></div>"
+        ).join("") : "") +
       "</div>";
   });
   html += "</div>";
