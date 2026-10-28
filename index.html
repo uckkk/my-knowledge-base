@@ -1062,8 +1062,8 @@ function renderList(){
     });
   } else if(activeCat !== "全部" && DIGESTS[activeCat]){
     const d = DIGESTS[activeCat];
-    html += '<div class="digest-card" data-digest="' + esc(activeCat) + '"><div class="digest-badge">本类干货 · 先看精华</div>' +
-      "<h2>" + esc(d.title) + "</h2><p>" + esc(d.lead) + '</p><span class="go">看干货 →</span></div>';
+    html += '<div class="digest-card" data-digest="' + esc(activeCat) + '">' +
+      "<h2>" + esc(d.title) + "</h2><p>" + esc(d.lead) + '</p></div>';
   }
   if(list.length === 0){
     html += '<div class="empty">没有找到相关内容</div>';
