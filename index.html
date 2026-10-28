@@ -42,6 +42,12 @@
   .act-n{font-size:14.5px}
   .act-n span{color:var(--accent);font-weight:700}
   .act-m{font-size:13px;color:var(--ink-3);margin-top:3px}
+  .close-h{font-size:13px;letter-spacing:.14em;color:var(--accent);font-weight:700;margin:22px 0 10px}
+  .cls{border-left:3px solid var(--accent);padding:1px 0 1px 14px;margin-bottom:16px}
+  .cls-t{font-weight:700;font-size:15.5px;margin-bottom:2px}
+  .cls-w{color:var(--ink-2);font-size:14.5px;margin-bottom:3px}
+  .cls-n{font-size:14px}
+  .cls-n span{color:var(--accent);font-weight:700}
   mark{background:var(--mark);color:inherit;border-radius:2px;padding:0 1px}
   a{color:var(--accent);text-decoration:none}
 
@@ -1380,6 +1386,62 @@ const ACTION_GROUPS = [
   { name: "家庭：孩子与老人", from: ["孩子成长", "老人健康"] }
 ];
 
+const AUTOCLOSE = {
+  "赚钱": [
+    {
+      "t": "经验小站全托管",
+      "how": "我选题建站、持续更新、上赞助页，报价整理好等你点头；你只批主题、接一次收款。先说清：案例里的 1100 美元是别人的数字，我不承诺收益，只保证站一直在长。",
+      "need": "批准一个主题"
+    },
+    {
+      "t": "数字小产品代工",
+      "how": "把你的管线模板、提示词包做成能卖的小产品：我写内容、做产品页、管后续更新。",
+      "need": "你定个价"
+    }
+  ],
+  "管线升级": [
+    {
+      "t": "样片直达",
+      "how": "你丢需求，我用代码做片出样片，自己查完光影音色再交付，你只审。",
+      "need": "给一个真实小需求"
+    },
+    {
+      "t": "竞品雷达",
+      "how": "名单给我，我定期抓取整理、更新进干货，有变化才提醒你。",
+      "need": "给 3 个竞品名字"
+    },
+    {
+      "t": "团队规范包",
+      "how": "规范正文、示例、答疑稿我全写好，你只负责转发到组里。",
+      "need": "说声开始"
+    }
+  ],
+  "省力": [
+    {
+      "t": "收件闭环（已在跑）",
+      "how": "你复制链接，我整理、入库、更新干货和行动页，全程不用你管。",
+      "need": "无，继续用就行"
+    },
+    {
+      "t": "汇报代笔",
+      "how": "原始材料丢给我，我按简练规范出稿，你只改个别字。",
+      "need": "丢一份最近的汇报材料"
+    }
+  ],
+  "家庭：孩子与老人": [
+    {
+      "t": "孩子学习路径筛选",
+      "how": "你转发进来的内容，我按最短、最省成本筛成路径清单，攒够一条推一条，不让你整页找。",
+      "need": "随手转发"
+    },
+    {
+      "t": "老人健康转发包",
+      "how": "健康要点我做成大字图，你一键转发；体检报告发我，我整理成复查清单。",
+      "need": "发一份报告，或说声做图"
+    }
+  ]
+};
+
 const navTree = document.getElementById("navTree");
 const searchInput = document.getElementById("search");
 const clearBtn = document.getElementById("clearBtn");
@@ -1565,7 +1627,15 @@ function renderActions(){
         '<p class="act-m">成本：' + esc(a.cost) +
         (a.basedOn.length ? ' · 依据：' + a.basedOn.map(id => { const en = ENTRIES.find(x => x.id === id); return en ? '<a href="#/e/' + esc(id) + '">' + esc(en.title) + "</a>" : ""; }).join(" · ") : "") +
         "</p></div>"
-      ).join("") + "</div>";
+      ).join("") +
+      ((AUTOCLOSE[g.name] || []).length ?
+        '<div class="close-h">我能自主闭环</div>' +
+        AUTOCLOSE[g.name].map(c =>
+          '<div class="cls"><div class="cls-t">' + esc(c.t) + "</div>" +
+          '<p class="cls-w">' + esc(c.how) + "</p>" +
+          '<p class="cls-n"><span>启动只要：</span>' + esc(c.need) + "</p></div>"
+        ).join("") : "") +
+      "</div>";
   });
   html += "</div>";
   main.innerHTML = html;
