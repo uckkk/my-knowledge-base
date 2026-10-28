@@ -464,7 +464,7 @@ function renderList(){
   } else {
     html += '<div class="entry-list">' + list.map(e =>
       '<article class="entry-row" data-open="' + esc(e.id) + '">' +
-        '<div class="date">' + fmtDate(e.date) + " · " + esc(e.category) + " · " + esc(e.subtopic) + "</div>" +
+        '<div class="date">' + fmtDate(e.date) + "</div>" +
         "<h2>" + hl(e.title) + "</h2>" +
         '<p class="core">' + hl(e.core) + "</p>" +
         '<div class="tags">' + e.tags.map(t => '<span class="tag">' + hl(t) + "</span>").join("") + "</div>" +
@@ -486,7 +486,7 @@ function renderEntry(id){
   main.innerHTML =
     '<div class="fade"><div class="crumb"><a href="#/" data-cat-link="' + esc(e.category) + '">' + esc(e.category) + '</a><span class="sep">›</span>' + esc(e.subtopic) + "</div>" +
     '<h1 class="page-title">' + hl(e.title) + "</h1>" +
-    '<div class="article-meta"><span>' + fmtDate(e.date) + '</span><span class="dot">·</span><span>' + esc(e.category) + " / " + esc(e.subtopic) + "</span>" +
+    '<div class="article-meta"><span>' + fmtDate(e.date) + "</span>" +
     e.tags.map(t => '<span class="tag">' + hl(t) + "</span>").join("") + "</div>" +
     '<p class="lead">' + hl(e.core) + "</p>" +
     '<ul class="points">' + e.points.slice(0, 3).map(p => "<li>" + hl(p) + "</li>").join("") + "</ul>" +
