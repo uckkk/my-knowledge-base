@@ -42,6 +42,16 @@
   .act-n{font-size:14.5px}
   .act-n span{color:var(--accent);font-weight:700}
   .act-m{font-size:13px;color:var(--ink-3);margin-top:3px}
+  table.kt{width:100%;border-collapse:collapse;margin-bottom:8px}
+  table.kt th{font-size:12.5px;color:var(--ink-3);text-align:left;font-weight:500;padding:4px 10px 7px 0;border-bottom:1.5px solid var(--line)}
+  table.kt td{padding:10px 10px 10px 0;border-bottom:1px solid var(--line);vertical-align:top;font-size:15px}
+  table.kt td:last-child, table.kt th:last-child{padding-right:0}
+  table.kt .tt{font-weight:700}
+  table.kt .tw{color:var(--ink-2);font-size:13.5px;margin-top:2px;line-height:1.55}
+  table.kt .nx{color:var(--accent);font-weight:600;white-space:normal}
+  table.kt .ct{color:var(--ink-2);white-space:normal}
+  table.kt .bs{font-size:12.5px;color:var(--ink-3);margin-top:3px}
+  table.kt .kn{color:var(--ink-3);font-size:13px;width:28px;padding-top:12px}
   .close-h{font-size:13px;letter-spacing:.14em;color:var(--accent);font-weight:700;margin:22px 0 10px}
   .cls{border-left:3px solid var(--accent);padding:1px 0 1px 14px;margin-bottom:16px}
   .cls-t{font-weight:700;font-size:15.5px;margin-bottom:2px}
@@ -1600,8 +1610,8 @@ function renderDigest(cat){
     '<p class="lead">' + esc(d.lead) + "</p>" +
     layerDiagram(d) +
     d.sections.map(sec =>
-      '<div class="detail-sec" data-sec="' + esc(sec.h) + '"><h3>' + esc(sec.h) + '</h3><ul class="sec-list">' +
-      sec.items.map(i => "<li>" + esc(i) + "</li>").join("") + "</ul></div>"
+      '<div class="detail-sec" data-sec="' + esc(sec.h) + '"><h3>' + esc(sec.h) + '</h3><table class="kt">' +
+      sec.items.map((it, ix) => '<tr><td class="kn">' + (ix + 1) + '</td><td>' + esc(it) + "</td></tr>").join("") + "</table></div>"
     ).join("") +
     '<div class="based-on"><div class="src-label">依据条目</div>' +
     d.basedOn.map(id => { const e = ENTRIES.find(x => x.id === id); return e ? '<a href="#/e/' + esc(id) + '">' + esc(e.title) + "</a>" : ""; }).join("") + "</div>" +
@@ -1619,22 +1629,22 @@ function renderActions(){
     '<p class="lead">只留对你加分的事。先看图：上面是结果，下面是底座；点任意一层，下面只留那一层的事。</p>' +
     layerDiagram({ layers: ACTION_LAYERS });
   ACTION_GROUPS.forEach(g => {
+    const acts = ACTIONS.filter(a => g.from.includes(a.group));
     html += '<div class="detail-sec" data-sec="' + esc(g.name) + '"><h3>' + esc(g.name) + "</h3>" +
-      ACTIONS.filter(a => g.from.includes(a.group)).map(a =>
-        '<div class="act"><div class="act-t">' + esc(a.title) + "</div>" +
-        '<p class="act-w">' + esc(a.why) + "</p>" +
-        '<p class="act-n"><span>最小下一步：</span>' + esc(a.next) + "</p>" +
-        '<p class="act-m">成本：' + esc(a.cost) +
-        (a.basedOn.length ? ' · 依据：' + a.basedOn.map(id => { const en = ENTRIES.find(x => x.id === id); return en ? '<a href="#/e/' + esc(id) + '">' + esc(en.title) + "</a>" : ""; }).join(" · ") : "") +
-        "</p></div>"
-      ).join("") +
+      '<table class="kt"><tr><th>事项</th><th>你只需</th><th>成本</th></tr>' +
+      acts.map(a =>
+        '<tr><td><span class="tt">' + esc(a.title) + '</span><div class="tw">' + esc(a.why) + "</div></td>" +
+        '<td class="nx">' + esc(a.next) + "</td>" +
+        '<td class="ct">' + esc(a.cost) +
+        (a.basedOn.length ? '<div class="bs">依据：' + a.basedOn.map(id => { const en = ENTRIES.find(x => x.id === id); return en ? '<a href="#/e/' + esc(id) + '">' + esc(en.title) + "</a>" : ""; }).join(" · ") + "</div>" : "") +
+        "</td></tr>"
+      ).join("") + "</table>" +
       ((AUTOCLOSE[g.name] || []).length ?
         '<div class="close-h">我能自主闭环</div>' +
+        '<table class="kt"><tr><th>事项</th><th>怎么做</th><th>启动只要</th></tr>' +
         AUTOCLOSE[g.name].map(c =>
-          '<div class="cls"><div class="cls-t">' + esc(c.t) + "</div>" +
-          '<p class="cls-w">' + esc(c.how) + "</p>" +
-          '<p class="cls-n"><span>启动只要：</span>' + esc(c.need) + "</p></div>"
-        ).join("") : "") +
+          '<tr><td class="tt">' + esc(c.t) + '</td><td class="ct">' + esc(c.how) + '</td><td class="nx">' + esc(c.need) + "</td></tr>"
+        ).join("") + "</table>" : "") +
       "</div>";
   });
   html += "</div>";
