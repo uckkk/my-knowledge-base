@@ -1269,6 +1269,98 @@ const DIGESTS = {
   }
 };
 
+const ACTIONS = [
+  {
+    "group": "赚钱",
+    "title": "把管线经验做成小站，卖赞助位",
+    "why": "你已验证的经验是现成内容，智能体建站维护，你只审批，等于睡后收入。",
+    "cost": "一个周末搭起来，后面每周看一眼",
+    "next": "回我一句你最想分享的管线主题，剩下的我来办",
+    "basedOn": [
+      "grokbot-monetize",
+      "vibe-pay"
+    ]
+  },
+  {
+    "group": "赚钱",
+    "title": "先把个人收款通道备好",
+    "why": "三步接入、不用写代码；以后任何小产品想收费，当天就能开卖。",
+    "cost": "约 10 分钟，一次性的事",
+    "next": "挑个空闲时间说声「开收款」，我一步步带你点",
+    "basedOn": [
+      "vibe-pay"
+    ]
+  },
+  {
+    "group": "管线升级",
+    "title": "宣传片和概念预演改用代码做片",
+    "why": "每帧可控、可复查，比生成式视频稳，正合你对管线可控性的要求。",
+    "cost": "先拿一个小项目试一支 30 秒的",
+    "next": "把下支宣传片的需求发我，我先出样片",
+    "basedOn": [
+      "lemo-opuscar"
+    ]
+  },
+  {
+    "group": "管线升级",
+    "title": "一句话前缀写进团队提需求规范",
+    "why": "全组给智能体下指令的质量一起涨，你少改稿、少返工。",
+    "cost": "一次群发通知，零后续维护",
+    "next": "我先把规范文本写好，你转发到组里即可",
+    "basedOn": [
+      "tishici-yijuhua"
+    ]
+  },
+  {
+    "group": "管线升级",
+    "title": "竞品和参考素材改成自动抓取",
+    "why": "无头浏览器专为机器读网页而生，调研从你日程里消失，只看结果。",
+    "cost": "我来搭，你只提想盯的名单",
+    "next": "发我 3 个想长期盯的竞品名字",
+    "basedOn": [
+      "wutou-liulanqi"
+    ]
+  },
+  {
+    "group": "省力",
+    "title": "把分派、跟进、检查、汇报交给智能体",
+    "why": "先被替代的本就是协调工作；你只留定目标、判例外、担责任。",
+    "cost": "先挑一条例行汇报试一周",
+    "next": "告诉我你最烦的一条例行汇报是哪条",
+    "basedOn": [
+      "replit-self-driving"
+    ]
+  },
+  {
+    "group": "孩子成长",
+    "title": "这一组先攒内容，不硬给建议",
+    "why": "知识库里暂时没有儿童学习的内容，宁缺毋滥；你转发进来的孩子相关分享，我按「最短路径、最省成本」整理并给建议。",
+    "cost": "你只管随手转发，其余我来",
+    "next": "看到好的育儿或学习内容，照老办法复制链接发我",
+    "basedOn": []
+  },
+  {
+    "group": "老人健康",
+    "title": "保湿两条路线转给老人直接照做",
+    "why": "老人皮肤干裂常见：干裂用凡士林锁水，日常用清爽路线，一张图就能讲清。",
+    "cost": "一次转发，零解释成本",
+    "next": "说声「发保湿图」，我把层级图整理成转发版",
+    "basedOn": [
+      "baoshi-fen-changjing"
+    ]
+  },
+  {
+    "group": "老人健康",
+    "title": "提醒老人别盲目跟风减肥药",
+    "why": "访谈提到这类药会掉肌肉、易反弹（个人观点，非医疗建议）；老人减重先问医生。",
+    "cost": "一句话提醒的事",
+    "next": "需要时我把要点整理成一句话版本发你转述",
+    "basedOn": [
+      "sunyuchen-caifu"
+    ]
+  }
+];
+
 const navTree = document.getElementById("navTree");
 const searchInput = document.getElementById("search");
 const clearBtn = document.getElementById("clearBtn");
@@ -1301,17 +1393,20 @@ function currentRoute(){
   const h = location.hash.replace(/^#\/?/, "");
   if(h.startsWith("e/")) return { type:"entry", id:h.slice(2) };
   if(h.startsWith("d/")) return { type:"digest", cat:decodeURIComponent(h.slice(2)) };
+  if(h === "a") return { type:"actions" };
   return { type:"list" };
 }
 
 function renderNav(){
   const cats = categories();
-  let html = '<button class="nav-all' + (activeCat === "全部" ? " active" : "") + '" data-all="1">全部条目</button>';
+  let html = '<button class="nav-all" data-actions="1" style="font-weight:700;color:var(--accent)">我的行动页</button>' +
+    '<button class="nav-all' + (activeCat === "全部" ? " active" : "") + '" data-all="1">全部条目</button>';
   cats.forEach(c => {
     html += '<div class="nav-cat">' +
       '<button class="nav-cat-name' + (activeCat === c ? " active" : "") + '" data-cat="' + esc(c) + '">' + esc(c) + "</button></div>";
   });
   navTree.innerHTML = html;
+  navTree.querySelector("[data-actions]").addEventListener("click", () => { location.hash = "#/a"; render(); });
   navTree.querySelector("[data-all]").addEventListener("click", () => {
     activeCat = "全部"; keyword = ""; searchInput.value = ""; clearBtn.classList.remove("show");
     location.hash = "#/"; render();
@@ -1437,10 +1532,33 @@ function renderDigest(cat){
   window.scrollTo(0, 0);
 }
 
+function renderActions(){
+  const groups = [...new Set(ACTIONS.map(a => a.group))];
+  let html = '<div class="fade"><h1 class="page-title">我的行动页</h1>' +
+    '<p class="lead">只留对你加分的事：赚钱、管线升级、省力、孩子、老人。每条都给了最小下一步，你动一下，剩下的我来。</p>';
+  groups.forEach(g => {
+    html += '<div class="detail-sec"><h3>' + esc(g) + "</h3>" +
+      ACTIONS.filter(a => a.group === g).map(a =>
+        '<div style="border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-bottom:12px;background:#fff">' +
+        '<div style="font-weight:700;font-size:16.5px;margin-bottom:4px">' + esc(a.title) + "</div>" +
+        '<p style="color:var(--ink-2);font-size:14.5px;margin-bottom:6px">' + esc(a.why) + "</p>" +
+        '<p style="font-size:13.5px;color:var(--ink-3);margin-bottom:6px">成本：' + esc(a.cost) + "</p>" +
+        '<p style="font-size:14.5px"><span style="color:var(--accent);font-weight:700">最小下一步：</span>' + esc(a.next) + "</p>" +
+        (a.basedOn.length ? '<p style="font-size:13px;margin-top:6px">依据：' + a.basedOn.map(id => { const e = ENTRIES.find(x => x.id === id); return e ? '<a href="#/e/' + esc(id) + '">' + esc(e.title) + "</a>" : ""; }).join(" · ") + "</p>" : "") +
+        "</div>"
+      ).join("") + "</div>";
+  });
+  html += "</div>";
+  main.innerHTML = html;
+  renderNav(null);
+  window.scrollTo(0, 0);
+}
+
 function render(){
   const r = currentRoute();
   if(r.type === "entry") renderEntry(r.id);
   else if(r.type === "digest") renderDigest(r.cat);
+  else if(r.type === "actions") renderActions();
   else renderList();
 }
 
