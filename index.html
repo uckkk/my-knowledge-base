@@ -271,6 +271,72 @@
 const ENTRIES = [
  {
   "category": "开源项目",
+  "core": "社区把 DeepSeek-V4-Pro 的推理能力蒸馏进 9B 小模型，再用 ARA 技术去掉拒绝限制，量化后 5.6GB 就能在普通电脑上跑。",
+  "date": "2026-11-08",
+  "detail": [
+   {
+    "h": "模型来历",
+    "items": [
+     "基底是 Qwen3.5 9B，教师模型为 DeepSeek-V4-Pro（Max Effect 模式），约 25 万条数学与 STEM 样本做监督微调，再经轻量强化学习打磨",
+     "去限制版由 xtools-at 用 Heretic 2.0 以 ARA（任意秩消融）技术制作，源头是 Jackrong 的蒸馏版",
+     "训练数据不含代码，作者称编程与工具调用仍有小幅提升"
+    ]
+   },
+   {
+    "h": "实测数据（模型卡自报）",
+    "items": [
+     "GSM8K 94.50%（4 次平均，NVFP4，vLLM 评测）",
+     "MMLU-Pro 数学、物理、化学三科平均 90.53%，每科抽 500 题、共 1500 题",
+     "拒绝率 3% 是原帖在 100 条复杂提示上的测试，原版拒 100 条；去限制版暂无独立能力测试"
+    ]
+   },
+   {
+    "h": "本地部署",
+    "items": [
+     "GGUF 量化版由 mradermacher 发布，Q4_K_M 约 5.6GB，另有 2.8GB 至 9.5GB 多档可选",
+     "支持 vLLM（NVFP4）与 llama.cpp（MTP、Q8_0）部署，普通电脑与核显设备可跑",
+     "遵循 Apache 2.0 协议完全开源"
+    ]
+   },
+   {
+    "h": "注意",
+    "items": [
+     "这是社区第三方去限制版本，非 DeepSeek 或 Qwen 官方发布",
+     "Hugging Face 已开始下架部分去限制模型，仓库存在被封可能",
+     "原帖称下载量过大导致平台一度瘫痪，此说法未核实"
+    ]
+   }
+  ],
+  "id": "deepseek-v4-pro-qwen35-9b-uncensored",
+  "points": [
+   "Qwen3.5 9B 为底，约 25 万条数学与 STEM 数据蒸馏自 DeepSeek-V4-Pro",
+   "ARA 技术去掉拒绝方向，原帖测试 100 条复杂提示只拒 3 条",
+   "Q4_K_M 量化版约 5.6GB，普通电脑与核显设备可跑，Apache 2.0 开源"
+  ],
+  "sources": [
+   {
+    "label": "模型卡：xtools-at 去限制版",
+    "url": "https://huggingface.co/xtools-at/DeepSeek-V4-Pro-Qwen3.5-9B-UNCENSORED-heretic"
+   },
+   {
+    "label": "GGUF 量化版：mradermacher",
+    "url": "https://huggingface.co/mradermacher/DeepSeek-V4-Pro-Qwen3.5-9B-UNCENSORED-heretic-i1-GGUF"
+   },
+   {
+    "label": "用户分享的视频号视频",
+    "url": "https://weixin.qq.com/sph/AltLKKEq9J"
+   }
+  ],
+  "subtopic": "本地大模型",
+  "tags": [
+   "DeepSeek",
+   "Qwen",
+   "本地部署"
+  ],
+  "title": "DeepSeek-V4-Pro 蒸馏 Qwen3.5 9B 去限制版：复杂提示只拒 3%，5.6GB 本地跑"
+ },
+ {
+  "category": "开源项目",
   "core": "开源里少见的大参数对话语音模型：表现力强、能克隆声线，但只支持英文，本地跑要 24GB 显存。",
   "date": "2026-11-08",
   "detail": [
