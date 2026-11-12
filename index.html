@@ -271,6 +271,69 @@
 const ENTRIES = [
  {
   "category": "AI与商业化",
+  "core": "Google 11 月 10 日在 AI Edge Gallery 上线端侧语音识别与朗读：不用联网，手机本地就能把说话转成文字、把文字读出来，配 Gemini Nano、Gemma 4 这类端侧小模型一起用。",
+  "date": "2026-11-12",
+  "detail": [
+   {
+    "h": "发布了什么",
+    "items": [
+     "Google 开发者博客 2026 年 11 月 10 日发布：AI Edge Gallery 新增端侧自动语音识别与文本转语音",
+     "语音是手机、可穿戴设备上最自然的 AI 交互方式，轻量语音模型已能在本地跑准、多语言、有表现力",
+     "全程离线、延迟低、内存占用小，不用联网也能用"
+    ]
+   },
+   {
+    "h": "安卓路线：ML Kit",
+    "items": [
+     "语音识别覆盖 100 多种语言，10 倍实时速度，FLEURS 基准词错率 8.0%–9.0%",
+     "朗读用紧凑扩散模型，约 100 毫秒开口，24kHz 音频、最高 50 倍实时合成，8 种表现力声音、21 种语言环境",
+     "模型由系统 AICore 管理，集成进系统，不占应用安装包体积"
+    ]
+   },
+   {
+    "h": "跨平台路线：MediaPipe 加 LiteRT",
+    "items": [
+     "开源权重模型包：Parakeet-TDT 0.6B 做识别，PocketTTS 100M、Kokoro-82M、Phonon 31M 做朗读",
+     "跑在 iOS、macOS、Windows、Linux 与网页上，与端侧小模型并行不抢算力",
+     "社区还提供 Whisper、Qwen3-ASR 等开源权重模型"
+    ]
+   },
+   {
+    "h": "两个演示",
+    "items": [
+     "XR 语言老师：手机对着路牌、菜单说话提问，本地出讲解、按当地发音读出来，全程不用联网",
+     "AI 聊天：流式听写输入、朗读回复带句子实时高亮，可自动播放",
+     "功能即日起可用，AI Edge Gallery 应用支持安卓与 iOS，参考实现已开源"
+    ]
+   }
+  ],
+  "id": "google-on-device-speech-ai-edge-gallery-2026-11-10",
+  "points": [
+   "安卓走 ML Kit：100 多种语言、10 倍实时转写，朗读约 100 毫秒开口",
+   "跨平台走 MediaPipe 加 LiteRT：开源语音模型，iOS、Windows、网页都能跑",
+   "两个演示：离线语言老师、带朗读的 AI 聊天，参考实现已开源"
+  ],
+  "sources": [
+   {
+    "label": "Google Developers Blog：On-Device Speech Recognition and Text-to-Speech in Google AI Edge Gallery（2026-11-10）",
+    "url": "https://developers.googleblog.com/on-device-speech-recognition-and-text-to-speech-in-google-ai-edge-gallery/"
+   },
+   {
+    "label": "Google for Developers：ML Kit GenAI APIs 概览",
+    "url": "https://developers.google.com/ml-kit/genai"
+   }
+  ],
+  "subtopic": "端侧 AI",
+  "tags": [
+   "Google",
+   "端侧语音",
+   "ML Kit",
+   "AI Edge Gallery"
+  ],
+  "title": "Google 端侧语音来了：手机断网也能听会说，识别朗读全在本地"
+ },
+ {
+  "category": "AI与商业化",
   "core": "Anthropic《支持地区政策》新版 11 月 12 日生效：人在中国不能用 Claude，注册地或总部在中国不行，中国人控股或控制的实体也不行，连云平台调用都算在内。",
   "date": "2026-11-11",
   "detail": [
