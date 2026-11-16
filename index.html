@@ -113,7 +113,7 @@
     margin-bottom:12px;font-weight:500;
   }
   .nav-all{
-    display:block;width:100%;text-align:left;
+    display:flex;justify-content:space-between;align-items:center;gap:8px;width:100%;text-align:left;
     font:inherit;font-size:15px;font-weight:500;color:var(--ink-2);
     background:none;border:none;border-radius:6px;
     padding:5px 8px;cursor:pointer;margin-bottom:10px;
@@ -235,6 +235,30 @@
   .fade{animation:fade .35s ease both}
   @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 
+  .nav-count{margin-left:auto;font-size:12px;color:var(--ink-3);font-weight:500;padding-left:8px;white-space:nowrap}
+  .home-stat{font-size:13.5px;color:var(--ink-3);letter-spacing:.04em;margin-bottom:18px}
+  .week-card{
+    background:#fff;border:1px solid var(--line);border-left:3px solid var(--accent);
+    border-radius:10px;padding:18px 20px 16px;margin-bottom:26px;cursor:pointer;
+  }
+  .week-card:hover{border-color:var(--accent-2)}
+  .week-card h2{font-family:var(--serif);font-size:21px;font-weight:900;line-height:1.4;margin-bottom:6px}
+  .week-card p{color:var(--ink-2);font-size:15px}
+  .week-card .go{color:var(--accent);font-size:14px;margin-top:8px;display:inline-block}
+  .prev-next{display:flex;justify-content:space-between;gap:20px;margin-top:40px;border-top:1px solid var(--line);padding-top:20px}
+  .prev-next a{font-size:15px;font-weight:500;line-height:1.5;max-width:46%}
+  .prev-next a span{display:block;font-size:12.5px;color:var(--ink-3);font-weight:400;margin-bottom:3px}
+  .prev-next a:last-child{text-align:right}
+  #toTop{
+    position:fixed;right:22px;bottom:22px;z-index:10;
+    width:42px;height:42px;border-radius:50%;border:1px solid var(--line);
+    background:#fff;color:var(--ink-2);font-size:18px;line-height:1;cursor:pointer;
+    box-shadow:0 2px 10px rgba(0,0,0,.08);
+    opacity:0;pointer-events:none;transition:opacity .2s ease;
+  }
+  #toTop.show{opacity:1;pointer-events:auto}
+  #toTop:hover{color:var(--accent);border-color:var(--accent-2)}
+
   @media(max-width:900px){
     .page{flex-direction:column;gap:0;padding:0 20px}
     aside{width:100%;height:auto;position:static;padding:26px 0 6px;overflow:visible}
@@ -266,9 +290,314 @@
   </aside>
   <main id="main"></main>
 </div>
+<button id="toTop" type="button" aria-label="回到顶部">↑</button>
 
 <script>
 const ENTRIES = [
+ {
+  "category": "技术周报",
+  "core": "连续改 100 轮不走样，还能直接生成带透明通道的素材，不用抠图。",
+  "date": "2026-11-16",
+  "detail": [
+   {
+    "h": "是什么",
+    "items": [
+     "字节跳动 Seedream 5.5 图像模型，多轮编辑可连续 100 轮，未编辑区域像素级保留。",
+     "原生 RGBA 输出，直接生成带透明通道的素材，含半透明，不用再抠图。"
+    ]
+   },
+   {
+    "h": "对管线有什么用",
+    "items": [
+     "改图不用反复返工重画，连续迭代成本下来了。",
+     "透明素材（图标、贴图、特效元素）直出，省掉抠图一步。",
+     "已接入 ComfyUI 合作节点（2026-11-11），工作流里直接调。"
+    ]
+   }
+  ],
+  "id": "weekly-seedream-55",
+  "points": [
+   "多轮编辑像素级保留未改区域",
+   "原生 RGBA，含半透明",
+   "已上 Comfy 合作节点"
+  ],
+  "sources": [
+   {
+    "label": "Seed 官方博客",
+    "url": "https://seed.bytedance.com/en/blog/more-realistic-images-more-stable-editing-across-100-rounds-introducing-seedream-5-5/"
+   },
+   {
+    "label": "Comfy 博客",
+    "url": "https://blog.comfy.org/p/seedream-55-is-now-available-via"
+   }
+  ],
+  "subtopic": "AI美术",
+  "tags": [
+   "生图",
+   "透明素材",
+   "ComfyUI"
+  ],
+  "title": "Seedream 5.5：连续编辑 100 轮，直接出透明素材",
+  "week": "2026-11-09",
+  "weekEnd": "2026-11-16"
+ },
+ {
+  "category": "技术周报",
+  "core": "开源权重，本机就能跑，6 步出图，最高 4096×4096。",
+  "date": "2026-11-16",
+  "detail": [
+   {
+    "h": "是什么",
+    "items": [
+     "MiniMax H3 图像模型，开源权重；ComfyUI v0.45.0 已支持。",
+     "6 步采样，最高分辨率 4096×4096。"
+    ]
+   },
+   {
+    "h": "怎么用",
+    "items": [
+     "本机部署直接跑，或走 Comfy 合作节点云接口，不用自己配环境。"
+    ]
+   }
+  ],
+  "id": "weekly-minimax-h3-comfyui",
+  "points": [
+   "开源权重，可本机运行",
+   "也可走合作节点云接口",
+   "6 步采样，最高 4096×4096"
+  ],
+  "sources": [
+   {
+    "label": "Comfy 博客",
+    "url": "https://blog.comfy.org/p/minimax-h3-image-is-now-available"
+   },
+   {
+    "label": "ComfyUI v0.45.0 发布说明",
+    "url": "https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.45.0"
+   }
+  ],
+  "subtopic": "AI美术",
+  "tags": [
+   "开源模型",
+   "本机部署",
+   "ComfyUI"
+  ],
+  "title": "MiniMax H3 图像模型进 ComfyUI，本机可跑",
+  "week": "2026-11-09",
+  "weekEnd": "2026-11-16"
+ },
+ {
+  "category": "技术周报",
+  "core": "云端节点，从成片逐帧抽出灰度遮罩，最长 10 秒。",
+  "date": "2026-11-16",
+  "detail": [
+   {
+    "h": "是什么",
+    "items": [
+     "LTX Video VFX 云端节点里的 AlphaGen，输入成片，逐帧抽出灰度遮罩，白为前景。",
+     "单次最长 10 秒。"
+    ]
+   },
+   {
+    "h": "注意",
+    "items": [
+     "云端运行，需账号积分，不用下载本地模型。"
+    ]
+   },
+   {
+    "h": "对管线有什么用",
+    "items": [
+     "已有成片快速出遮罩，做合成、替换、特效的前置步骤。"
+    ]
+   }
+  ],
+  "id": "weekly-ltx-alphagen",
+  "points": [
+   "云端节点，不下载本地模型",
+   "白为前景的灰度遮罩",
+   "最长 10 秒"
+  ],
+  "sources": [
+   {
+    "label": "Comfy 官方教程",
+    "url": "https://docs.comfy.org/tutorials/partner-nodes/lightricks/ltx-video-vfx"
+   }
+  ],
+  "subtopic": "AI美术",
+  "tags": [
+   "视频特效",
+   "遮罩",
+   "云端节点"
+  ],
+  "title": "LTX AlphaGen：从成片抽遮罩",
+  "week": "2026-11-09",
+  "weekEnd": "2026-11-16"
+ },
+ {
+  "category": "技术周报",
+  "core": "新的是节点，不是模型，别被「新模型」的说法带偏。",
+  "date": "2026-11-16",
+  "detail": [
+   {
+    "h": "澄清",
+    "items": [
+     "这次是 ComfyUI 新增 GPT Image V3 节点与 SVG 节点，不是新模型；更新日志里「新模型」的说法以节点文档为准。"
+    ]
+   },
+   {
+    "h": "模型选项",
+    "items": [
+     "V3 节点可选 gpt-image-2.6-flare、2.6-sunburst、2.5-flare、2.5-sunburst。",
+     "SVG 节点可选 2.6-flare、2.6-sunburst。"
+    ]
+   },
+   {
+    "h": "对管线有什么用",
+    "items": [
+     "SVG 节点直接出矢量图，图标与界面素材可进矢量流程。"
+    ]
+   }
+  ],
+  "id": "weekly-gpt-image-v3-svg",
+  "points": [
+   "V3 节点可选 2.6 / 2.5 两代模型",
+   "SVG 节点只支持 2.6",
+   "已进 ComfyUI v0.45.0"
+  ],
+  "sources": [
+   {
+    "label": "V3 节点文档",
+    "url": "https://docs.comfy.org/built-in-nodes/OpenAIGPTImageNodeV3"
+   },
+   {
+    "label": "SVG 节点文档",
+    "url": "https://docs.comfy.org/built-in-nodes/OpenAIGPTImageSVGNode"
+   },
+   {
+    "label": "ComfyUI v0.45.0 发布说明",
+    "url": "https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.45.0"
+   }
+  ],
+  "subtopic": "AI美术",
+  "tags": [
+   "GPT Image",
+   "矢量图",
+   "ComfyUI"
+  ],
+  "title": "GPT Image 新节点不是新模型",
+  "week": "2026-11-09",
+  "weekEnd": "2026-11-16"
+ },
+ {
+  "category": "技术周报",
+  "core": "多视角画面回烘成 UV 贴图，改完直接贴回模型。",
+  "date": "2026-11-16",
+  "detail": [
+   {
+    "h": "是什么",
+    "items": [
+     "UltraTex 把编辑后的多视角渲染画面回投影到网格贴图上（贴图回烘）。",
+     "UltraTexConditioning 节点把六个视角打包成视图网格。"
+    ]
+   },
+   {
+    "h": "怎么用",
+    "items": [
+     "抱脸 Comfy-Org/UltraTex 为官方重打包文件；已进 ComfyUI v0.45.0。"
+    ]
+   },
+   {
+    "h": "对管线有什么用",
+    "items": [
+     "贴图改完不用手工重贴，直接回烘到模型上，改材质流程变短。"
+    ]
+   }
+  ],
+  "id": "weekly-ultratex",
+  "points": [
+   "六视角打包成视图网格",
+   "回投影到网格贴图",
+   "已进 ComfyUI v0.45.0"
+  ],
+  "sources": [
+   {
+    "label": "ComfyUI 提案 #17636",
+    "url": "https://github.com/Comfy-Org/ComfyUI/pull/17636"
+   },
+   {
+    "label": "抱脸官方仓库",
+    "url": "https://huggingface.co/Comfy-Org/UltraTex"
+   }
+  ],
+  "subtopic": "AI美术",
+  "tags": [
+   "贴图",
+   "三维",
+   "ComfyUI"
+  ],
+  "title": "UltraTex：多视角画面回烘 UV 贴图",
+  "week": "2026-11-09",
+  "weekEnd": "2026-11-16"
+ },
+ {
+  "category": "技术周报",
+  "core": "四天连发四版，补丁节奏快，升版前先对一下依赖。",
+  "date": "2026-11-16",
+  "detail": [
+   {
+    "h": "版本与日期（北京时间）",
+    "items": [
+     "45.3.0 在 11-11、45.3.1 在 11-12、45.3.2 在 11-13、45.3.3 在 11-15。"
+    ]
+   },
+   {
+    "h": "关键升级",
+    "items": [
+     "45.3.2 升级 Chromium 至 156.0.8078.100。",
+     "45.3.3 升级 Node.js 至 24.22.3。"
+    ]
+   },
+   {
+    "h": "注意",
+    "items": [
+     "官方发布页显示美区日期，比北京时间晚一天，对日期时以北京时间为准。"
+    ]
+   }
+  ],
+  "id": "weekly-electron-45-3",
+  "points": [
+   "11-11 至 11-15 连发 45.3.0–45.3.3",
+   "45.3.2 升 Chromium 156",
+   "45.3.3 升 Node.js 24.22.3"
+  ],
+  "sources": [
+   {
+    "label": "45.3.0 发布页",
+    "url": "https://releases.electronjs.org/release/v45.3.0"
+   },
+   {
+    "label": "45.3.1 发布页",
+    "url": "https://releases.electronjs.org/release/v45.3.1"
+   },
+   {
+    "label": "45.3.2 发布页",
+    "url": "https://releases.electronjs.org/release/v45.3.2"
+   },
+   {
+    "label": "45.3.3 发布页",
+    "url": "https://releases.electronjs.org/release/v45.3.3"
+   }
+  ],
+  "subtopic": "AI美术",
+  "tags": [
+   "Electron",
+   "桌面应用",
+   "版本升级"
+  ],
+  "title": "Electron 45.3.0 至 45.3.3 连发四版",
+  "week": "2026-11-09",
+  "weekEnd": "2026-11-16"
+ },
  {
   "category": "生活",
   "core": "先固定证据，再找学校欺凌治理委员会启动调查，严重欺凌可直接报警，新法第 60 条专治学生欺凌。",
@@ -7615,156 +7944,240 @@ const DIGESTS = {
    "touzi-guojia-zhanlue",
    "danao-sige-renge"
   ]
+ },
+ "技术周报": {
+  "title": "技术周报干货：新工具先看能不能进管线",
+  "lead": "每周一期，只收核实过的 AI 美术与管线动态；每条先问一句：能不能省一步、快一轮。",
+  "layers": [
+   {
+    "name": "直出可用",
+    "note": "透明素材、遮罩、矢量图，直接进工作流",
+    "sec": "本期要点"
+   },
+   {
+    "name": "本机可跑",
+    "note": "开源权重本地部署，不依赖云端",
+    "sec": "本机与云端"
+   },
+   {
+    "name": "先澄清再跟",
+    "note": "新节点不等于新模型，版本号先对官方",
+    "sec": "防踩坑"
+   },
+   {
+    "name": "核实（地基）",
+    "note": "每条都打开原始页面对过，没核实的不写",
+    "sec": "核心结论"
+   }
+  ],
+  "sections": [
+   {
+    "h": "核心结论",
+    "items": [
+     "首期 6 条，5 条与 ComfyUI v0.45.0 相关；主线是「直出可用」——透明素材、遮罩、矢量、贴图回烘都在缩短手工环节。",
+     "判断新工具只问一句：能不能让现有管线少一步。能，就试；不能，先放着。"
+    ]
+   },
+   {
+    "h": "本期要点",
+    "items": [
+     "Seedream 5.5：连续编辑 100 轮不走样，原生透明素材直出。",
+     "MiniMax H3：开源权重本机跑，6 步出图，最高 4096×4096。",
+     "LTX AlphaGen：成片抽遮罩，最长 10 秒，云端节点。",
+     "UltraTex：六视角画面回烘成贴图，改材质不用手工重贴。"
+    ]
+   },
+   {
+    "h": "本机与云端",
+    "items": [
+     "本机可跑：MiniMax H3 开源权重，本地部署。",
+     "云端节点：Seedream 5.5、LTX AlphaGen（需账号积分），不用下载模型。",
+     "SVG 矢量图走 GPT Image 节点，直接进矢量流程。"
+    ]
+   },
+   {
+    "h": "防踩坑",
+    "items": [
+     "GPT Image V3 / SVG 是新节点不是新模型，模型仍是 2.6 / 2.5。",
+     "Electron 发布页显示美区日期，比北京时间晚一天，对日期以北京时间为准。"
+    ]
+   }
+  ],
+  "basedOn": [
+   "weekly-seedream-55",
+   "weekly-minimax-h3-comfyui",
+   "weekly-ltx-alphagen",
+   "weekly-gpt-image-v3-svg",
+   "weekly-ultratex",
+   "weekly-electron-45-3"
+  ]
  }
 };
 
 const ACTIONS = [
-  {
-    "group": "赚钱",
-    "title": "把管线经验做成小站，卖赞助位",
-    "why": "经验是现成内容，我建站维护，你只审批。",
-    "cost": "一个周末起步",
-    "next": "回我一个主题",
-    "basis": [
-      {
-        "id": "grokbot-monetize",
-        "t": "GrokBot 案例"
-      },
-      {
-        "id": "vibe-pay",
-        "t": "Vibe Pay 收款"
-      }
-    ]
-  },
-  {
-    "group": "赚钱",
-    "title": "先把个人收款通道备好",
-    "why": "以后任何小产品收费，当天能开卖。",
-    "cost": "约 10 分钟",
-    "next": "说声「开收款」",
-    "basis": [
-      {
-        "id": "vibe-pay",
-        "t": "Vibe Pay 收款"
-      }
-    ]
-  },
-  {
-    "group": "管线升级",
-    "title": "宣传片改用代码做片",
-    "why": "每帧可控可复查，比生成式视频稳。",
-    "cost": "先试一支 30 秒",
-    "next": "把下支片需求发我",
-    "basis": [
-      {
-        "id": "lemo-opuscar",
-        "t": "Lemo 做片"
-      }
-    ]
-  },
-  {
-    "group": "管线升级",
-    "title": "一句话前缀写进团队规范",
-    "why": "全组输出一起涨，你少改稿。",
-    "cost": "一次群发",
-    "next": "转发到组里",
-    "basis": [
-      {
-        "id": "tishici-yijuhua",
-        "t": "一句话前缀"
-      }
-    ]
-  },
-  {
-    "group": "管线升级",
-    "title": "竞品素材自动抓取",
-    "why": "调研从日程里消失，你只看结果。",
-    "cost": "我来搭",
-    "next": "发我 3 个竞品名",
-    "basis": [
-      {
-        "id": "wutou-liulanqi",
-        "t": "无头浏览器"
-      }
-    ]
-  },
-  {
-    "group": "省力",
-    "title": "协调工作交给智能体",
-    "why": "你只留定目标、判例外、担责任。",
-    "cost": "先试一周",
-    "next": "告诉我最烦的一条汇报",
-    "basis": [
-      {
-        "id": "replit-self-driving",
-        "t": "Replit 组织观"
-      }
-    ]
-  },
-  {
-    "group": "孩子成长",
-    "title": "先攒内容，不硬给建议",
-    "why": "库里暂无儿童内容；转发进来，我按最短、最省整理。",
-    "cost": "零",
-    "next": "随手转发给我",
-    "basis": []
-  },
-  {
-    "group": "老人健康",
-    "title": "保湿路线转给老人",
-    "why": "干裂急救、日常清爽，一图讲清。",
-    "cost": "一次转发",
-    "next": "说声「发保湿图」",
-    "basis": [
-      {
-        "id": "baoshi-fen-changjing",
-        "t": "保湿条目"
-      }
-    ]
-  },
-  {
-    "group": "老人健康",
-    "title": "提醒老人别跟风减肥药",
-    "why": "掉肌肉易反弹（个人观点，非医疗建议）。",
-    "cost": "一句话",
-    "next": "需要时说一声",
-    "basis": [
-      {
-        "id": "sunyuchen-caifu",
-        "t": "财富自由访谈"
-      }
-    ]
-  },
-  {
-    "group": "管线升级",
-    "title": "游戏开发技能包一键装进编程助手",
-    "why": "路由器按引擎自动加载技能，美术生产技能正好对你的管线。",
-    "cost": "一条命令",
-    "next": "说声装技能包",
-    "basis": [
-      {
-        "id": "gamedev-skills-77",
-        "t": "游戏开发技能包"
-      }
-    ]
-  },
-  {
-    "group": "管线升级",
-    "title": "做视频前先翻素材库",
-    "why": "镜头、布光、情绪、参数表达都已存好，写提示词直接套。",
-    "cost": "零",
-    "next": "打开知识库实用技巧类",
-    "basis": [
-      {
-        "id": "jingtou-yuyan-12",
-        "t": "12 种镜头语言"
-      },
-      {
-        "id": "buguang-5",
-        "t": "5 种布光"
-      }
-    ]
-  }
+ {
+  "group": "赚钱",
+  "title": "把管线经验做成小站，卖赞助位",
+  "why": "经验是现成内容，我建站维护，你只审批。",
+  "cost": "一个周末起步",
+  "next": "回我一个主题",
+  "basis": [
+   {
+    "id": "grokbot-monetize",
+    "t": "GrokBot 案例"
+   },
+   {
+    "id": "vibe-pay",
+    "t": "Vibe Pay 收款"
+   }
+  ]
+ },
+ {
+  "group": "赚钱",
+  "title": "先把个人收款通道备好",
+  "why": "以后任何小产品收费，当天能开卖。",
+  "cost": "约 10 分钟",
+  "next": "说声「开收款」",
+  "basis": [
+   {
+    "id": "vibe-pay",
+    "t": "Vibe Pay 收款"
+   }
+  ]
+ },
+ {
+  "group": "管线升级",
+  "title": "宣传片改用代码做片",
+  "why": "每帧可控可复查，比生成式视频稳。",
+  "cost": "先试一支 30 秒",
+  "next": "把下支片需求发我",
+  "basis": [
+   {
+    "id": "lemo-opuscar",
+    "t": "Lemo 做片"
+   }
+  ]
+ },
+ {
+  "group": "管线升级",
+  "title": "一句话前缀写进团队规范",
+  "why": "全组输出一起涨，你少改稿。",
+  "cost": "一次群发",
+  "next": "转发到组里",
+  "basis": [
+   {
+    "id": "tishici-yijuhua",
+    "t": "一句话前缀"
+   }
+  ]
+ },
+ {
+  "group": "管线升级",
+  "title": "竞品素材自动抓取",
+  "why": "调研从日程里消失，你只看结果。",
+  "cost": "我来搭",
+  "next": "发我 3 个竞品名",
+  "basis": [
+   {
+    "id": "wutou-liulanqi",
+    "t": "无头浏览器"
+   }
+  ]
+ },
+ {
+  "group": "省力",
+  "title": "协调工作交给智能体",
+  "why": "你只留定目标、判例外、担责任。",
+  "cost": "先试一周",
+  "next": "告诉我最烦的一条汇报",
+  "basis": [
+   {
+    "id": "replit-self-driving",
+    "t": "Replit 组织观"
+   }
+  ]
+ },
+ {
+  "group": "孩子成长",
+  "title": "先攒内容，不硬给建议",
+  "why": "库里暂无儿童内容；转发进来，我按最短、最省整理。",
+  "cost": "零",
+  "next": "随手转发给我",
+  "basis": []
+ },
+ {
+  "group": "老人健康",
+  "title": "保湿路线转给老人",
+  "why": "干裂急救、日常清爽，一图讲清。",
+  "cost": "一次转发",
+  "next": "说声「发保湿图」",
+  "basis": [
+   {
+    "id": "baoshi-fen-changjing",
+    "t": "保湿条目"
+   }
+  ]
+ },
+ {
+  "group": "老人健康",
+  "title": "提醒老人别跟风减肥药",
+  "why": "掉肌肉易反弹（个人观点，非医疗建议）。",
+  "cost": "一句话",
+  "next": "需要时说一声",
+  "basis": [
+   {
+    "id": "sunyuchen-caifu",
+    "t": "财富自由访谈"
+   }
+  ]
+ },
+ {
+  "group": "管线升级",
+  "title": "游戏开发技能包一键装进编程助手",
+  "why": "路由器按引擎自动加载技能，美术生产技能正好对你的管线。",
+  "cost": "一条命令",
+  "next": "说声装技能包",
+  "basis": [
+   {
+    "id": "gamedev-skills-77",
+    "t": "游戏开发技能包"
+   }
+  ]
+ },
+ {
+  "group": "管线升级",
+  "title": "做视频前先翻素材库",
+  "why": "镜头、布光、情绪、参数表达都已存好，写提示词直接套。",
+  "cost": "零",
+  "next": "打开知识库实用技巧类",
+  "basis": [
+   {
+    "id": "jingtou-yuyan-12",
+    "t": "12 种镜头语言"
+   },
+   {
+    "id": "buguang-5",
+    "t": "5 种布光"
+   }
+  ]
+ },
+ {
+  "group": "管线升级",
+  "title": "每周挑一个周报新点试跑进管线",
+  "why": "周报只收核实过的，每周试一个，一年就是几十个提效点。",
+  "cost": "每周半小时",
+  "next": "回我这期先试哪个",
+  "basis": [
+   {
+    "id": "weekly-seedream-55",
+    "t": "Seedream 5.5"
+   },
+   {
+    "id": "weekly-ultratex",
+    "t": "UltraTex"
+   }
+  ]
+ }
 ];
 
 const ACTION_LAYERS = [
@@ -7859,26 +8272,44 @@ function fmtDate(d){
 function categories(){
   return [...new Set(ENTRIES.map(e => e.category))];
 }
+function weeklyIssues(){
+  const map = {};
+  ENTRIES.forEach(e => { if(!e.week) return; (map[e.week] = map[e.week] || []).push(e); });
+  return Object.keys(map).sort().reverse().map(id => ({ id, items: map[id] }));
+}
+function weekLabel(id, end){
+  const a = id.split("-").map(Number);
+  const b = (end || id).split("-").map(Number);
+  const s1 = a[1] + "月" + a[2] + "日";
+  const s2 = (b[1] === a[1]) ? b[2] + "日" : b[1] + "月" + b[2] + "日";
+  return "技术周报 · " + s1 + "至" + s2;
+}
 function entryMatches(e){
   if(!keyword) return true;
-  const hay = [e.title, e.core, e.category, e.subtopic, ...e.points, ...e.tags].join(" ").toLowerCase();
+  const det = (e.detail || []).flatMap(s => [s.h, ...s.items]);
+  const hay = [e.title, e.core, e.category, e.subtopic, ...e.points, ...e.tags, ...det].join(" ").toLowerCase();
   return hay.includes(keyword.toLowerCase());
 }
 function currentRoute(){
   const h = location.hash.replace(/^#\/?/, "");
   if(h.startsWith("e/")) return { type:"entry", id:h.slice(2) };
   if(h.startsWith("d/")) return { type:"digest", cat:decodeURIComponent(h.slice(2)) };
+  if(h.startsWith("w/")) return { type:"issue", id:h.slice(2) };
+  if(h === "w") return { type:"weekly" };
   if(h === "a") return { type:"actions" };
   return { type:"list" };
 }
 
 function renderNav(){
   const cats = categories();
+  const issues = weeklyIssues();
+  const weekBtn = issues.length ? '<button class="nav-all" data-weekly="1">技术周报<span class="nav-count">' + issues.length + ' 期</span></button>' : "";
   let html = '<button class="nav-all" data-actions="1" style="font-weight:700;color:var(--accent)">我的行动页</button>' +
-    '<button class="nav-all' + (activeCat === "全部" ? " active" : "") + '" data-all="1">全部条目</button>';
+    '<button class="nav-all' + (activeCat === "全部" ? " active" : "") + '" data-all="1">全部条目<span class="nav-count">' + ENTRIES.length + "</span></button>" + weekBtn;
   cats.forEach(c => {
+    const n = ENTRIES.filter(e => e.category === c).length;
     html += '<div class="nav-cat">' +
-      '<button class="nav-cat-name' + (activeCat === c ? " active" : "") + '" data-cat="' + esc(c) + '">' + esc(c) + "</button></div>";
+      '<button class="nav-cat-name' + (activeCat === c ? " active" : "") + '" data-cat="' + esc(c) + '">' + esc(c) + '<span class="nav-count">' + n + "</span></button></div>";
   });
   navTree.innerHTML = html;
   navTree.querySelector("[data-actions]").addEventListener("click", () => { location.hash = "#/a"; render(); });
@@ -7886,6 +8317,8 @@ function renderNav(){
     activeCat = "全部"; keyword = ""; searchInput.value = ""; clearBtn.classList.remove("show");
     location.hash = "#/"; render();
   });
+  const wkBtn = navTree.querySelector("[data-weekly]");
+  if(wkBtn) wkBtn.addEventListener("click", () => { location.hash = "#/w"; render(); });
   navTree.querySelectorAll("[data-cat]").forEach(b => b.addEventListener("click", () => {
     activeCat = b.getAttribute("data-cat");
     location.hash = "#/"; render();
@@ -7914,6 +8347,8 @@ function renderList(){
     const d = DIGESTS[activeCat];
     html += '<div class="digest-card" data-digest="' + esc(activeCat) + '">' +
       "<h2>" + esc(d.title) + "</h2><p>" + esc(d.lead) + '</p></div>';
+  } else if(activeCat === "全部"){
+    html += homeHead();
   }
   if(list.length === 0){
     html += '<div class="empty">没有找到相关内容</div>';
@@ -7935,7 +8370,23 @@ function renderList(){
   main.querySelectorAll("[data-digest]").forEach(r => r.addEventListener("click", () => {
     location.hash = "#/d/" + encodeURIComponent(r.getAttribute("data-digest"));
   }));
+  main.querySelectorAll("[data-issue]").forEach(r => r.addEventListener("click", () => {
+    location.hash = "#/w/" + r.getAttribute("data-issue");
+  }));
   renderNav(null);
+}
+
+function prevNext(id){
+  const list = ENTRIES.filter(e => (activeCat === "全部" || e.category === activeCat) && entryMatches(e));
+  const i = list.findIndex(e => e.id === id);
+  if(i < 0) return "";
+  const prev = i > 0 ? list[i - 1] : null;
+  const next = i < list.length - 1 ? list[i + 1] : null;
+  if(!prev && !next) return "";
+  return '<div class="prev-next">' +
+    (prev ? '<a href="#/e/' + esc(prev.id) + '"><span>← 上一条</span>' + esc(prev.title) + "</a>" : "<span></span>") +
+    (next ? '<a href="#/e/' + esc(next.id) + '"><span>下一条 →</span>' + esc(next.title) + "</a>" : "") +
+    "</div>";
 }
 
 function renderEntry(id){
@@ -7954,6 +8405,7 @@ function renderEntry(id){
     ).join("") : "") +
     '<div class="sources"><div class="src-label">来源</div>' +
     e.sources.map(s => '<a href="' + esc(s.url) + '" target="_blank" rel="noopener noreferrer">↗ ' + esc(s.label) + "</a>").join("") + "</div>" +
+    prevNext(id) +
     '<a class="back-link" id="backLink">← 返回列表</a></div>';
   document.getElementById("backLink").addEventListener("click", () => { location.hash = "#/"; });
   const cl = main.querySelector("[data-cat-link]");
@@ -8038,10 +8490,77 @@ function renderActions(){
   window.scrollTo(0, 0);
 }
 
+function homeHead(){
+  const dates = ENTRIES.map(e => e.date).sort();
+  const latest = dates[dates.length - 1];
+  const d0 = new Date(latest + "T00:00:00");
+  d0.setDate(d0.getDate() - 6);
+  const cut = d0.toISOString().slice(0, 10);
+  const fresh = ENTRIES.filter(e => e.date >= cut).length;
+  let h = '<div class="home-stat">共 ' + ENTRIES.length + " 条 · 最近一周新增 " + fresh + " 条</div>";
+  const issues = weeklyIssues();
+  if(issues.length){
+    const it = issues[0];
+    h += '<div class="week-card" data-issue="' + esc(it.id) + '">' +
+      '<div class="digest-badge">技术周报 · 最新一期</div>' +
+      "<h2>" + esc(weekLabel(it.id, it.items[0].weekEnd)) + "</h2>" +
+      '<p>' + it.items.slice(0, 3).map(e => esc(e.title)).join("；") + (it.items.length > 3 ? "；等 " + it.items.length + " 条" : "") + "</p>" +
+      '<span class="go">打开本期周报 →</span></div>';
+  }
+  return h;
+}
+
+function renderWeeklyList(){
+  const issues = weeklyIssues();
+  let html = '<div class="fade"><div class="crumb">技术周报</div>' +
+    '<h1 class="page-title">技术周报</h1>' +
+    '<p class="page-sub">每周一期，AI 美术与生产管线的新东西，只写核实过的。</p>';
+  if(!issues.length) html += '<div class="empty">暂无周报</div>';
+  else html += '<div class="entry-list">' + issues.map(it =>
+    '<article class="entry-row" data-issue="' + esc(it.id) + '">' +
+      '<div class="date">' + fmtDate(it.id) + " — " + fmtDate(it.items[0].weekEnd || it.id) + "</div>" +
+      "<h2>" + esc(weekLabel(it.id, it.items[0].weekEnd)) + "</h2>" +
+      '<p class="core">' + it.items.slice(0, 3).map(e => esc(e.title)).join("；") + (it.items.length > 3 ? "；等 " + it.items.length + " 条" : "") + "</p>" +
+    "</article>").join("") + "</div>";
+  html += "</div>";
+  main.innerHTML = html;
+  main.querySelectorAll("[data-issue]").forEach(r => r.addEventListener("click", () => {
+    location.hash = "#/w/" + r.getAttribute("data-issue");
+  }));
+  renderNav(null);
+  window.scrollTo(0, 0);
+}
+
+function renderWeeklyIssue(id){
+  const it = weeklyIssues().find(x => x.id === id);
+  if(!it){ renderWeeklyList(); return; }
+  const end = it.items[0].weekEnd || id;
+  let html = '<div class="fade"><div class="crumb"><a href="#/w">技术周报</a><span class="sep">›</span>' + fmtDate(id) + "</div>" +
+    '<h1 class="page-title">' + esc(weekLabel(id, end)) + "</h1>" +
+    '<div class="article-meta"><span>' + fmtDate(id) + " — " + fmtDate(end) + "</span><span>共 " + it.items.length + " 条</span></div>" +
+    '<p class="lead">本期只写逐条打开过原始页面核实的内容；没核实的宁可不写。</p>' +
+    '<div class="entry-list">' + it.items.map(e =>
+      '<article class="entry-row" data-open="' + esc(e.id) + '">' +
+        "<h2>" + esc(e.title) + "</h2>" +
+        '<p class="core">' + esc(e.core) + "</p>" +
+        '<div class="tags">' + e.tags.map(t => '<span class="tag">' + esc(t) + "</span>").join("") + "</div>" +
+      "</article>").join("") + "</div>" +
+    '<a class="back-link" id="backLink">← 返回周报列表</a></div>';
+  main.innerHTML = html;
+  main.querySelectorAll("[data-open]").forEach(r => r.addEventListener("click", () => {
+    location.hash = "#/e/" + r.getAttribute("data-open");
+  }));
+  document.getElementById("backLink").addEventListener("click", () => { location.hash = "#/w"; });
+  renderNav(null);
+  window.scrollTo(0, 0);
+}
+
 function render(){
   const r = currentRoute();
   if(r.type === "entry") renderEntry(r.id);
   else if(r.type === "digest") renderDigest(r.cat);
+  else if(r.type === "weekly") renderWeeklyList();
+  else if(r.type === "issue") renderWeeklyIssue(r.id);
   else if(r.type === "actions") renderActions();
   else renderList();
 }
@@ -8113,6 +8632,11 @@ searchInput.addEventListener("keydown", e => { if(e.key === "Escape"){ searchInp
 clearBtn.addEventListener("click", () => {
   searchInput.value = ""; keyword = ""; clearBtn.classList.remove("show"); renderList(); searchInput.focus();
 });
+const toTopBtn = document.getElementById("toTop");
+window.addEventListener("scroll", () => {
+  toTopBtn.classList.toggle("show", window.scrollY > 600);
+}, { passive: true });
+toTopBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
 render();
 </script>
 </body>
