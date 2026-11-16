@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="zh-Hans" data-theme="light" data-accent="ember" data-finish="gloss">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <title>Stone Design 统一效果页</title>
+  <link rel="stylesheet" href="css/stone.css">
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="app">
+    <header class="topbar">
+      <button class="menu-btn" id="menu-btn" type="button" aria-label="打开目录" aria-expanded="false" aria-controls="nav">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 5h14M3 10h14M3 15h14"/></svg>
+      </button>
+      <h1 class="cjk">Stone Design 统一效果页</h1>
+      <div class="topbar-tools">
+        <div class="seg-mini" role="group" aria-label="外观">
+          <button type="button" data-theme-btn="light">浅色</button>
+          <button type="button" data-theme-btn="dark">深色</button>
+        </div>
+        <div class="accent-dots" id="accent-dots" role="group" aria-label="强调色"></div>
+        <button type="button" class="toggle-chip" id="reduce-toggle" aria-pressed="false">减弱动态</button>
+      </div>
+    </header>
+    <div class="nav-backdrop" id="nav-backdrop"></div>
+    <div class="layout">
+      <nav class="nav" id="nav" aria-label="目录">
+        <span class="nav-label">浏览</span>
+        <a href="#overview">说明</a>
+        <a href="#tokens">令牌</a>
+        <a href="#components">组件</a>
+        <a href="#effects">效果</a>
+        <a href="#fruit-goo">糖胶水果</a>
+        <a href="#reference">原生参考</a>
+        <a href="#coverage">覆盖清单</a>
+        <a href="#spec">规范补录</a>
+        <span class="nav-label">令牌</span>
+        <a href="#tokens-color">颜色</a>
+        <a href="#tokens-type">字体与间距</a>
+        <a href="#tokens-motion">动效与触感</a>
+        <span class="nav-label">组件</span>
+        <a href="#comp-button">按钮与开关</a>
+        <a href="#comp-input">输入与分段</a>
+        <a href="#comp-list">列表、结果、面板</a>
+        <a href="#comp-paywall">空状态与付费墙</a>
+        <span class="nav-label">效果</span>
+        <a href="#fx-goo">软胶与变形</a>
+        <a href="#fx-lacquer">漆面按钮</a>
+        <a href="#fx-faces">头像、伙伴、表情</a>
+        <a href="#fx-gaze">gaze-v8 整眼跟手</a>
+        <a href="#fx-kiss">接触、拉丝、吸合</a>
+        <a href="#fx-shared">涟漪、高光、导出</a>
+        <span class="nav-label">糖胶水果</span>
+        <a href="#fg-play">可玩游戏</a>
+        <a href="#fg-atlas">水果图鉴</a>
+        <a href="#fg-how">实现要点</a>
+        <span class="nav-label">规范补录</span>
+        <a href="#principles">原则摘要</a>
+        <a href="#usage">使用与禁止</a>
+        <a href="#webmap">网页适配</a>
+        <a href="#prompt">约束提示词</a>
+        <a href="#checklist">验收清单</a>
+      </nav>
+      <main class="main">
+        <section class="section" id="overview">
+          <p class="kicker t-caption">公开统一页 · 无 CDN · 网页演示不是 Metal 原生运行</p>
+          <h2 class="t-large cjk">完整效果与组件预览</h2>
+          <p class="lede t-body cjk">这是 Stone 设计系统已有目录的统一交互页：效果预览包为准，补上转交手册里预览页没有的规范条文（原则、使用与禁止、网页适配、约束提示词、验收清单），再加糖胶水果全套（果合大作战 v12 可玩游戏、19 种水果图鉴、实现要点）。网页演示遵守源码令牌，用 Canvas 连续表面近似软胶与漆面；不能把本页当成 iOS / Metal / 触感的原样运行。触觉、陀螺仪姿态、Liquid Glass 和 metallib 只列清或给出已有真实录像、静帧。</p>
+          <div class="disclaimer t-callout cjk">
+            源码以 IstoneDesign 为准。本页令牌来自已提取的 <code>data/tokens.json</code>。圆角是普通 CSS 近似，不是 SwiftUI continuous。减弱动态时去掉位移和缩放，只保留短淡入。本页可直接在浏览器打开。覆盖清单已内嵌，资源使用相对路径。糖胶水果以设计系统 v12 包与本页内嵌演示为准。
+          </div>
+        </section>
+
+        <section class="section" id="tokens">
+          <h2 class="t-large cjk">令牌</h2>
+          <p class="lede cjk">全部数值来自源码，不另造色板或间距。</p>
+
+          <div class="block" id="tokens-color">
+            <h3>灰阶 Ramp 0–12 <span class="badge badge-web">Web 等价</span></h3>
+            <p class="note">浅色 0 最亮到 12 最暗；深色相反。随顶部浅色/深色切换。</p>
+            <div class="swatch-row" id="ramp-row">
+              <!-- filled by inline static so it works without JS too: both themes via CSS vars is hard; JS/CSS current theme swatches as background colors listed -->
+              <div class="swatch" style="background:#FFFFFF;color:#5C5C59">0</div>
+              <div class="swatch" style="background:#FAFAF9;color:#5C5C59">1</div>
+              <div class="swatch" style="background:#F4F4F2;color:#5C5C59">2</div>
+              <div class="swatch" style="background:#ECECE9;color:#5C5C59">3</div>
+              <div class="swatch" style="background:#E2E2DE;color:#5C5C59">4</div>
+              <div class="swatch" style="background:#D3D3CE;color:#5C5C59">5</div>
+              <div class="swatch" style="background:#B9B9B4;color:#121211">6</div>
+              <div class="swatch" style="background:#9B9B96;color:#121211">7</div>
+              <div class="swatch" style="background:#7A7A76;color:#fff">8</div>
+              <div class="swatch" style="background:#5C5C59;color:#fff">9</div>
+              <div class="swatch" style="background:#3E3E3C;color:#fff">10</div>
+              <div class="swatch" style="background:#262625;color:#fff">11</div>
+              <div class="swatch" style="background:#121211;color:#fff">12</div>
+            </div>
+            <p class="note" style="margin-top:8px">深色 Ramp 0 最暗 → 12 最亮：</p>
+            <div class="swatch-row">
+              <div class="swatch" style="background:#0A0A0B;color:#fff">0</div>
+              <div class="swatch" style="background:#111112;color:#fff">1</div>
+              <div class="swatch" style="background:#18181A;color:#fff">2</div>
+              <div class="swatch" style="background:#202022;color:#fff">3</div>
+              <div class="swatch" style="background:#2A2A2D;color:#fff">4</div>
+              <div class="swatch" style="background:#37373A;color:#fff">5</div>
+              <div class="swatch" style="background:#4A4A4E;color:#fff">6</div>
+              <div class="swatch" style="background:#636367;color:#fff">7</div>
+              <div class="swatch" style="background:#828286;color:#121211">8</div>
+              <div class="swatch" style="background:#A2A2A5;color:#121211">9</div>
+              <div class="swatch" style="background:#C4C4C6;color:#121211">10</div>
+              <div class="swatch" style="background:#E2E2E3;color:#121211">11</div>
+              <div class="swatch" style="background:#F4F4F2;color:#121211">12</div>
+            </div>
+            <p class="note">当前页面底色即语义色 <code>base</code>。</p>
+
+            <h3 style="margin-top:28px">语义色 Palette <span class="badge badge-web">Web 等价</span></h3>
+            <div class="swatch-row" style="gap:8px;margin-top:8px">
+              <div class="swatch wide" style="background:var(--c-base)"><span>base</span><code>页面底</code></div>
+              <div class="swatch wide" style="background:var(--c-raised);border:var(--hairline) solid var(--c-hairline)"><span>raised</span><code>卡片</code></div>
+              <div class="swatch wide" style="background:var(--c-sunken)"><span>sunken</span><code>输入凹槽</code></div>
+              <div class="swatch wide" style="background:var(--c-fill)"><span>fill</span><code>控件底</code></div>
+              <div class="swatch wide" style="background:var(--c-fill-strong)"><span>fillStrong</span><code>开关关</code></div>
+              <div class="swatch wide" style="background:var(--c-text);color:var(--c-base)"><span>textPrimary</span></div>
+              <div class="swatch wide" style="background:var(--c-text-2);color:var(--c-base)"><span>textSecondary</span></div>
+              <div class="swatch wide" style="background:var(--c-text-3);color:var(--c-base)"><span>textTertiary</span></div>
+              <div class="swatch wide" style="background:var(--c-success);color:#fff"><span>success</span></div>
+              <div class="swatch wide" style="background:var(--c-warning);color:#121211"><span>warning</span></div>
+              <div class="swatch wide" style="background:var(--c-danger);color:#fff"><span>danger</span></div>
+              <div class="swatch wide" style="background:var(--c-ink);color:var(--c-on-ink)"><span>ink / onInk</span></div>
+            </div>
+
+            <h3 style="margin-top:28px">八个强调色 <span class="badge badge-web">Web 等价</span></h3>
+            <p class="note">默认 Ember。用顶栏色点切换，组件会跟着变。Amber 的字色在浅色和深色都是 #121211。</p>
+            <div class="swatch-row" style="gap:8px">
+              <div class="swatch wide" style="background:#F2551D;color:#fff"><span>Ember</span><code>#F2551D / #FF6B35</code></div>
+              <div class="swatch wide" style="background:#2F5BEA;color:#fff"><span>Cobalt</span><code>#2F5BEA / #6B8CFF</code></div>
+              <div class="swatch wide" style="background:#0E9F7A;color:#fff"><span>Jade</span><code>#0E9F7A / #2FCB9C</code></div>
+              <div class="swatch wide" style="background:#E09B00;color:#121211"><span>Amber</span><code>#E09B00 / #FFC233</code></div>
+              <div class="swatch wide" style="background:#6A55D6;color:#fff"><span>Iris</span><code>#6A55D6 / #9583F5</code></div>
+              <div class="swatch wide" style="background:#E5484D;color:#fff"><span>Coral</span><code>#E5484D / #FF6E73</code></div>
+              <div class="swatch wide" style="background:#0A8CA0;color:#fff"><span>Lagoon</span><code>#0A8CA0 / #2DBFD3</code></div>
+              <div class="swatch wide" style="background:#121211;color:#fff"><span>Graphite</span><code>#121211 / #F4F4F2</code></div>
+            </div>
+          </div>
+
+          <div class="block" id="tokens-type">
+            <h3>字体 TypeStyle <span class="badge badge-web">Web 等价</span></h3>
+            <p class="note">本页用系统字体回落，不是 SF Pro 本体；禁止 SF Pro Rounded。callout 以实现为准（系统 callout 默认 16pt，注释曾写 15）。中文取消负字距，并加行距补偿。</p>
+            <div class="typo-stack">
+              <p class="t-display cjk">136.5 显示</p>
+              <p class="t-large cjk">大标题 Large Title</p>
+              <p class="t-title cjk">标题 Title2 Semibold</p>
+              <p class="t-headline cjk">标题 Headline Semibold</p>
+              <p class="t-body cjk">正文 Body，用于说明和段落。</p>
+              <p class="t-callout cjk">说明 Callout（16pt 实现）。</p>
+              <p class="t-footnote cjk">注脚 Footnote 13 Regular。</p>
+              <p class="t-caption cjk">图注 Caption2 11 Medium +0.2。</p>
+              <p class="t-mono">Mono 13 · 3.2808 ft</p>
+            </div>
+
+            <h3 style="margin-top:28px">间距 Space <span class="badge badge-web">Web 等价</span></h3>
+            <p class="note">仅源码枚举：x1=4 … x14=56，margin 20，行高 52，触达 44，按钮 56，输入 52。没有把组件专用尺寸提升成新的全局 Token。</p>
+            <div class="space-demo" aria-hidden="true">
+              <i style="height:4px" title="x1"></i>
+              <i style="height:8px"></i>
+              <i style="height:12px"></i>
+              <i style="height:16px"></i>
+              <i style="height:20px"></i>
+              <i style="height:24px"></i>
+              <i style="height:32px"></i>
+              <i style="height:40px"></i>
+              <i style="height:56px"></i>
+            </div>
+            <p class="t-caption">x1 4 · x2 8 · x3 12 · x4 16 · x5 20 · x6 24 · x8 32 · x10 40 · x14 56</p>
+
+            <h3 style="margin-top:28px">圆角 Radius <span class="badge badge-web">Web 等价</span></h3>
+            <p class="note">Web 为普通圆角，无法原样使用 SwiftUI <code>.continuous</code>。concentric(outer, inset) = max(outer − inset, 2)。</p>
+            <div class="radius-demo">
+              <span style="border-radius:6px">xs 6</span>
+              <span style="border-radius:10px">sm 10</span>
+              <span style="border-radius:14px">md 14</span>
+              <span style="border-radius:20px">lg 20</span>
+              <span style="border-radius:28px">xl 28</span>
+            </div>
+
+            <h3 style="margin-top:28px">表面层级 <span class="badge badge-web">Web 等价</span></h3>
+            <div class="grid-2">
+              <div class="pad" style="border-radius:20px">flat：不铺表面、无描边。</div>
+              <div class="surface pad">raised：浅色两层淡投影（黑 4% blur 1 y=1；黑 5% blur 12 y=6）。深色无投影，顶部发丝高光。</div>
+              <div class="surface-sunken pad">sunken：凹槽填充 + 发丝边。</div>
+              <div class="pad surface" style="position:relative">
+                页面底 + 颗粒（仅大面积底和主结果卡；不用于文字、按钮、输入框）。瓦片由源码种子生成。
+              </div>
+            </div>
+            <h3 style="margin-top:28px">floatingGlass <span class="badge badge-cannot">不可模拟</span></h3>
+            <p class="note">iOS 26 <code>glassEffect(.regular.interactive())</code> 无法在网页复现。下面条只用 backdrop-filter 示意“浮在内容上的控件”，需原生验证。</p>
+            <div class="surface pad" style="padding-bottom:0">
+              <p class="t-body cjk" style="margin:0 0 12px">内容层示例。</p>
+              <div class="glass-bar" style="margin:0 -20px">浮层操作条（示意，不是 Liquid Glass）</div>
+            </div>
+          </div>
+
+          <div class="block" id="tokens-motion">
+            <h3>四个弹簧 <span class="badge badge-web">Web 等价</span></h3>
+            <p class="note">JS 按 <code>response</code> / <code>dampingFraction</code> 积分，不是把 response 写成 CSS 秒数。点按色块查看。减弱动态改用源码短缓动：0.10 / 0.15 / 0.20 / 0.25 秒，只做淡入，去掉位移回弹。</p>
+            <div class="stack">
+              <button type="button" class="surface pad" data-spring="press" style="text-align:left;cursor:pointer;border:var(--hairline) solid var(--c-hairline)">
+                <strong>press</strong> · 0.20 / 0.90（bounce 0.10）按下抬起
+                <i style="display:block;width:16px;height:16px;border-radius:8px;background:var(--accent);margin-top:8px"></i>
+              </button>
+              <button type="button" class="surface pad" data-spring="snap" style="text-align:left;cursor:pointer;border:0">
+                <strong>snap</strong> · 0.32 / 0.82 开关、分段、选中
+                <i style="display:block;width:16px;height:16px;border-radius:8px;background:var(--accent);margin-top:8px"></i>
+              </button>
+              <button type="button" class="surface pad" data-spring="glide" style="text-align:left;cursor:pointer;border:0">
+                <strong>glide</strong> · 0.45 / 1.00 布局、面板
+                <i style="display:block;width:16px;height:16px;border-radius:8px;background:var(--accent);margin-top:8px"></i>
+              </button>
+              <button type="button" class="surface pad" data-spring="reward" style="text-align:left;cursor:pointer;border:0">
+                <strong>reward</strong> · 0.55 / 0.70（每屏最多一次）
+                <i style="display:block;width:16px;height:16px;border-radius:8px;background:var(--accent);margin-top:8px"></i>
+              </button>
+            </div>
+
+            <h3 style="margin-top:28px">触感 Haptic <span class="badge badge-cannot">不可模拟</span></h3>
+            <p class="note">网页不能调用 Taptic Engine。以下只列源码映射，不触发震动来冒充手感。</p>
+            <table class="haptic-table">
+              <thead><tr><th>事件</th><th>用途</th><th>UIKit</th></tr></thead>
+              <tbody>
+                <tr><td>tap</td><td>主按钮提交</td><td>Impact medium 0.7</td></tr>
+                <tr><td>select</td><td>分段 / 滑杆刻度 / 面板档位</td><td>Selection</td></tr>
+                <tr><td>toggleOn</td><td>开关打开</td><td>Impact light 0.9</td></tr>
+                <tr><td>toggleOff</td><td>开关关闭</td><td>Impact soft 0.6</td></tr>
+                <tr><td>edge</td><td>滑杆到达端点</td><td>Impact rigid 0.6</td></tr>
+                <tr><td>threshold</td><td>越过阈值</td><td>Impact medium 0.8</td></tr>
+                <tr><td>reveal</td><td>结果卡出现</td><td>Impact soft 0.5</td></tr>
+                <tr><td>success</td><td>复制、保存、购买成功</td><td>Notification success</td></tr>
+                <tr><td>warning</td><td>可恢复问题</td><td>Notification warning</td></tr>
+                <tr><td>error</td><td>输入错误、购买失败</td><td>Notification error</td></tr>
+              </tbody>
+            </table>
+
+            <h3 style="margin-top:28px">文案 L10n <span class="badge badge-web">Web 等价</span></h3>
+            <p class="note">资源仅 11 条，全部列出。本页不是完整运行时本地化系统。</p>
+            <table class="haptic-table">
+              <thead><tr><th>键</th><th>en</th><th>zh-Hans</th></tr></thead>
+              <tbody>
+                <tr><td>Clear</td><td>Clear</td><td>清除</td></tr>
+                <tr><td>Continue</td><td>Continue</td><td>继续</td></tr>
+                <tr><td>Close</td><td>Close</td><td>关闭</td></tr>
+                <tr><td>Restore</td><td>Restore</td><td>恢复购买</td></tr>
+                <tr><td>Terms</td><td>Terms</td><td>条款</td></tr>
+                <tr><td>Privacy</td><td>Privacy</td><td>隐私</td></tr>
+                <tr><td>Copied</td><td>Copied</td><td>已复制</td></tr>
+                <tr><td>Copy result</td><td>Copy result</td><td>复制结果</td></tr>
+                <tr><td>On / Off</td><td>On / Off</td><td>开 / 关</td></tr>
+                <tr><td>Exported</td><td>Exported</td><td>已导出</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="section" id="components">
+          <h2 class="t-large cjk">组件</h2>
+          <p class="lede cjk">对应 <code>StoneGallery</code> 里的全部组件，并展开已存在的状态，而不是只放三四个演示。</p>
+
+          <div class="block" id="comp-button">
+            <h3>主按钮 PrimaryButton <span class="badge badge-web">Web 等价</span></h3>
+            <p class="note">高度 56，圆角 14，全宽，headline。按下 0.97 缩放 + 亮度 −4%；减弱动态改为透明度 0.8。加载时文字淡出、转圈淡入。禁用为灰底灰字。</p>
+            <div class="stack" style="max-width:400px">
+              <button type="button" class="btn kind-ink" data-press id="calc-btn"><span class="btn-label">计算</span></button>
+              <button type="button" class="btn kind-accent" data-press id="btn-loading-demo"><span class="btn-label">强调色 · 点按查看加载</span></button>
+              <button type="button" class="btn kind-quiet" data-press>次要操作</button>
+              <button type="button" class="btn kind-ink" disabled>禁用</button>
+            </div>
+
+            <h3 style="margin-top:28px">开关 .stone <span class="badge badge-web">Web 等价</span></h3>
+            <p class="note">轨道 52×32，拇指 28，按下拉宽到 34。原生开/关触感不模拟。</p>
+            <div class="surface row-group">
+              <div class="list-row is-static">
+                <div class="meta">自动保存</div>
+                <button type="button" class="stone-toggle" role="switch" aria-checked="true" aria-label="自动保存"><span class="thumb"></span></button>
+              </div>
+              <div class="row-div"></div>
+              <div class="list-row is-static">
+                <div class="meta">关闭态</div>
+                <button type="button" class="stone-toggle" role="switch" aria-checked="false" aria-label="关闭态"><span class="thumb"></span></button>
+              </div>
+              <div class="row-div"></div>
+              <div class="list-row is-static">
+                <div class="meta">禁用</div>
+                <button type="button" class="stone-toggle" role="switch" aria-checked="true" aria-disabled="true" aria-label="禁用"><span class="thumb"></span></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="block" id="comp-input">
+            <h3>滑杆 StoneSlider <span class="badge badge-web">Web 等价</span></h3>
+            <p class="note">轨道 6，拖动加粗到 10，拇指 28，拖动缩放 1.1。到达端点的 edge 触感不可模拟。</p>
+            <div class="stone-slider" data-min="0" data-max="100" data-step="1" data-value="42">
+              <div class="s-label">数量 <span class="s-val">42</span></div>
+              <div class="track-hit"><div class="track"><div class="fill"></div><div class="thumb"></div></div></div>
+            </div>
+
+            <h3 style="margin-top:28px">分段 SegmentedControl <span class="badge badge-web">Web 等价</span></h3>
+            <div class="seg" role="group" aria-label="单位">
+              <div class="seg-thumb" aria-hidden="true"></div>
+              <button type="button" aria-pressed="true">米</button>
+              <button type="button" aria-pressed="false">英尺</button>
+              <button type="button" aria-pressed="false">英寸</button>
+            </div>
+
+            <h3 style="margin-top:28px">输入框 InputField <span class="badge badge-web">Web 等价</span></h3>
+            <p class="note">输入 <code>0</code> 触发错误与抖动（−6, 5, −3, 0，0.3s）。聚焦为 1.5 边 + 4 光晕。</p>
+            <div class="stack">
+              <div class="field" id="field-live">
+                <label>长度</label>
+                <div class="box">
+                  <input type="text" inputmode="decimal" placeholder="输入数值" value="">
+                  <span class="unit">m</span>
+                  <button type="button" class="clear" hidden aria-label="清除">×</button>
+                </div>
+                <div class="err" hidden></div>
+              </div>
+              <div class="field is-disabled">
+                <label>禁用</label>
+                <div class="box"><input type="text" value="不可编辑" disabled></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="block" id="comp-list">
+            <h3>列表行 ListRow / RowGroup <span class="badge badge-web">Web 等价</span></h3>
+            <div class="surface row-group">
+              <button type="button" class="list-row" data-press>
+                <span class="symbol" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="6"/></svg>
+                </span>
+                <span class="meta">强调色<span class="sub">点顶栏色点切换</span></span>
+              </button>
+              <div class="row-div has-icon"></div>
+              <button type="button" class="list-row" data-sheet="medium" data-press>
+                <span class="symbol" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="2" y="6" width="12" height="8" rx="1.5"/></svg>
+                </span>
+                <span class="meta">显示面板<span class="sub">medium 半屏</span></span>
+              </button>
+              <div class="row-div has-icon"></div>
+              <div class="list-row is-static" disabled>
+                <span class="meta">禁用行</span>
+              </div>
+            </div>
+            <p class="fx-caption">无图标分隔缩进 16，有图标 56（16+28+12）。</p>
+
+            <h3 style="margin-top:28px">结果卡 ResultCard <span class="badge badge-web">Web 等价</span></h3>
+            <p class="note">点上方「计算」显示。揭示：淡入 + 上移 8pt + 0.96→1。复制成功文案保持 1.4s。大面积结果卡允许颗粒。</p>
+            <div class="surface pad result-card" id="result-card" hidden>
+              <div class="grain-local" aria-hidden="true"></div>
+              <p class="label t-caption">结果</p>
+              <p class="value t-display" id="result-value">137.8<span class="unit">ft</span></p>
+              <p class="detail">1 米 = 3.2808 英尺</p>
+              <button type="button" class="copy" id="copy-btn">复制</button>
+            </div>
+
+            <h3 style="margin-top:28px">面板 stoneSheet <span class="badge badge-web">Web 等价</span></h3>
+            <p class="note">compact 约 1/3（0.34）、medium 半屏、large 近全屏。网页为自绘层，不是 UIKit detent。关闭按钮视觉 30、触达 44。</p>
+            <div class="row">
+              <button type="button" class="btn kind-quiet" data-press data-sheet="compact" style="width:auto;padding:0 20px">compact</button>
+              <button type="button" class="btn kind-quiet" data-press data-sheet="medium" style="width:auto;padding:0 20px">medium</button>
+              <button type="button" class="btn kind-quiet" data-press data-sheet="large" style="width:auto;padding:0 20px">large</button>
+            </div>
+          </div>
+
+          <div class="block" id="comp-paywall">
+            <h3>空状态 EmptyState <span class="badge badge-web">Web 等价</span></h3>
+            <div class="surface pad">
+              <div class="empty">
+                <div class="sym" aria-hidden="true">
+                  <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="6" y="12" width="28" height="18" rx="2"/><path d="M6 16h28"/></svg>
+                </div>
+                <h4>还没有记录</h4>
+                <p>计算一次后，结果会出现在这里。</p>
+                <button type="button" class="btn kind-ink" data-press style="max-width:200px">继续</button>
+              </div>
+            </div>
+
+            <h3 style="margin-top:28px">付费墙 PaywallView <span class="badge badge-web">Web 等价</span></h3>
+            <p class="note">最多 3 个方案、最多 3 条权益。方案卡圆角源码为 md 14（Token xl 28 未用于方案卡）。选中缩放 0.98。价格和文案为组件结构示例。</p>
+            <div class="stack" style="max-width:400px">
+              <button type="button" class="pay-plan" aria-pressed="true">
+                <span class="dot"></span>
+                <span>永久解锁<span class="plan-note">一次购买，永久使用</span></span>
+                <span class="price">¥28</span>
+              </button>
+              <button type="button" class="pay-plan" aria-pressed="false">
+                <span class="dot"></span>
+                <span>年度<span class="plan-note">自动续期</span></span>
+                <span class="price">¥12 / 年</span>
+              </button>
+              <button type="button" class="pay-plan" aria-pressed="false">
+                <span class="dot"></span>
+                <span>月度</span>
+                <span class="price">¥3 / 月</span>
+              </button>
+              <ul class="perk-list">
+                <li>去掉水印</li>
+                <li>解锁全部工具</li>
+                <li>以后的更新</li>
+              </ul>
+              <p class="t-caption" style="text-align:center;color:var(--c-text-3)">恢复购买 · 条款 · 隐私</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="effects">
+          <h2 class="t-large cjk">效果</h2>
+          <p class="lede cjk">对应 <code>StoneEffectsGallery</code>。网页用连续 SDF 表面，不是 metallib。原生要求真机查看陀螺仪和触感。</p>
+          <div class="row" style="margin-bottom:20px">
+            <span class="t-footnote">漆面表面</span>
+            <div class="seg-mini" role="group" aria-label="漆面表面">
+              <button type="button" data-finish-btn="gloss" aria-pressed="true">亮</button>
+              <button type="button" data-finish-btn="matte">哑</button>
+            </div>
+          </div>
+
+          <div class="block" id="fx-goo">
+            <h3>GooField 软胶团块 <span class="badge badge-web">Web 等价</span></h3>
+            <p class="note">拖动团块。并集使用与 Metal 相同的多项式 smin，表面连续，不用粗线冒充胶颈。</p>
+            <div class="fx-stage" style="height:200px"><canvas id="fx-goo-field" class="fx-canvas" width="720" height="200" style="width:100%;height:200px"></canvas></div>
+            <p class="fx-caption">Web SDF · 非 gooBlobs 着色器</p>
+
+            <h3 style="margin-top:28px">GooMorph 液态变形 <span class="badge badge-web">Web 等价</span></h3>
+            <p class="note">点按：圆钮流入圆角面板，过程带小液滴。使用 reward / glide 弹簧。</p>
+            <div class="fx-stage" style="height:220px"><canvas id="fx-goo-morph" class="fx-canvas" width="720" height="220" style="width:100%;height:220px"></canvas></div>
+
+            <h3 style="margin-top:28px">液态开关 .goo <span class="badge badge-web">Web 等价</span></h3>
+            <div class="toggle-row" style="max-width:280px">
+              <span>液态开关</span>
+              <canvas id="fx-goo-toggle" width="104" height="64" style="width:52px;height:32px;cursor:pointer"></canvas>
+              <input type="checkbox" id="goo-toggle-input" class="sr-only" checked>
+            </div>
+          </div>
+
+          <div class="block" id="fx-lacquer">
+            <h3>漆面液态按钮 <span class="badge badge-web">Web 等价</span></h3>
+            <p class="note">按住并向外拖：先长出厚根细颈，再分出细丝，松手回缩；拉得过远会断裂。丝线可画出按钮外。Web 简化了原生 4 股×15 点绳索，不是 <code>lacquerGoo</code>。EffectHaptics 的拉伸与断裂触感不可模拟。</p>
+            <div class="fx-stage" style="height:180px">
+              <canvas id="fx-lacquer-main" class="fx-canvas" data-lacquer data-title="锁定描图" data-style="filled" data-tint="ink" width="720" height="180" style="width:100%;height:180px"></canvas>
+            </div>
+            <p class="fx-caption">样式 · 色 · 状态（拖任一颗查看拉丝）</p>
+            <div class="lacquer-row">
+              <div class="lacquer-slot"><canvas id="fx-lacquer-1" class="fx-canvas" data-lacquer data-title="实心" data-style="filled" data-tint="ink" width="280" height="180" style="width:100%;height:180px"></canvas></div>
+              <div class="lacquer-slot"><canvas id="fx-lacquer-2" class="fx-canvas" data-lacquer data-title="琉璃" data-style="glass" data-tint="ink" width="280" height="180" style="width:100%;height:180px"></canvas></div>
+              <div class="lacquer-slot"><canvas id="fx-lacquer-3" class="fx-canvas" data-lacquer data-title="描边" data-style="ghost" data-tint="ink" width="280" height="180" style="width:100%;height:180px"></canvas></div>
+              <div class="lacquer-slot"><canvas id="fx-lacquer-4" class="fx-canvas" data-lacquer data-title="锁" data-style="icon" data-tint="ink" width="280" height="180" style="width:100%;height:180px"></canvas></div>
+            </div>
+            <div class="lacquer-row">
+              <div class="lacquer-slot"><canvas id="fx-lacquer-5" class="fx-canvas" data-lacquer data-title="加载" data-state="loading" width="280" height="180" style="width:100%;height:180px"></canvas></div>
+              <div class="lacquer-slot"><canvas id="fx-lacquer-6" class="fx-canvas" data-lacquer data-title="完成" data-state="success" width="280" height="180" style="width:100%;height:180px"></canvas></div>
+              <div class="lacquer-slot"><canvas id="fx-lacquer-7" class="fx-canvas" data-lacquer data-title="锁定" data-state="warning" width="280" height="180" style="width:100%;height:180px"></canvas></div>
+              <div class="lacquer-slot"><canvas id="fx-lacquer-8" class="fx-canvas" data-lacquer data-title="删除" data-state="destructive" width="280" height="180" style="width:100%;height:180px"></canvas></div>
+              <div class="lacquer-slot"><canvas id="fx-lacquer-9" class="fx-canvas" data-lacquer data-title="禁用" data-state="disabled" width="280" height="180" style="width:100%;height:180px"></canvas></div>
+            </div>
+            <div class="lacquer-row">
+              <div class="lacquer-slot"><canvas id="fx-lacquer-10" class="fx-canvas" data-lacquer data-title="墨" data-tint="ink" width="280" height="180" style="width:100%;height:180px"></canvas></div>
+              <div class="lacquer-slot"><canvas id="fx-lacquer-11" class="fx-canvas" data-lacquer data-title="瓷" data-tint="porcelain" width="280" height="180" style="width:100%;height:180px"></canvas></div>
+              <div class="lacquer-slot"><canvas id="fx-lacquer-12" class="fx-canvas" data-lacquer data-title="朱" data-tint="vermilion" width="280" height="180" style="width:100%;height:180px"></canvas></div>
+              <div class="lacquer-slot"><canvas id="fx-lacquer-13" class="fx-canvas" data-lacquer data-title="翠" data-tint="jade" width="280" height="180" style="width:100%;height:180px"></canvas></div>
+              <div class="lacquer-slot"><canvas id="fx-lacquer-14" class="fx-canvas" data-lacquer data-title="青" data-tint="lapis" width="280" height="180" style="width:100%;height:180px"></canvas></div>
+              <div class="lacquer-slot"><canvas id="fx-lacquer-15" class="fx-canvas" data-lacquer data-title="紫" data-tint="amethyst" width="280" height="180" style="width:100%;height:180px"></canvas></div>
+            </div>
+          </div>
+
+          <div class="block" id="fx-faces">
+            <h3>漆面头像 12 形 <span class="badge badge-web">Web 等价</span></h3>
+            <p class="note">圆、方圆、胶囊、饭团、菱、团、六边、水滴、豆、五边、星、双耳。网页为 SDF 近似，不是 <code>lacquerAvatar</code> 着色器。表情分配与 EffectsGallery 一致。</p>
+            <div class="avatar-grid" id="avatar-grid"></div>
+
+            <h3 style="margin-top:28px">表情 13 种 <span class="badge badge-web">Web 等价</span></h3>
+            <p class="note">几何近似。精确口型、腮红和材质以原生与参考静帧为准。</p>
+            <div class="expr-grid" id="expr-grid"></div>
+
+            <h3 style="margin-top:28px">漆面伙伴 6 形 <span class="badge badge-web">Web 等价</span></h3>
+            <p class="note">circle、squircle、teardrop、rice、bean、capsule。</p>
+            <div class="buddy-grid" id="buddy-grid"></div>
+          </div>
+
+          <div class="block" id="fx-gaze">
+            <h3>gaze-v8 整眼跟手 <span class="badge badge-web">Web 等价</span></h3>
+            <p class="note">在区域内移动指针。整眼（眶）移动，不是只移瞳孔。参数：眶锚 ±0.34r / 0.08r，眶 0.115×0.1107r，眶走 0.250r / 0.240r，瞳走 0.020r，eyeScale 0.82，墨混 0.52。不要用 v6/v7。减弱动态时不跟手。对照下方六方向静帧。</p>
+            <div class="fx-stage" style="height:208px"><canvas id="fx-gaze-canvas" class="fx-canvas" width="720" height="208" style="width:100%;height:208px"></canvas></div>
+            <p class="fx-caption">Web 跟手 · 核准基线 gaze-v8 · 非 lacquerBuddyField 着色器</p>
+          </div>
+
+          <div class="block" id="fx-kiss">
+            <h3>接触、拉伸、断裂回缩、吸合 <span class="badge badge-web">Web 等价</span></h3>
+            <p class="note">拖动任一团靠近：先出现厚根细颈的连续接触面；再拉开可拉丝、过远断裂并回缩；挤在一起会吸合。不要把胶颈画成一条线。精确亲吻时间轴与口型以 kiss-v5 录像为准，本页不宣称像素级等同。</p>
+            <div class="fx-stage" style="height:240px"><canvas id="fx-kiss-canvas" class="fx-canvas" width="720" height="240" style="width:100%;height:240px"></canvas></div>
+            <p class="fx-caption">Web SDF · 对照 kiss-v5 / flow-v9 参考</p>
+          </div>
+
+          <div class="block" id="fx-shared">
+            <h3>墨水涟漪 inkRipple <span class="badge badge-web">Web 等价</span></h3>
+            <p class="note">时长 1.2s，默认振幅 12。网页为径向波纹近似，不是 layerEffect 对底层像素的折射。</p>
+            <div class="ripple-box" id="ripple-box">
+              <span class="t-title cjk">点按网格落下</span>
+              <span class="wave"></span>
+            </div>
+
+            <h3 style="margin-top:28px">倾斜高光 tiltGlint <span class="badge badge-web">Web 等价</span></h3>
+            <p class="note">默认强度 0.14。本页用指针驱动高光。真机陀螺仪倾斜属于 TiltMotion，无法在此稳定复现，需原生验证。</p>
+            <div class="tilt-card" id="tilt-card">
+              <div class="glint" aria-hidden="true"></div>
+              <span class="t-title">永久解锁</span>
+            </div>
+
+            <h3 style="margin-top:28px">倾斜姿态 TiltMotion <span class="badge badge-cannot">不可模拟</span></h3>
+            <p class="note">依赖 Core Motion。本页不编造设备姿态数据。</p>
+
+            <h3 style="margin-top:28px">导出成功 exportSuccess <span class="badge badge-web">Web 等价</span></h3>
+            <p class="note">视觉约 1.6s。successBloom 触感不可模拟。</p>
+            <div class="row">
+              <button type="button" class="btn kind-ink" data-press id="export-btn" style="width:auto;padding:0 24px">导出</button>
+            </div>
+            <div class="export-stage" id="export-stage"><div class="export-mark" aria-hidden="true">✓</div></div>
+
+            <h3 style="margin-top:28px">Metal 着色器入口 <span class="badge badge-cannot">不可模拟</span></h3>
+            <p class="note">网页不能运行 <code>IstoneEffects.metal</code> / metallib。<code>StoneEffects.isEnabled</code> 与 <code>LacquerShaders</code> 是 iOS 运行时能力。</p>
+            <p class="t-footnote"><code>lacquerGoo</code> · <code>lacquerAvatar</code> · <code>gooBlobs</code> · <code>tiltGlint</code> · <code>inkRipple</code> · <code>lacquerBuddy</code> · <code>lacquerBuddyField</code> · <code>lacquerBuddyMerge</code></p>
+          </div>
+        </section>
+
+        <section class="section" id="fruit-goo">
+          <h2 class="t-large cjk">糖胶水果 · 果合大作战</h2>
+          <p class="lede cjk">软胶水果全套，v12 最新版。方向：果冻 Q 弹在水果本身——深压扁、多段回弹、剪切晃动、拖拽拉伸、体转，水果之间不加元素。胶颈、拉丝、黏丝方向已作废（2026-11-16 用户定），本页不收。玩法、计分、存档保留原游戏。</p>
+
+          <div class="block" id="fg-play">
+            <h3>可玩游戏 <span class="badge badge-web">Web 等价</span></h3>
+            <p class="note">直接玩：投放器只投 5 种最小水果，带内按住拖动瞄准、松手掉落；同种一碰就合；结束线、最高分、进化链都在。手机上点开就能玩。</p>
+            <iframe class="game-frame" src="fruit-goo-playground.html" loading="lazy" title="果合大作战可玩演示"></iframe>
+            <p class="fx-caption"><a href="fruit-goo-playground.html" target="_blank" rel="noopener">全屏打开游戏 ↗</a> · 最高分存在本机浏览器里</p>
+          </div>
+
+          <div class="block" id="fg-atlas">
+            <h3>水果图鉴 · 19 种 <span class="badge badge-web">Web 等价</span></h3>
+            <p class="note">按进化链顺序排，小到大。等级按含糖量排（美国农业部食物数据库，每 100 克可食部总糖），半径 24 + 等级×3。西瓜与椰子同为 6.2 克，按精确值（西瓜 6.2、椰子 6.22）西瓜在前。</p>
+            <div class="fruit-grid">
+              <div class="fruit-cell"><img src="fruit-goo/avocado.png" alt="牛油果" loading="lazy"><span class="fname">牛油果</span><span class="flevel">0 级</span><span class="fsugar">糖 0.66 克</span></div>
+              <div class="fruit-cell"><img src="fruit-goo/lemon.png" alt="柠檬" loading="lazy"><span class="fname">柠檬</span><span class="flevel">1 级</span><span class="fsugar">糖 2.5 克</span></div>
+              <div class="fruit-cell"><img src="fruit-goo/raspberry.png" alt="树莓" loading="lazy"><span class="fname">树莓</span><span class="flevel">2 级</span><span class="fsugar">糖 4.4 克</span></div>
+              <div class="fruit-cell"><img src="fruit-goo/strawberry.png" alt="草莓" loading="lazy"><span class="fname">草莓</span><span class="flevel">3 级</span><span class="fsugar">糖 4.9 克</span></div>
+              <div class="fruit-cell"><img src="fruit-goo/watermelon.png" alt="西瓜" loading="lazy"><span class="fname">西瓜</span><span class="flevel">4 级</span><span class="fsugar">糖 6.2 克</span></div>
+              <div class="fruit-cell"><img src="fruit-goo/coconut.png" alt="椰子" loading="lazy"><span class="fname">椰子</span><span class="flevel">5 级</span><span class="fsugar">糖 6.2 克</span></div>
+              <div class="fruit-cell"><img src="fruit-goo/cantaloupe.png" alt="哈密瓜" loading="lazy"><span class="fname">哈密瓜</span><span class="flevel">6 级</span><span class="fsugar">糖 7.86 克</span></div>
+              <div class="fruit-cell"><img src="fruit-goo/peach.png" alt="桃子" loading="lazy"><span class="fname">桃子</span><span class="flevel">7 级</span><span class="fsugar">糖 8.4 克</span></div>
+              <div class="fruit-cell"><img src="fruit-goo/kiwi.png" alt="猕猴桃" loading="lazy"><span class="fname">猕猴桃</span><span class="flevel">8 级</span><span class="fsugar">糖 8.99 克</span></div>
+              <div class="fruit-cell"><img src="fruit-goo/orange.png" alt="橙子" loading="lazy"><span class="fname">橙子</span><span class="flevel">9 级</span><span class="fsugar">糖 9.4 克</span></div>
+              <div class="fruit-cell"><img src="fruit-goo/pear.png" alt="梨" loading="lazy"><span class="fname">梨</span><span class="flevel">10 级</span><span class="fsugar">糖 9.8 克</span></div>
+              <div class="fruit-cell"><img src="fruit-goo/pineapple.png" alt="菠萝" loading="lazy"><span class="fname">菠萝</span><span class="flevel">11 级</span><span class="fsugar">糖 9.9 克</span></div>
+              <div class="fruit-cell"><img src="fruit-goo/apple.png" alt="苹果" loading="lazy"><span class="fname">苹果</span><span class="flevel">12 级</span><span class="fsugar">糖 10.4 克</span></div>
+              <div class="fruit-cell"><img src="fruit-goo/banana.png" alt="香蕉" loading="lazy"><span class="fname">香蕉</span><span class="flevel">13 级</span><span class="fsugar">糖 12.23 克</span></div>
+              <div class="fruit-cell"><img src="fruit-goo/persimmon.png" alt="柿子" loading="lazy"><span class="fname">柿子</span><span class="flevel">14 级</span><span class="fsugar">糖 12.5 克</span></div>
+              <div class="fruit-cell"><img src="fruit-goo/cherry.png" alt="樱桃" loading="lazy"><span class="fname">樱桃</span><span class="flevel">15 级</span><span class="fsugar">糖 12.8 克</span></div>
+              <div class="fruit-cell"><img src="fruit-goo/mango.png" alt="芒果" loading="lazy"><span class="fname">芒果</span><span class="flevel">16 级</span><span class="fsugar">糖 13.66 克</span></div>
+              <div class="fruit-cell"><img src="fruit-goo/grape.png" alt="葡萄" loading="lazy"><span class="fname">葡萄</span><span class="flevel">17 级</span><span class="fsugar">糖 15.5 克</span></div>
+              <div class="fruit-cell"><img src="fruit-goo/fig.png" alt="无花果" loading="lazy"><span class="fname">无花果</span><span class="flevel">18 级 · 最大</span><span class="fsugar">糖 16.26 克</span></div>
+            </div>
+            <p class="fx-caption">带柄 12 种、无柄 7 种；带柄的柄叶是独立图，跟着果体弹抖。合成得分（目标等级+2）×10，双无花果消除 +350。</p>
+          </div>
+
+          <div class="block" id="fg-how">
+            <h3>实现要点 <span class="badge badge-web">Web 等价</span></h3>
+            <ul class="do-list">
+              <li><strong>软接触：</strong>地板与水果间用弹簧加阻尼（罚弹簧），穿透深度即物理压缩，视觉压扁 = 穿透 ÷ 半径；压扁在接触约 80 毫秒里逐渐形成，不是落地瞬间阶跃。</li>
+              <li><strong>接触锚定形变：</strong>形变网格锚在接触点，果底贴地、果心下沉；接触端压满、远端不动、中部鼓出；对称拉伸（拖拽、甩出、自由晃动）以果心为锚。</li>
+              <li><strong>体转（v12）：</strong>摩擦作用在接触点滑移速度上，既减滑移又生力矩。横着滑出去的落地后由滑转滚（v=ω·r 锁死），斜着撞上另一颗会翻个身，直着掉的不转。滚动阻力 6，约 1 秒停稳。抓着定住不转，甩出按抓点偏心带转。压扁轴是世界系的、体转是果子自己的，网格先转后压扁。</li>
+              <li><strong>一碰就合：</strong>同种重叠超过 0.01×小直径即合，不用等压深、不用按住半秒；0.28 秒交融动画（两颗向中点收缩淡出、新果弹出），像漆液交融相互吸收，不炸、无粒子。</li>
+              <li><strong>地板回弹 0.13：</strong>落地闷墩一下就停住；水果间回弹约 0.25，果堆少晃。</li>
+              <li><strong>柄叶弹簧：</strong>柄叶拆成独立图，弯曲网格跟果体弹抖；果子压在柄叶上时柄往受力侧弯、被压短，拿走弹回来。弹抖系数滑杆（0 最沉稳—1 最活泼），默认沉稳。</li>
+              <li><strong>防闪烁：</strong>压扁轴与锚点改目标加插值（不直接赋值）、压扁交接改插值、呼吸相位每颗出生时随机定死；余晃阶段三项跳变实测全是 0。</li>
+              <li><strong>性能：</strong>静止水果整图直绘不走网格，网格降格（果体 6×6、柄叶 3×6）；落稳后一帧绘制调用从几百次降到 9 次。</li>
+              <li><strong>FruitGooGame 完整游戏组件已进设计系统：</strong>投放、合成、计分、结束、最高分、进化链都在 Swift 包内。转交手册「游戏规则不进设计系统」一条，已于 2026-11-16 被用户决定推翻，设计系统是唯一沉淀地。</li>
+              <li><strong>验证：</strong>网页 harness 102 项全过（含 8 项转动回归）；Swift 测试 45 个。果体白线已修（逐格仿射第四角误差，自适应重叠盖住，像素验证过）。</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="section" id="reference">
+          <h2 class="t-large cjk">原生参考</h2>
+          <p class="lede cjk">这些是已有的真实录像与静帧，从本机资料复制，未新录、未重做游戏。用来对照 Web 近似与原生的差别。</p>
+          <div class="media-grid">
+            <figure class="media-card wide">
+              <video controls preload="metadata" src="media/ref-linkgame-kiss-v5-fixed-frontal-normal-speed.mp4"></video>
+              <figcaption class="fx-caption">kiss-v5 正面常速 · 亲吻与接触的真实外观</figcaption>
+            </figure>
+            <figure class="media-card">
+              <img src="media/ref-linkgame-kiss-v5-horizontal-stages.png" alt="kiss-v5 水平阶段">
+              <figcaption class="fx-caption">kiss-v5 水平阶段</figcaption>
+            </figure>
+            <figure class="media-card">
+              <img src="media/ref-linkgame-kiss-v5-horizontal-approach-detail.png" alt="kiss-v5 水平接近特写">
+              <figcaption class="fx-caption">kiss-v5 水平接近特写</figcaption>
+            </figure>
+            <figure class="media-card">
+              <img src="media/ref-linkgame-kiss-v5-vertical-stages.png" alt="kiss-v5 垂直阶段">
+              <figcaption class="fx-caption">kiss-v5 垂直阶段</figcaption>
+            </figure>
+            <figure class="media-card">
+              <img src="media/ref-linkgame-kiss-v5-vertical-contact-detail.png" alt="kiss-v5 垂直接触特写">
+              <figcaption class="fx-caption">kiss-v5 垂直接触特写</figcaption>
+            </figure>
+            <figure class="media-card wide">
+              <img src="media/ref-linkgame-gaze-v8-six-directions.png" alt="gaze-v8 六方向">
+              <figcaption class="fx-caption">gaze-v8 六方向（核准整眼跟手）</figcaption>
+            </figure>
+            <figure class="media-card">
+              <img src="media/ref-linkgame-flow-v9-last-pair-goo.png" alt="flow-v9 末对软胶">
+              <figcaption class="fx-caption">flow-v9 末对软胶</figcaption>
+            </figure>
+            <figure class="media-card">
+              <img src="media/ref-linkgame-flow-v9-playthrough-keyframes.png" alt="flow-v9 流程关键帧">
+              <figcaption class="fx-caption">flow-v9 流程关键帧</figcaption>
+            </figure>
+          </div>
+        </section>
+
+        <section class="section" id="coverage">
+          <h2 class="t-large cjk">覆盖清单</h2>
+          <p class="lede cjk">设计系统目录中已盘点的全部项。三类：Web 等价、原生参考、不可模拟。不把缺项说成已实现。</p>
+          <div id="coverage-stats" class="row" style="margin-bottom:16px"></div>
+          <div class="cov-filters seg-mini" role="group" aria-label="筛选">
+            <button type="button" data-cov-filter="all" aria-pressed="true">全部</button>
+            <button type="button" data-cov-filter="web">Web 等价</button>
+            <button type="button" data-cov-filter="native-ref">原生参考</button>
+            <button type="button" data-cov-filter="cannot">不可模拟</button>
+          </div>
+          <div class="surface" style="overflow:auto">
+            <table class="cov-table">
+              <thead><tr><th>项目</th><th>类型</th><th>来源</th><th>说明</th></tr></thead>
+              <tbody id="coverage-body"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="section" id="spec">
+          <h2 class="t-large cjk">规范补录</h2>
+          <p class="lede cjk">转交手册（STONE_AI_HANDOFF.md）里预览页没有的条文，照录进来。数值以 IstoneDesign Token 源码为准。</p>
+
+          <div class="block" id="principles">
+            <h3>原则摘要 <span class="badge badge-web">手册 §1</span></h3>
+            <ul class="do-list">
+              <li>账号下所有 iOS 小工具共用同一套视觉与交互。目标：克制、高级、功能优先、零冗余；动效和触感到位，底子极简、干净、饱满，避免花杂。</li>
+              <li>每个 App 根视图三步：石底 → 本 App 唯一强调色槽位 → 只用本包组件和 Token，不写魔法数字。</li>
+              <li>强调色只标记「当前活跃的值」和「每屏一个主操作」，其他一律中性灰。</li>
+              <li>每屏最多 1 个签名效果 + 1 个共享效果，放在最重要的真实动作上，不做循环装饰动画。</li>
+              <li>不要把连连看专属形象（棋盘伙伴 / 注视 / 亲嘴）强制给所有工具——它们是可复用的漆面原语，不是全局吉祥物。</li>
+            </ul>
+          </div>
+
+          <div class="block" id="usage">
+            <h3>使用与禁止 <span class="badge badge-web">手册 §10</span></h3>
+            <p class="note"><strong>使用：</strong></p>
+            <ul class="do-list">
+              <li>iOS 只用 IstoneDesign 的 Token 与组件，不写颜色、字号、间距、圆角、动画的字面量。颜色用 Palette / AppAccent，字体用 typeStyle，间距用 Space，圆角用 Radius 且 continuous。</li>
+              <li>动画只用四个 Motion 预设，触感只用 Haptic。强调色每屏只出现在活跃值和一个主操作上。</li>
+              <li>签名效果只用该 App 分配的那一个，放在最重要的动作上。导出一律用导出成功；卡片底面可用倾斜高光。</li>
+              <li>浅色、深色、高对比度、最大动态字体下都可读。任何一行可删而不影响使用的文字都不应存在。</li>
+            </ul>
+            <p class="note"><strong>禁止：</strong></p>
+            <ul class="do-list">
+              <li>不加引导页、不加教程浮层、不加评分弹窗、不加装饰图。</li>
+              <li>不自写新的着色器特效；棋盘合批 / 吸合走包内着色器，不要在 App metallib 里再抄一份。</li>
+              <li>内容层不用 Liquid Glass。不用 SF Pro Rounded。中文段落不用负字距。</li>
+              <li>颗粒不铺在文字、按钮、输入框上。倾斜高光不加在含文字的容器、输入框、列表行或会长列表里的每一行。</li>
+              <li>不做循环装饰动画；签名 / 共享效果只在真实事件上播放。</li>
+              <li>不把连连看伙伴形象、注视棋盘、亲嘴动画套到未分配该效果的工具上。</li>
+              <li>生产 UI 不显示 DEBUG 注视标记或录制器。漆面按钮丝线会画到按钮外 96pt，父视图不要裁剪；按钮放在不滚动的位置（底部操作区）。</li>
+              <li>模拟器没有陀螺仪和触感，相关验收必须用真机（iOS）。</li>
+            </ul>
+            <p class="note">一条已改：手册原写「游戏规则不进设计系统」，2026-11-16 用户已推翻——FruitGooGame 完整游戏组件现已进设计系统，见上方糖胶水果一节。</p>
+            <p class="note">特效统一降级：减弱动态或效果总开关关闭时，无形变、无丝线、无倾斜，只保留淡入淡出和普通触感；倾斜高光在无陀螺仪时停在默认位置；静止后降低开销，同屏 GPU 效果区域 ≤ 2 处。</p>
+          </div>
+
+          <div class="block" id="webmap">
+            <h3>网页适配映射 <span class="badge badge-web">手册 §12</span></h3>
+            <p class="note">把 Token 翻译到 Web 的建议，供在 CSS / JS 中重实现。它不是可安装的组件库，也不能替代 IstoneDesign。弹簧不是 CSS 秒数：response 0.20 / 0.32 / 0.45 / 0.55 不能当作 transition-duration；Web 要近似应用弹簧物理（或明确标注为非等价的缓动近似），减弱动态下改用 0.10 / 0.15 / 0.20 / 0.25s 淡入淡出，去掉位移与缩放。</p>
+            <div class="row" style="margin-bottom:8px"><button type="button" class="btn kind-quiet" data-press data-copy-target="webmap-code" style="width:auto;padding:0 20px">复制 CSS 变量</button></div>
+            <pre class="code-block" id="webmap-code"><code>/* 映射建议，不是完整组件库。请同时实现深色与高对比。 */
+:root {
+  --stone-base: #F7F7F5;
+  --stone-raised: #FFFFFF;
+  --stone-sunken: #EFEFEC;
+  --stone-fill: #E8E8E4;
+  --stone-fill-strong: #D6D6D1;
+  --stone-hairline: rgba(0, 0, 0, 0.08);
+  --stone-line-strong: rgba(0, 0, 0, 0.16);
+  --stone-text: #121211;
+  --stone-text-secondary: #6B6B67;
+  --stone-text-tertiary: #A3A39E;
+  --stone-ink: #121211;
+  --stone-on-ink: #FFFFFF;
+  --stone-success: #1F9D55;
+  --stone-warning: #C77C02;
+  --stone-danger: #D93036;
+  --stone-thumb: #FFFFFF;
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
+  --space-5: 20px; --space-6: 24px; --space-8: 32px; --space-10: 40px; --space-14: 56px;
+  --space-margin: 20px;
+  --hit-target: 44px;
+  --radius-xs: 6px; --radius-sm: 10px; --radius-md: 14px;
+  --radius-lg: 20px; --radius-xl: 28px;
+  --hairline: 1px; /* 更准确：1 / devicePixelRatio px */
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display",
+    "PingFang SC", "Noto Sans CJK SC", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --stone-base: #0A0A0B;
+    --stone-raised: #161618;
+    --stone-sunken: #1C1C1F;
+    --stone-fill: #252528;
+    --stone-fill-strong: #3A3A3E;
+    --stone-hairline: rgba(255, 255, 255, 0.10);
+    --stone-line-strong: rgba(255, 255, 255, 0.20);
+    --stone-text: #F4F4F2;
+    --stone-text-secondary: #9C9C9F;
+    --stone-text-tertiary: #5E5E62;
+    --stone-ink: #F4F4F2;
+    --stone-on-ink: #0A0A0B;
+    --stone-success: #3DD68C;
+    --stone-warning: #F5B83D;
+    --stone-danger: #FF5C61;
+  }
+}</code></pre>
+            <p class="note">圆角优先模拟连续曲率（如 corner-shape / superellipse），普通 border-radius 只是近似。Web 需自行重做、且不可声称“已附带 Swift 实现”的部分：Metal 漆面 / 墨波 / 倾斜高光、UIKit / Core Haptics、Liquid Glass、SwiftUI 弹簧与 matchedGeometry。</p>
+          </div>
+
+          <div class="block" id="prompt">
+            <h3>约束提示词 <span class="badge badge-web">手册 §13 · 全文照录</span></h3>
+            <p class="note">可直接复制给其他 AI。数值以 IstoneDesign Token 源码为准，不要臆造。</p>
+            <div class="row" style="margin-bottom:8px"><button type="button" class="btn kind-quiet" data-press data-copy-target="prompt-code" style="width:auto;padding:0 20px">复制提示词</button></div>
+            <pre class="code-block" id="prompt-code"><code>你在实现 istone / Stone 风格界面。必须遵守 Stone 视觉规范（见 STONE_AI_HANDOFF.md，数值以 IstoneDesign Token 源码为准，不要臆造）。
+
+原则：极简克制、干净饱满、功能优先、零冗余。不要花杂，不要装饰图、引导页、教程浮层、评分弹窗。
+
+颜色只用规范里的 Palette 与 8 个 AppAccent 槽位（浅/深必须成对实现）。每个产品只用一个强调色；每屏强调色只出现在「当前活跃值」和「一个主操作」上，其余中性灰。Amber 上的文字始终是 #121211。不要把漆面材料色当成 App 强调色。
+
+字体：SF Pro + PingFang SC，等宽用 SF Mono / ui-monospace。禁止 SF Pro Rounded。中文不要负字距，正文需中文行距补偿。字号走 typeStyle 阶梯，不要随意写字号。
+
+间距走 4pt 网格（4/8/12/16/20/24/32/40/56，页边 20）。圆角 6/10/14/20/28，连续曲率，嵌套用同心（外圆角−内边距，最小 2）。发丝线 1 物理像素。点击区 ≥ 44。主按钮高 56，输入框/列表行高 52。
+
+表面：页面底 #F7F7F5 / #0A0A0B + 可选细颗粒（只铺大底和主结果卡，不铺文字/按钮/输入框）。卡片用 raised，输入用 sunken。浮层玻璃只用于浮在内容上的控件，内容层禁止。
+
+动效只用四个弹簧预设 press/snap/glide/reward（response 0.20/0.32/0.45/0.55，damping 0.90/0.82/1.00/0.70）。这些是弹簧参数，不是 CSS 秒数。reward 每屏最多一次。减弱动态时去掉位移和缩放，只保留 0.10/0.15/0.20/0.25s 淡入淡出。
+
+每屏最多 1 个签名效果 + 1 个共享效果，只在真实事件上播放，不做循环装饰。不要把连连看的伙伴 / 注视 / 亲嘴形象强制用到所有工具。若实现注视，必须按 gaze-v8：固定正面、整眼平移（socketTravel 0.250r/0.240r，pupilTravel 0.020r）、低对比、嘴与身体连续、纵向正面嘟嘴轻靠、不翻脸。
+
+iOS 可直接复用 IstoneDesign Swift package。Web 必须按同一 Token 重实现视觉，不能声称 Swift / Metal / 触感 / Liquid Glass 特效可直接使用。现有 style.css 只是不完整的站点映射，不是 CSS 组件库。
+
+浅色、深色、高对比、大字号下都要可读。先对照 STONE_AI_HANDOFF.md 的验收清单再交付。</code></pre>
+          </div>
+
+          <div class="block" id="checklist">
+            <h3>验收清单 <span class="badge badge-web">手册 §14</span></h3>
+            <ul class="check-list">
+              <li>浅色、深色、高对比度、最大动态字体下都可读</li>
+              <li>开启「减弱动态效果」后没有缩放和位移，只用 0.10–0.25s 淡入淡出（对应四个预设的精确时长）</li>
+              <li>每屏强调色不超过两处（活跃值 + 一个主操作）</li>
+              <li>所有点击区域 ≥ 44pt</li>
+              <li>没有任何一行文字可以删掉而不影响使用</li>
+              <li>未写颜色 / 字号 / 间距 / 圆角 / 动画字面量（iOS 走 Token；Web 走与 Token 一一对应的变量，而不是随意新值）</li>
+              <li>圆角为连续曲率；嵌套同心</li>
+              <li>发丝线为 1 物理像素；深色 raised 无投影、有顶部高光线</li>
+              <li>颗粒只出现在大底和主结果卡</li>
+              <li>内容层无 Liquid Glass；无引导页 / 教程浮层 / 评分弹窗 / 装饰图</li>
+              <li>每屏最多 1 个签名效果 + 1 个共享效果；无循环装饰动画</li>
+              <li>未把连连看伙伴形象强制用到无关工具</li>
+              <li>若有注视 / 亲嘴：符合 gaze-v8（固定正面整眼平移、低对比、嘴身连续、纵向嘟嘴轻靠、不翻脸）；生产 UI 无 DEBUG 标记</li>
+              <li>reward 每屏最多一次；导出用导出成功（或 Web 上的等价一次反馈），倾斜高光只加在底面</li>
+              <li>Web 实现未声称 Swift / Metal 特效可直接使用；弹簧未被误写成 CSS 秒数</li>
+              <li>iOS 触感与倾斜验收用真机（模拟器无陀螺仪和触感）</li>
+            </ul>
+          </div>
+        </section>
+
+        <p class="t-caption" style="color:var(--c-text-3)">Stone Design 统一效果页 · 网页演示不是 Metal / SwiftUI 原生运行</p>
+      </main>
+    </div>
+  </div>
+
+  <div class="sheet-scrim" id="sheet-scrim">
+    <div class="sheet size-medium" id="sheet" role="dialog" aria-labelledby="sheet-title">
+      <div class="sheet-header">
+        <h3 id="sheet-title">单位</h3>
+        <button type="button" class="sheet-close" id="sheet-close" aria-label="关闭"><span>×</span></button>
+      </div>
+      <div class="sheet-body">
+        <div class="seg" role="group" aria-label="面板内单位">
+          <div class="seg-thumb" aria-hidden="true"></div>
+          <button type="button" aria-pressed="true">米</button>
+          <button type="button" aria-pressed="false">英尺</button>
+        </div>
+        <p class="note" style="margin-top:16px">这是网页自绘面板，用来预览档位高度与页头，不是系统 sheet。</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/coverage-data.js"></script>
+  <script src="js/effects.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    // 统一页新增：复制按钮（提示词 / CSS 变量），成功文案保持 1.4s
+    document.querySelectorAll('[data-copy-target]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var el = document.getElementById(btn.getAttribute('data-copy-target'));
+        if (!el) return;
+        var text = el.innerText || el.textContent;
+        var done = function () {
+          var old = btn.textContent;
+          btn.textContent = '已复制';
+          setTimeout(function () { btn.textContent = old; }, 1400);
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(done, function () { fallbackCopy(text, done); });
+        } else { fallbackCopy(text, done); }
+      });
+    });
+    function fallbackCopy(text, done) {
+      var ta = document.createElement('textarea');
+      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); } catch (e) {}
+      document.body.removeChild(ta); done();
+    }
+  </script>
+</body>
+</html>
