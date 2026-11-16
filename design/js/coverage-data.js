@@ -1,0 +1,599 @@
+/* 内嵌覆盖清单，供 file:// 直接打开，勿再 fetch。 */
+window.STONE_COVERAGE = {
+  "meta": {
+    "name": "Stone Design 统一效果页覆盖清单",
+    "sourceOfTruth": "本机 IstoneDesign 源码，及已提取的 tokens.json。冲突时以 Swift 源码为准。",
+    "scope": "只覆盖设计系统里已经存在的令牌、组件、效果、糖胶水果与已有真实参考，不发明新设计。",
+    "notMetal": "本页 Web 演示不是 Metal / SwiftUI 原生来样运行。",
+    "private": "公开统一页（istone.cc/design/），无 CDN。",
+    "counts": {
+      "total": 64,
+      "web": 54,
+      "native-ref": 4,
+      "cannot": 6
+    }
+  },
+  "kinds": {
+    "web": "Web 等价：可用本页交互查看，并标明与原生的差异。",
+    "native-ref": "原生参考：用已有真实录像或静帧展示，不是本页实时着色器。",
+    "cannot": "不可模拟：触觉、Metal 库、陀螺仪姿态、Liquid Glass 等，只列清并说明需原生验证。"
+  },
+  "items": [
+    {
+      "id": "ramp",
+      "title": "灰阶 Stone Ramp 0–12",
+      "source": "Color+Tokens.swift · StoneRamp",
+      "kind": "web",
+      "section": "tokens",
+      "preview": "#tokens",
+      "note": "浅色 0 最亮→12 最暗，深色相反。"
+    },
+    {
+      "id": "palette",
+      "title": "语义色 Palette",
+      "source": "Color+Tokens.swift · Palette",
+      "kind": "web",
+      "section": "tokens",
+      "preview": "#tokens",
+      "note": "底色、浮起、凹陷、填充、发丝、文字、成功/警告/危险。"
+    },
+    {
+      "id": "accents",
+      "title": "八个 App 强调色槽位",
+      "source": "Color+Tokens.swift · AppAccent.allSlots",
+      "kind": "web",
+      "section": "tokens",
+      "preview": "#tokens",
+      "note": "默认 Ember。顶部可切换。含 on 字色。"
+    },
+    {
+      "id": "typography",
+      "title": "字体 TypeStyle",
+      "source": "Typography.swift",
+      "kind": "web",
+      "section": "tokens",
+      "preview": "#tokens",
+      "note": "九级样式。本页用系统字体回落，不是 SF Pro 本体；禁止 SF Pro Rounded。callout 以实现为准（系统 callout 默认 16pt）。"
+    },
+    {
+      "id": "space",
+      "title": "间距 Space",
+      "source": "Layout.swift · Space",
+      "kind": "web",
+      "section": "tokens",
+      "preview": "#tokens",
+      "note": "4pt 网格。仅使用源码枚举，不发明未收录的全局间距。"
+    },
+    {
+      "id": "radius",
+      "title": "圆角 Radius",
+      "source": "Layout.swift · Radius",
+      "kind": "web",
+      "section": "tokens",
+      "preview": "#tokens",
+      "note": "Web 为普通圆角近似，无法原样使用 SwiftUI .continuous。含 concentric。"
+    },
+    {
+      "id": "hairline",
+      "title": "发丝线 Hairline",
+      "source": "Layout.swift · Hairline / Palette.hairline",
+      "kind": "web",
+      "section": "tokens",
+      "preview": "#tokens",
+      "note": "1 物理像素。列表分隔缩进：无图标 16，有图标 56。"
+    },
+    {
+      "id": "surface",
+      "title": "表面层级 flat / raised / sunken",
+      "source": "Layout.swift · SurfaceLevel",
+      "kind": "web",
+      "section": "tokens",
+      "preview": "#tokens",
+      "note": "浅色 raised 两层淡投影；深色无投影、顶部发丝高光。"
+    },
+    {
+      "id": "stone-background",
+      "title": "页面底 stoneBackground",
+      "source": "Texture.swift",
+      "kind": "web",
+      "section": "tokens",
+      "preview": "#tokens",
+      "note": "底色 + 可选颗粒。"
+    },
+    {
+      "id": "grain",
+      "title": "颗粒质感 Grain",
+      "source": "Texture.swift · GrainTile",
+      "kind": "web",
+      "section": "tokens",
+      "preview": "#tokens",
+      "note": "用源码同一 LCG 种子生成 128×128 @2x 灰度瓦片；浅色 multiply 4%，深色 screen 3.5%。不用于文字、按钮、输入框。"
+    },
+    {
+      "id": "motion",
+      "title": "四个弹簧 Motion",
+      "source": "Motion.swift",
+      "kind": "web",
+      "section": "tokens",
+      "preview": "#tokens",
+      "note": "JS 按 response / dampingFraction 积分，不是把 response 写成 CSS 秒数。减弱动态改用源码给定的短缓动。"
+    },
+    {
+      "id": "press-scale",
+      "title": "按压 PressScaleStyle",
+      "source": "PrimaryButton.swift",
+      "kind": "web",
+      "section": "components",
+      "preview": "#components",
+      "note": "默认 0.97 缩放 + 亮度 −4%；减弱动态不缩放，透明度 0.8。"
+    },
+    {
+      "id": "reveal",
+      "title": "揭示 revealOnInsert",
+      "source": "Motion.swift",
+      "kind": "web",
+      "section": "components",
+      "preview": "#components",
+      "note": "淡入 + 上移 8pt + 0.96→1；移除仅淡出；减弱动态只留淡入淡出。"
+    },
+    {
+      "id": "floating-glass",
+      "title": "floatingGlass / Liquid Glass",
+      "source": "Layout.swift",
+      "kind": "cannot",
+      "section": "tokens",
+      "preview": "#tokens",
+      "note": "iOS 26 glassEffect 无法在网页复现。本页用 backdrop-filter 示意用途（浮在内容上的条），不是 Liquid Glass。需原生验证。"
+    },
+    {
+      "id": "haptics",
+      "title": "触感 Haptic",
+      "source": "Tokens/Haptics.swift",
+      "kind": "cannot",
+      "section": "tokens",
+      "preview": "#tokens",
+      "note": "列出全部 10 个事件与 UIKit 映射。网页无法调用 Taptic Engine；即使有 Vibration API 也不等同，故不模拟手感。"
+    },
+    {
+      "id": "primary-button",
+      "title": "主按钮 PrimaryButton",
+      "source": "Components/PrimaryButton.swift",
+      "kind": "web",
+      "section": "components",
+      "preview": "#components",
+      "note": "三种 kind：ink / accent / quiet。状态：默认、按下、加载、禁用。高度 56，圆角 14，全宽，headline。"
+    },
+    {
+      "id": "toggle",
+      "title": "开关 .toggleStyle(.stone)",
+      "source": "Components/Toggle.swift",
+      "kind": "web",
+      "section": "components",
+      "preview": "#components",
+      "note": "轨道 52×32，拇指 28，按下拇指拉宽到 34，内边距 2，禁用透明度 0.4。"
+    },
+    {
+      "id": "slider",
+      "title": "滑杆 StoneSlider",
+      "source": "Components/Slider.swift",
+      "kind": "web",
+      "section": "components",
+      "preview": "#components",
+      "note": "轨道 6，拖动加粗到 10，拇指 28，拖动缩放 1.1，到达端点在原生会触发 edge 触感。"
+    },
+    {
+      "id": "segmented",
+      "title": "分段 SegmentedControl",
+      "source": "Components/SegmentedControl.swift",
+      "kind": "web",
+      "section": "components",
+      "preview": "#components",
+      "note": "高度 44，内边距 2，外框圆角 10，滑块圆角 8。"
+    },
+    {
+      "id": "input",
+      "title": "输入框 InputField",
+      "source": "Components/InputField.swift",
+      "kind": "web",
+      "section": "components",
+      "preview": "#components",
+      "note": "默认 / 聚焦（1.5 边 + 4 光晕）/ 错误（抖动 −6,5,−3,0，0.3s）/ 禁用 / 清除按钮 28。"
+    },
+    {
+      "id": "list-row",
+      "title": "列表行 ListRow / RowGroup / RowDivider",
+      "source": "Components/ListRow.swift",
+      "kind": "web",
+      "section": "components",
+      "preview": "#components",
+      "note": "行高 52，图标槽 28，组圆角 20。含按下、禁用、有/无图标分隔。"
+    },
+    {
+      "id": "result-card",
+      "title": "结果卡 ResultCard",
+      "source": "Components/ResultCard.swift",
+      "kind": "web",
+      "section": "components",
+      "preview": "#components",
+      "note": "圆角 20，内边距 20，复制成功态 1.4s。可叠加颗粒（大面积结果卡允许）。"
+    },
+    {
+      "id": "sheet",
+      "title": "面板 stoneSheet / SheetHeader / SheetSize",
+      "source": "Components/Sheet.swift",
+      "kind": "web",
+      "section": "components",
+      "preview": "#components",
+      "note": "档位 compact 0.34 / medium 半屏 / large 全屏。网页为自绘层，不是 UIKit PresentationDetent。"
+    },
+    {
+      "id": "empty",
+      "title": "空状态 EmptyState",
+      "source": "Components/EmptyState.swift",
+      "kind": "web",
+      "section": "components",
+      "preview": "#components",
+      "note": "符号 40，按钮宽 200，最大宽 300，出现延迟 0.05s、上移 8pt。"
+    },
+    {
+      "id": "paywall",
+      "title": "付费墙 PaywallView",
+      "source": "Components/Paywall.swift",
+      "kind": "web",
+      "section": "components",
+      "preview": "#components",
+      "note": "最多 3 个方案、最多 3 条权益。方案卡圆角源码为 md 14（Token xl 28 未用于方案卡）。选中圆点 22。"
+    },
+    {
+      "id": "stone-gallery",
+      "title": "组件总览 StoneGallery",
+      "source": "Gallery.swift",
+      "kind": "web",
+      "section": "components",
+      "preview": "#components",
+      "note": "本页按该总览的组件集合展开全部状态，而不是只放几个演示。"
+    },
+    {
+      "id": "effects-gallery",
+      "title": "签名效果总览 StoneEffectsGallery",
+      "source": "Effects/EffectsGallery.swift",
+      "kind": "web",
+      "section": "effects",
+      "preview": "#effects",
+      "note": "原生要求真机（模拟器无陀螺仪和触感）。本页给出 Web 等价与参考，并标明差异。"
+    },
+    {
+      "id": "goo-field",
+      "title": "GooBlob / GooField",
+      "source": "Effects/GooMorph.swift",
+      "kind": "web",
+      "section": "effects",
+      "preview": "#effects",
+      "note": "用与 Metal 相同的多项式 smin 与圆 SDF 做连续表面并集，可拖动团块。"
+    },
+    {
+      "id": "goo-morph",
+      "title": "液态变形 GooMorph",
+      "source": "Effects/GooMorph.swift",
+      "kind": "web",
+      "section": "effects",
+      "preview": "#effects",
+      "note": "圆钮 Morph 进圆角面板，可带小液滴。点击切换。"
+    },
+    {
+      "id": "goo-toggle",
+      "title": "液态开关 .toggleStyle(.goo)",
+      "source": "Effects/GooMorph.swift · GooToggleStyle",
+      "kind": "web",
+      "section": "effects",
+      "preview": "#effects",
+      "note": "拇指与轨道用 smin 融合，不是硬切圆角。"
+    },
+    {
+      "id": "lacquer-style",
+      "title": "漆面样式 LacquerStyle",
+      "source": "Effects/LacquerStyle.swift",
+      "kind": "web",
+      "section": "effects",
+      "preview": "#effects",
+      "note": "filled / glass / icon / ghost 四种外形，共用粗颈+分叉丝物理。"
+    },
+    {
+      "id": "lacquer-tint",
+      "title": "漆面色 LacquerTint",
+      "source": "Effects/LacquerStyle.swift",
+      "kind": "web",
+      "section": "effects",
+      "preview": "#effects",
+      "note": "墨、瓷、朱、翠、青、紫。展示用注释中的 sRGB 色值。"
+    },
+    {
+      "id": "lacquer-state",
+      "title": "漆面状态 LacquerState",
+      "source": "Effects/LacquerStyle.swift",
+      "kind": "web",
+      "section": "effects",
+      "preview": "#effects",
+      "note": "idle / loading / success / warning / destructive / disabled。成功、警告、危险会覆盖 tint。"
+    },
+    {
+      "id": "lacquer-finish",
+      "title": "漆面表面 LacquerFinish",
+      "source": "Effects/LacquerStyle.swift",
+      "kind": "web",
+      "section": "effects",
+      "preview": "#effects",
+      "note": "gloss 亮、matte 哑。哑光降低高光。"
+    },
+    {
+      "id": "lacquer-goo-button",
+      "title": "漆面液态按钮 LacquerGooButton",
+      "source": "Effects/LacquerGooButton.swift",
+      "kind": "web",
+      "section": "effects",
+      "preview": "#effects",
+      "note": "按住拖出厚根细颈与分叉丝，松手回缩，过远断裂。Web 为连续 SDF 表面，简化了原生 4 股×15 点的绳索模拟；不是 Metal lacquerGoo。丝线可画出按钮外，容器未裁切。"
+    },
+    {
+      "id": "lacquer-avatar",
+      "title": "漆面头像 LacquerAvatar（12 形）",
+      "source": "Effects/LacquerAvatar.swift / LacquerStyle.LacquerAvatarShape",
+      "kind": "web",
+      "section": "effects",
+      "preview": "#effects",
+      "note": "圆、方圆、胶囊、饭团、菱、团、六边、水滴、豆、五边、星、双耳。Web 为 SDF/路径近似，不是 lacquerAvatar 着色器。"
+    },
+    {
+      "id": "lacquer-expression",
+      "title": "表情 LacquerExpression（13）",
+      "source": "Effects/LacquerStyle.swift",
+      "kind": "web",
+      "section": "effects",
+      "preview": "#effects",
+      "note": "idle 到 brightSmile 全部列出。网页绘制为几何近似，精确口型与腮红由原生着色器负责，需对照参考图。"
+    },
+    {
+      "id": "lacquer-buddy",
+      "title": "漆面伙伴 LacquerBuddy（6 形）",
+      "source": "Effects/LacquerBuddy.swift",
+      "kind": "web",
+      "section": "effects",
+      "preview": "#effects",
+      "note": "circle / squircle / teardrop / rice / bean / capsule。可按压缩放、注视指针。"
+    },
+    {
+      "id": "lacquer-face",
+      "title": "面孔 LacquerFace / Look / GazeSession",
+      "source": "Effects/LacquerFace.swift",
+      "kind": "web",
+      "section": "effects",
+      "preview": "#effects",
+      "note": "指向、闲置漂移、跟随衰减。减弱动态时不做跟手位移。"
+    },
+    {
+      "id": "gaze-v8",
+      "title": "gaze-v8 整眼跟手 LacquerGazePose",
+      "source": "Effects/LacquerGazePose.swift",
+      "kind": "web",
+      "section": "effects",
+      "preview": "#effects",
+      "note": "按已核准参数：眶锚 ±0.34r / 0.08r，眶 0.115×0.1107r，眶走 0.250r / 0.240r，瞳走 0.020r，eyeScale 0.82，墨混 0.52。不要用 v6/v7。"
+    },
+    {
+      "id": "pointer-tracking",
+      "title": "指针跟踪 LacquerPointerTracking",
+      "source": "Effects/LacquerPointerTracking.swift",
+      "kind": "web",
+      "section": "effects",
+      "preview": "#effects",
+      "note": "网页用 pointer 事件跟踪。多指与系统触控板力度无法对等。"
+    },
+    {
+      "id": "kissing-pair",
+      "title": "亲吻成对 LacquerKissingPair",
+      "source": "Effects/LacquerKissingPair.swift",
+      "kind": "web",
+      "section": "effects",
+      "preview": "#effects",
+      "note": "可交互靠近、接触面、拉丝、断裂回缩或吸合。并排提供 kiss-v5 真实录像，不宣称像素级等同。"
+    },
+    {
+      "id": "kiss-motion",
+      "title": "亲吻时序 LacquerKissMotion",
+      "source": "Effects/LacquerFaceTuning.swift",
+      "kind": "web",
+      "section": "effects",
+      "preview": "#effects",
+      "note": "Web 演示接触开始/结束与靠近阶段；精确口型时间轴以录像为准。"
+    },
+    {
+      "id": "contact-surface",
+      "title": "厚根细颈接触面 LacquerContactSurface",
+      "source": "Effects/LacquerContactSurface.swift",
+      "kind": "web",
+      "section": "effects",
+      "preview": "#effects",
+      "note": "接触处连续表面而非单线。对照 kiss-v5 接触特写。"
+    },
+    {
+      "id": "pucker",
+      "title": "撅嘴几何 LacquerPuckerGeometry",
+      "source": "Effects/LacquerPuckerGeometry.swift",
+      "kind": "web",
+      "section": "effects",
+      "preview": "#effects",
+      "note": "网页为简化外形；精确几何需看原生与 kiss-v5 静帧。"
+    },
+    {
+      "id": "goo-path",
+      "title": "合并路径 LacquerGooPath",
+      "source": "Effects/LacquerBuddy.swift",
+      "kind": "web",
+      "section": "effects",
+      "preview": "#effects",
+      "note": "伙伴之间的拉丝、断裂、回缩、吸合。对照 flow-v9 末对软胶静帧。"
+    },
+    {
+      "id": "ink-ripple",
+      "title": "墨水涟漪 inkRipple",
+      "source": "Effects/InkRipple.swift / metal inkRipple",
+      "kind": "web",
+      "section": "effects",
+      "preview": "#effects",
+      "note": "时长 1.2s，默认振幅 12。网页为径向波纹近似，不是 SwiftUI layerEffect 对底层图像的折射。"
+    },
+    {
+      "id": "tilt-glint",
+      "title": "倾斜高光 tiltGlint",
+      "source": "Effects/TiltGlint.swift",
+      "kind": "web",
+      "section": "effects",
+      "preview": "#effects",
+      "note": "默认强度 0.14。本页用指针驱动高光；真机陀螺仪倾斜需原生验证。"
+    },
+    {
+      "id": "tilt-motion",
+      "title": "倾斜姿态 TiltMotion",
+      "source": "Effects/TiltMotion.swift",
+      "kind": "cannot",
+      "section": "effects",
+      "preview": "#effects",
+      "note": "依赖 Core Motion 陀螺仪，网页预览无法稳定获取设备姿态。不编造倾斜数据。"
+    },
+    {
+      "id": "export-success",
+      "title": "导出成功 exportSuccess",
+      "source": "Effects/ExportSuccess.swift",
+      "kind": "web",
+      "section": "effects",
+      "preview": "#effects",
+      "note": "视觉时长 1.6s。成功触感无法在网页复现。"
+    },
+    {
+      "id": "metal-shaders",
+      "title": "IstoneEffects.metal 着色器入口",
+      "source": "Effects/Shaders/IstoneEffects.metal",
+      "kind": "cannot",
+      "section": "effects",
+      "preview": "#effects",
+      "note": "stitchable：lacquerGoo、lacquerAvatar、gooBlobs、tiltGlint、inkRipple、lacquerBuddy、lacquerBuddyField、lacquerBuddyMerge。网页不能运行 metallib。"
+    },
+    {
+      "id": "effect-shaders",
+      "title": "EffectShaders / LacquerShaders / StoneEffects.isEnabled",
+      "source": "Effects/EffectShaders.swift",
+      "kind": "cannot",
+      "section": "effects",
+      "preview": "#effects",
+      "note": "Metal 库装载与开关是 iOS 运行时能力。"
+    },
+    {
+      "id": "effect-haptics",
+      "title": "效果触感 EffectHaptics",
+      "source": "Effects/EffectHaptics.swift",
+      "kind": "cannot",
+      "section": "effects",
+      "preview": "#effects",
+      "note": "beginStretch / updateStretch / endStretch / snap / successBloom 需 Taptic Engine，不在网页模拟手感。"
+    },
+    {
+      "id": "l10n",
+      "title": "文案 L10n",
+      "source": "L10n.swift + zh-Hans/en.lproj",
+      "kind": "web",
+      "section": "tokens",
+      "preview": "#tokens",
+      "note": "展示中英资源条目，不是运行时动态切换完整本地化系统。"
+    },
+    {
+      "id": "ref-kiss-v5-video",
+      "title": "kiss-v5 正面常速录像",
+      "source": "fruit-goo 已公开资料，本地复制",
+      "kind": "native-ref",
+      "section": "reference",
+      "preview": "#reference",
+      "note": "真实 iOS 录像，用于对照亲吻与接触，不是本页实时渲染。"
+    },
+    {
+      "id": "ref-kiss-v5-stills",
+      "title": "kiss-v5 水平/垂直阶段与接触特写",
+      "source": "fruit-goo 已公开静帧，本地复制",
+      "kind": "native-ref",
+      "section": "reference",
+      "preview": "#reference",
+      "note": "四张静帧，说明接近、接触、阶段，不另造图。"
+    },
+    {
+      "id": "ref-gaze-v8",
+      "title": "gaze-v8 六方向静帧",
+      "source": "fruit-goo 已公开静帧，本地复制",
+      "kind": "native-ref",
+      "section": "reference",
+      "preview": "#reference",
+      "note": "核准的整眼跟手外观参考。"
+    },
+    {
+      "id": "ref-flow-v9",
+      "title": "flow-v9 末对软胶与流程关键帧",
+      "source": "fruit-goo 已公开静帧，本地复制",
+      "kind": "native-ref",
+      "section": "reference",
+      "preview": "#reference",
+      "note": "合并拉丝外观参考；不是游戏重做。"
+    },
+    {
+      "id": "fruitgoo-game",
+      "title": "糖胶水果可玩游戏 FruitGooGame",
+      "source": "Effects/FruitGooGame.swift · fruit-goo-playground.html",
+      "kind": "web",
+      "section": "fruit-goo",
+      "preview": "#fruit-goo",
+      "note": "投放、合成、计分、结束、最高分、进化链；本页内嵌可玩。网页 harness 102 项全过。"
+    },
+    {
+      "id": "fruitgoo-atlas",
+      "title": "19 种水果图鉴",
+      "source": "Resources/FruitGoo/*.png",
+      "kind": "web",
+      "section": "fruit-goo",
+      "preview": "#fg-atlas",
+      "note": "按含糖量升序（USDA 每 100 克总糖），牛油果最小、无花果最大；带柄 12 种。"
+    },
+    {
+      "id": "fruitgoo-physics",
+      "title": "软接触 + 接触锚定形变",
+      "source": "Effects/FruitGooPlayground.swift",
+      "kind": "web",
+      "section": "fruit-goo",
+      "preview": "#fg-how",
+      "note": "罚弹簧软接触，穿透即压扁；网格锚在接触点，果底贴地、果心下沉。"
+    },
+    {
+      "id": "fruitgoo-rotation",
+      "title": "体转 v12",
+      "source": "Effects/FruitGooPlayground.swift",
+      "kind": "web",
+      "section": "fruit-goo",
+      "preview": "#fg-how",
+      "note": "摩擦作用在接触点滑移速度上；地板由滑转滚、斜撞翻身、直掉不转；约 1 秒停稳。"
+    },
+    {
+      "id": "fruitgoo-merge",
+      "title": "一碰就合 · 0.28 秒交融",
+      "source": "Effects/FruitGooGame.swift",
+      "kind": "web",
+      "section": "fruit-goo",
+      "preview": "#fg-how",
+      "note": "同种一碰就合，交融动画 0.28 秒，不炸、无粒子。"
+    },
+    {
+      "id": "fruitgoo-stem",
+      "title": "柄叶弹簧与弹抖系数",
+      "source": "Effects/FruitGooPlayground.swift",
+      "kind": "web",
+      "section": "fruit-goo",
+      "preview": "#fg-how",
+      "note": "柄叶拆图弯曲网格；柄压弯曲压短；弹抖滑杆 0 沉稳—1 活泼，默认沉稳。"
+    }
+  ]
+};
