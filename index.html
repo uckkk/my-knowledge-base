@@ -259,6 +259,16 @@
   #toTop.show{opacity:1;pointer-events:auto}
   #toTop:hover{color:var(--accent);border-color:var(--accent-2)}
 
+  .row-meta{display:flex;align-items:center;gap:10px;margin-bottom:5px}
+  .row-meta .date{margin-bottom:0}
+  .cat-chip{font-size:12px;color:var(--accent);background:var(--accent-soft);border-radius:999px;padding:1px 9px;white-space:nowrap}
+  .filter-chips{display:flex;gap:8px;margin-bottom:6px;flex-wrap:wrap}
+  .chip{font:inherit;font-size:13.5px;color:var(--ink-2);background:#fff;border:1px solid var(--line);border-radius:999px;padding:4px 14px;cursor:pointer}
+  .chip:hover{color:var(--accent);border-color:var(--accent-2)}
+  .chip.active{color:#fff;background:var(--accent);border-color:var(--accent)}
+  .copy-link{font:inherit;font-size:13px;color:var(--ink-3);background:none;border:1px solid var(--line);border-radius:999px;padding:2px 11px;cursor:pointer;margin-left:2px}
+  .copy-link:hover{color:var(--accent);border-color:var(--accent-2)}
+
   @media(max-width:900px){
     .page{flex-direction:column;gap:0;padding:0 20px}
     aside{width:100%;height:auto;position:static;padding:26px 0 6px;overflow:visible}
@@ -282,7 +292,7 @@
     <span class="site-title" id="homeLink">我的知识库</span>
     <div class="search-box">
       <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.8-3.8"/></svg>
-      <input id="search" type="text" placeholder="搜索" autocomplete="off" aria-label="搜索">
+      <input id="search" type="text" placeholder="搜索标题、正文、标签" autocomplete="off" aria-label="搜索">
       <button id="clearBtn" type="button" aria-label="清除">×</button>
     </div>
     <div class="nav-label">目录</div>
@@ -8502,7 +8512,22 @@ const clearBtn = document.getElementById("clearBtn");
 
 let keyword = "";
 let activeCat = "全部";
+let freshOnly = false;
 let closedCats = new Set();
+
+function freshCut(){
+  const dates = ENTRIES.map(e => e.date).sort();
+  const d0 = new Date(dates[dates.length - 1] + "T00:00:00");
+  d0.setDate(d0.getDate() - 6);
+  return d0.toISOString().slice(0, 10);
+}
+function fallbackCopy(text, done){
+  const ta = document.createElement("textarea");
+  ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+  document.body.appendChild(ta); ta.select();
+  try { document.execCommand("copy"); } catch(e) {}
+  document.body.removeChild(ta); done();
+}
 
 function esc(s){
   return String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -8563,13 +8588,14 @@ function renderNav(){
   navTree.innerHTML = html;
   navTree.querySelector("[data-actions]").addEventListener("click", () => { location.hash = "#/a"; render(); });
   navTree.querySelector("[data-all]").addEventListener("click", () => {
-    activeCat = "全部"; keyword = ""; searchInput.value = ""; clearBtn.classList.remove("show");
+    activeCat = "全部"; freshOnly = false; keyword = ""; searchInput.value = ""; clearBtn.classList.remove("show");
     location.hash = "#/"; render();
   });
   const wkBtn = navTree.querySelector("[data-weekly]");
   if(wkBtn) wkBtn.addEventListener("click", () => { location.hash = "#/w"; render(); });
   navTree.querySelectorAll("[data-cat]").forEach(b => b.addEventListener("click", () => {
     activeCat = b.getAttribute("data-cat");
+    freshOnly = false;
     location.hash = "#/"; render();
   }));
 }
@@ -8580,7 +8606,7 @@ function digestMatches(d){
   return hay.includes(keyword.toLowerCase());
 }
 function renderList(){
-  let list = ENTRIES.filter(e => (activeCat === "全部" || e.category === activeCat) && entryMatches(e));
+  let list = ENTRIES.filter(e => (activeCat === "全部" || e.category === activeCat) && entryMatches(e) && (!freshOnly || e.date >= freshCut()));
   let html = '<div class="fade">';
   if(keyword){
     html += '<div class="search-note">搜索「' + esc(keyword) + "」</div>";
@@ -8599,12 +8625,18 @@ function renderList(){
   } else if(activeCat === "全部"){
     html += homeHead();
   }
+  if(!keyword){
+    const freshN = ENTRIES.filter(e => (activeCat === "全部" || e.category === activeCat) && e.date >= freshCut()).length;
+    html += '<div class="filter-chips">' +
+      '<button class="chip' + (!freshOnly ? " active" : "") + '" data-fresh="0">全部</button>' +
+      '<button class="chip' + (freshOnly ? " active" : "") + '" data-fresh="1">本周新增 ' + freshN + "</button></div>";
+  }
   if(list.length === 0){
     html += '<div class="empty">没有找到相关内容</div>';
   } else {
     html += '<div class="entry-list">' + list.map(e =>
       '<article class="entry-row" data-open="' + esc(e.id) + '">' +
-        '<div class="date">' + fmtDate(e.date) + "</div>" +
+        '<div class="row-meta"><span class="date">' + fmtDate(e.date) + '</span><span class="cat-chip">' + esc(e.category) + "</span></div>" +
         "<h2>" + hl(e.title) + "</h2>" +
         '<p class="core">' + hl(e.core) + "</p>" +
         '<div class="tags">' + e.tags.map(t => '<span class="tag">' + hl(t) + "</span>").join("") + "</div>" +
@@ -8619,6 +8651,10 @@ function renderList(){
   main.querySelectorAll("[data-digest]").forEach(r => r.addEventListener("click", () => {
     location.hash = "#/d/" + encodeURIComponent(r.getAttribute("data-digest"));
   }));
+  main.querySelectorAll("[data-fresh]").forEach(b => b.addEventListener("click", () => {
+    freshOnly = b.getAttribute("data-fresh") === "1";
+    renderList();
+  }));
   main.querySelectorAll("[data-issue]").forEach(r => r.addEventListener("click", () => {
     location.hash = "#/w/" + r.getAttribute("data-issue");
   }));
@@ -8626,7 +8662,7 @@ function renderList(){
 }
 
 function prevNext(id){
-  const list = ENTRIES.filter(e => (activeCat === "全部" || e.category === activeCat) && entryMatches(e));
+  const list = ENTRIES.filter(e => (activeCat === "全部" || e.category === activeCat) && entryMatches(e) && (!freshOnly || e.date >= freshCut()));
   const i = list.findIndex(e => e.id === id);
   if(i < 0) return "";
   const prev = i > 0 ? list[i - 1] : null;
@@ -8645,7 +8681,7 @@ function renderEntry(id){
     '<div class="fade"><div class="crumb"><a href="#/" data-cat-link="' + esc(e.category) + '">' + esc(e.category) + '</a><span class="sep">›</span>' + esc(e.subtopic) + "</div>" +
     '<h1 class="page-title">' + hl(e.title) + "</h1>" +
     '<div class="article-meta"><span>' + fmtDate(e.date) + "</span>" +
-    e.tags.map(t => '<span class="tag">' + hl(t) + "</span>").join("") + "</div>" +
+    e.tags.map(t => '<span class="tag">' + hl(t) + "</span>").join("") + '<button class="copy-link" id="copyLink" type="button">复制链接</button></div>' +
     '<p class="lead">' + hl(e.core) + "</p>" +
     '<ul class="points">' + e.points.slice(0, 3).map(p => "<li>" + hl(p) + "</li>").join("") + "</ul>" +
     (e.detail ? e.detail.map(sec =>
@@ -8659,6 +8695,13 @@ function renderEntry(id){
   document.getElementById("backLink").addEventListener("click", () => { location.hash = "#/"; });
   const cl = main.querySelector("[data-cat-link]");
   if(cl) cl.addEventListener("click", ev => { ev.preventDefault(); activeCat = cl.getAttribute("data-cat-link"); location.hash = "#/"; render(); });
+  const copyBtn = document.getElementById("copyLink");
+  if(copyBtn) copyBtn.addEventListener("click", () => {
+    const url = location.href.split("#")[0] + "#/e/" + id;
+    const done = () => { copyBtn.textContent = "已复制"; setTimeout(() => { copyBtn.textContent = "复制链接"; }, 1400); };
+    if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(url).then(done, () => fallbackCopy(url, done)); }
+    else fallbackCopy(url, done);
+  });
   renderNav(id);
   window.scrollTo(0, 0);
 }
@@ -8740,11 +8783,7 @@ function renderActions(){
 }
 
 function homeHead(){
-  const dates = ENTRIES.map(e => e.date).sort();
-  const latest = dates[dates.length - 1];
-  const d0 = new Date(latest + "T00:00:00");
-  d0.setDate(d0.getDate() - 6);
-  const cut = d0.toISOString().slice(0, 10);
+  const cut = freshCut();
   const fresh = ENTRIES.filter(e => e.date >= cut).length;
   let h = '<div class="home-stat">共 ' + ENTRIES.length + " 条 · 最近一周新增 " + fresh + " 条</div>";
   const issues = weeklyIssues();
@@ -8868,11 +8907,12 @@ main.addEventListener("click", ev => {
 });
 window.addEventListener("hashchange", render);
 document.getElementById("homeLink").addEventListener("click", () => {
-  activeCat = "全部"; keyword = ""; searchInput.value = ""; clearBtn.classList.remove("show");
+  activeCat = "全部"; freshOnly = false; keyword = ""; searchInput.value = ""; clearBtn.classList.remove("show");
   location.hash = "#/"; render();
 });
 searchInput.addEventListener("input", () => {
   keyword = searchInput.value.trim();
+  freshOnly = false;
   clearBtn.classList.toggle("show", keyword.length > 0);
   if(currentRoute().type !== "list"){ history.replaceState(null, "", "#/"); }
   renderList();
@@ -8880,6 +8920,13 @@ searchInput.addEventListener("input", () => {
 searchInput.addEventListener("keydown", e => { if(e.key === "Escape"){ searchInput.value = ""; keyword = ""; clearBtn.classList.remove("show"); renderList(); } });
 clearBtn.addEventListener("click", () => {
   searchInput.value = ""; keyword = ""; clearBtn.classList.remove("show"); renderList(); searchInput.focus();
+});
+document.addEventListener("keydown", e => {
+  if(e.key !== "/" || e.metaKey || e.ctrlKey || e.altKey) return;
+  const t = e.target;
+  if(t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.isContentEditable)) return;
+  e.preventDefault();
+  searchInput.focus();
 });
 const toTopBtn = document.getElementById("toTop");
 window.addEventListener("scroll", () => {
