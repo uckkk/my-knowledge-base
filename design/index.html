@@ -29,39 +29,38 @@
       <nav class="nav" id="nav" aria-label="目录">
         <span class="nav-label">浏览</span>
         <a href="#overview">说明</a>
+        <span class="nav-label">界面类</span>
         <a href="#tokens">令牌</a>
+        <a class="nav-sub" href="#tokens-color">颜色</a>
+        <a class="nav-sub" href="#tokens-type">字体与间距</a>
+        <a class="nav-sub" href="#tokens-motion">动效与触感</a>
         <a href="#components">组件</a>
+        <a class="nav-sub" href="#comp-button">按钮与开关</a>
+        <a class="nav-sub" href="#comp-input">输入与分段</a>
+        <a class="nav-sub" href="#comp-list">列表、结果、面板</a>
+        <a class="nav-sub" href="#comp-paywall">空状态与付费墙</a>
+        <span class="nav-label">动效类</span>
         <a href="#effects">效果</a>
-        <a href="#fruit-goo">糖胶水果</a>
+        <a class="nav-sub" href="#fx-goo">软胶与变形</a>
+        <a class="nav-sub" href="#fx-lacquer">漆面按钮</a>
+        <a class="nav-sub" href="#fx-faces">头像、伙伴、表情</a>
+        <a class="nav-sub" href="#fx-gaze">gaze-v8 整眼跟手</a>
+        <a class="nav-sub" href="#fx-kiss">接触、拉丝、吸合</a>
+        <a class="nav-sub" href="#fx-shared">涟漪、高光、导出</a>
         <a href="#reference">原生参考</a>
-        <a href="#coverage">覆盖清单</a>
+        <span class="nav-label">游戏类</span>
+        <a href="#fruit-goo">糖胶水果</a>
+        <a class="nav-sub" href="#fg-play">可玩游戏</a>
+        <a class="nav-sub" href="#fg-atlas">水果图鉴</a>
+        <a class="nav-sub" href="#fg-how">实现要点</a>
+        <span class="nav-label">规范类</span>
         <a href="#spec">规范补录</a>
-        <span class="nav-label">令牌</span>
-        <a href="#tokens-color">颜色</a>
-        <a href="#tokens-type">字体与间距</a>
-        <a href="#tokens-motion">动效与触感</a>
-        <span class="nav-label">组件</span>
-        <a href="#comp-button">按钮与开关</a>
-        <a href="#comp-input">输入与分段</a>
-        <a href="#comp-list">列表、结果、面板</a>
-        <a href="#comp-paywall">空状态与付费墙</a>
-        <span class="nav-label">效果</span>
-        <a href="#fx-goo">软胶与变形</a>
-        <a href="#fx-lacquer">漆面按钮</a>
-        <a href="#fx-faces">头像、伙伴、表情</a>
-        <a href="#fx-gaze">gaze-v8 整眼跟手</a>
-        <a href="#fx-kiss">接触、拉丝、吸合</a>
-        <a href="#fx-shared">涟漪、高光、导出</a>
-        <span class="nav-label">糖胶水果</span>
-        <a href="#fg-play">可玩游戏</a>
-        <a href="#fg-atlas">水果图鉴</a>
-        <a href="#fg-how">实现要点</a>
-        <span class="nav-label">规范补录</span>
-        <a href="#principles">原则摘要</a>
-        <a href="#usage">使用与禁止</a>
-        <a href="#webmap">网页适配</a>
-        <a href="#prompt">约束提示词</a>
-        <a href="#checklist">验收清单</a>
+        <a class="nav-sub" href="#principles">原则摘要</a>
+        <a class="nav-sub" href="#usage">使用与禁止</a>
+        <a class="nav-sub" href="#webmap">网页适配</a>
+        <a class="nav-sub" href="#prompt">约束提示词</a>
+        <a class="nav-sub" href="#checklist">验收清单</a>
+        <a href="#coverage">覆盖清单</a>
       </nav>
       <main class="main">
         <section class="section" id="overview">
@@ -71,8 +70,16 @@
           <div class="disclaimer t-callout cjk">
             源码以 IstoneDesign 为准。本页令牌来自已提取的 <code>data/tokens.json</code>。圆角是普通 CSS 近似，不是 SwiftUI continuous。减弱动态时去掉位移和缩放，只保留短淡入。本页可直接在浏览器打开。覆盖清单已内嵌，资源使用相对路径。糖胶水果以设计系统 v12 包与本页内嵌演示为准。
           </div>
+        <div class="cat-cards">
+          <a class="cat-card" href="#cat-ui"><span class="cat-card-name">界面类</span><span class="cat-card-desc">令牌 · 组件</span><span class="cat-card-note">颜色、字体、间距、弹簧与 10 个组件</span></a>
+          <a class="cat-card" href="#cat-fx"><span class="cat-card-name">动效类</span><span class="cat-card-desc">效果 · 原生参考</span><span class="cat-card-note">软胶、漆面、头像、注视与真实录像</span></a>
+          <a class="cat-card" href="#cat-game"><span class="cat-card-name">游戏类</span><span class="cat-card-desc">糖胶水果</span><span class="cat-card-note">可玩游戏、19 种水果图鉴、实现要点</span></a>
+          <a class="cat-card" href="#cat-spec"><span class="cat-card-name">规范类</span><span class="cat-card-desc">规范补录 · 覆盖清单</span><span class="cat-card-note">原则、禁止、提示词、验收清单与 64 项盘点</span></a>
+        </div>
+
         </section>
 
+        <div class="cat-band" id="cat-ui"><span class="cat-name">界面类</span><span class="cat-desc">搭界面用的砖：令牌与组件</span></div>
         <section class="section" id="tokens">
           <h2 class="t-large cjk">令牌</h2>
           <p class="lede cjk">全部数值来自源码，不另造色板或间距。</p>
@@ -413,6 +420,7 @@
           </div>
         </section>
 
+        <div class="cat-band" id="cat-fx"><span class="cat-name">动效类</span><span class="cat-desc">会动的效果与原生对照</span></div>
         <section class="section" id="effects">
           <h2 class="t-large cjk">效果</h2>
           <p class="lede cjk">对应 <code>StoneEffectsGallery</code>。网页用连续 SDF 表面，不是 metallib。原生要求真机查看陀螺仪和触感。</p>
@@ -531,6 +539,45 @@
           </div>
         </section>
 
+        <section class="section" id="reference">
+          <h2 class="t-large cjk">原生参考</h2>
+          <p class="lede cjk">这些是已有的真实录像与静帧，从本机资料复制，未新录、未重做游戏。用来对照 Web 近似与原生的差别。</p>
+          <div class="media-grid">
+            <figure class="media-card wide">
+              <video controls preload="metadata" src="media/ref-linkgame-kiss-v5-fixed-frontal-normal-speed.mp4"></video>
+              <figcaption class="fx-caption">kiss-v5 正面常速 · 亲吻与接触的真实外观</figcaption>
+            </figure>
+            <figure class="media-card">
+              <img src="media/ref-linkgame-kiss-v5-horizontal-stages.png" alt="kiss-v5 水平阶段">
+              <figcaption class="fx-caption">kiss-v5 水平阶段</figcaption>
+            </figure>
+            <figure class="media-card">
+              <img src="media/ref-linkgame-kiss-v5-horizontal-approach-detail.png" alt="kiss-v5 水平接近特写">
+              <figcaption class="fx-caption">kiss-v5 水平接近特写</figcaption>
+            </figure>
+            <figure class="media-card">
+              <img src="media/ref-linkgame-kiss-v5-vertical-stages.png" alt="kiss-v5 垂直阶段">
+              <figcaption class="fx-caption">kiss-v5 垂直阶段</figcaption>
+            </figure>
+            <figure class="media-card">
+              <img src="media/ref-linkgame-kiss-v5-vertical-contact-detail.png" alt="kiss-v5 垂直接触特写">
+              <figcaption class="fx-caption">kiss-v5 垂直接触特写</figcaption>
+            </figure>
+            <figure class="media-card wide">
+              <img src="media/ref-linkgame-gaze-v8-six-directions.png" alt="gaze-v8 六方向">
+              <figcaption class="fx-caption">gaze-v8 六方向（核准整眼跟手）</figcaption>
+            </figure>
+            <figure class="media-card">
+              <img src="media/ref-linkgame-flow-v9-last-pair-goo.png" alt="flow-v9 末对软胶">
+              <figcaption class="fx-caption">flow-v9 末对软胶</figcaption>
+            </figure>
+            <figure class="media-card">
+              <img src="media/ref-linkgame-flow-v9-playthrough-keyframes.png" alt="flow-v9 流程关键帧">
+              <figcaption class="fx-caption">flow-v9 流程关键帧</figcaption>
+            </figure>
+          </div>
+        </section>
+        <div class="cat-band" id="cat-game"><span class="cat-name">游戏类</span><span class="cat-desc">糖胶水果全套，可玩</span></div>
         <section class="section" id="fruit-goo">
           <h2 class="t-large cjk">糖胶水果 · 果合大作战</h2>
           <p class="lede cjk">软胶水果全套，v12 最新版。方向：果冻 Q 弹在水果本身——深压扁、多段回弹、剪切晃动、拖拽拉伸、体转，水果之间不加元素。胶颈、拉丝、黏丝方向已作废（2026-11-16 用户定），本页不收。玩法、计分、存档保留原游戏。</p>
@@ -586,63 +633,9 @@
           </div>
         </section>
 
-        <section class="section" id="reference">
-          <h2 class="t-large cjk">原生参考</h2>
-          <p class="lede cjk">这些是已有的真实录像与静帧，从本机资料复制，未新录、未重做游戏。用来对照 Web 近似与原生的差别。</p>
-          <div class="media-grid">
-            <figure class="media-card wide">
-              <video controls preload="metadata" src="media/ref-linkgame-kiss-v5-fixed-frontal-normal-speed.mp4"></video>
-              <figcaption class="fx-caption">kiss-v5 正面常速 · 亲吻与接触的真实外观</figcaption>
-            </figure>
-            <figure class="media-card">
-              <img src="media/ref-linkgame-kiss-v5-horizontal-stages.png" alt="kiss-v5 水平阶段">
-              <figcaption class="fx-caption">kiss-v5 水平阶段</figcaption>
-            </figure>
-            <figure class="media-card">
-              <img src="media/ref-linkgame-kiss-v5-horizontal-approach-detail.png" alt="kiss-v5 水平接近特写">
-              <figcaption class="fx-caption">kiss-v5 水平接近特写</figcaption>
-            </figure>
-            <figure class="media-card">
-              <img src="media/ref-linkgame-kiss-v5-vertical-stages.png" alt="kiss-v5 垂直阶段">
-              <figcaption class="fx-caption">kiss-v5 垂直阶段</figcaption>
-            </figure>
-            <figure class="media-card">
-              <img src="media/ref-linkgame-kiss-v5-vertical-contact-detail.png" alt="kiss-v5 垂直接触特写">
-              <figcaption class="fx-caption">kiss-v5 垂直接触特写</figcaption>
-            </figure>
-            <figure class="media-card wide">
-              <img src="media/ref-linkgame-gaze-v8-six-directions.png" alt="gaze-v8 六方向">
-              <figcaption class="fx-caption">gaze-v8 六方向（核准整眼跟手）</figcaption>
-            </figure>
-            <figure class="media-card">
-              <img src="media/ref-linkgame-flow-v9-last-pair-goo.png" alt="flow-v9 末对软胶">
-              <figcaption class="fx-caption">flow-v9 末对软胶</figcaption>
-            </figure>
-            <figure class="media-card">
-              <img src="media/ref-linkgame-flow-v9-playthrough-keyframes.png" alt="flow-v9 流程关键帧">
-              <figcaption class="fx-caption">flow-v9 流程关键帧</figcaption>
-            </figure>
-          </div>
-        </section>
 
-        <section class="section" id="coverage">
-          <h2 class="t-large cjk">覆盖清单</h2>
-          <p class="lede cjk">设计系统目录中已盘点的全部项。三类：Web 等价、原生参考、不可模拟。不把缺项说成已实现。</p>
-          <div id="coverage-stats" class="row" style="margin-bottom:16px"></div>
-          <div class="cov-filters seg-mini" role="group" aria-label="筛选">
-            <button type="button" data-cov-filter="all" aria-pressed="true">全部</button>
-            <button type="button" data-cov-filter="web">Web 等价</button>
-            <button type="button" data-cov-filter="native-ref">原生参考</button>
-            <button type="button" data-cov-filter="cannot">不可模拟</button>
-          </div>
-          <div class="surface" style="overflow:auto">
-            <table class="cov-table">
-              <thead><tr><th>项目</th><th>类型</th><th>来源</th><th>说明</th></tr></thead>
-              <tbody id="coverage-body"></tbody>
-            </table>
-          </div>
-        </section>
 
+        <div class="cat-band" id="cat-spec"><span class="cat-name">规范类</span><span class="cat-desc">条文、提示词与覆盖盘点</span></div>
         <section class="section" id="spec">
           <h2 class="t-large cjk">规范补录</h2>
           <p class="lede cjk">转交手册（STONE_AI_HANDOFF.md）里预览页没有的条文，照录进来。数值以 IstoneDesign Token 源码为准。</p>
@@ -784,6 +777,23 @@ iOS 可直接复用 IstoneDesign Swift package。Web 必须按同一 Token 重�
           </div>
         </section>
 
+        <section class="section" id="coverage">
+          <h2 class="t-large cjk">覆盖清单</h2>
+          <p class="lede cjk">设计系统目录中已盘点的全部项。三类：Web 等价、原生参考、不可模拟。不把缺项说成已实现。</p>
+          <div id="coverage-stats" class="row" style="margin-bottom:16px"></div>
+          <div class="cov-filters seg-mini" role="group" aria-label="筛选">
+            <button type="button" data-cov-filter="all" aria-pressed="true">全部</button>
+            <button type="button" data-cov-filter="web">Web 等价</button>
+            <button type="button" data-cov-filter="native-ref">原生参考</button>
+            <button type="button" data-cov-filter="cannot">不可模拟</button>
+          </div>
+          <div class="surface" style="overflow:auto">
+            <table class="cov-table">
+              <thead><tr><th>项目</th><th>类型</th><th>来源</th><th>说明</th></tr></thead>
+              <tbody id="coverage-body"></tbody>
+            </table>
+          </div>
+        </section>
         <p class="t-caption" style="color:var(--c-text-3)">Stone Design 统一效果页 · 网页演示不是 Metal / SwiftUI 原生运行</p>
       </main>
     </div>
