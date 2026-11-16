@@ -38,6 +38,11 @@
   .next-ci img { position: absolute; inset: 0; width: 24px; height: 24px; }
   #gameover { position: absolute; inset: 0; background: rgba(255,247,236,.93); border-radius: 18px; display: none; flex-direction: column; align-items: center; justify-content: center; gap: 10px; text-align: center; }
   #gameover.show { display: flex; }
+  #startGate { position: absolute; inset: 0; background: rgba(255,247,236,.92); border-radius: 18px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; text-align: center; z-index: 3; cursor: pointer; }
+  #startGate.hide { display: none; }
+  #startGate .sg-title { font-size: 22px; font-weight: 700; }
+  #startGate .sg-sub { font-size: 13px; color: #8a7f74; max-width: 280px; line-height: 1.5; }
+  #startGate button { background: #d94f2b; color: #fff; border: 0; border-radius: 999px; padding: 10px 22px; font-size: 15px; font-weight: 600; cursor: pointer; }
   #gameover .go-title { font-size: 26px; font-weight: 700; }
   #gameover .go-score { font-size: 17px; }
   #gameover .go-new { font-size: 13px; color: #d94f2b; font-weight: 700; }
@@ -56,6 +61,11 @@
 </div>
 <div id="stage">
   <canvas id="cv"></canvas>
+  <div id="startGate" role="button" tabindex="0" aria-label="点击开始游戏">
+    <div class="sg-title">果合大作战</div>
+    <div class="sg-sub">点一下开始。未开始或离开页面时不跑物理循环，避免占满本机 CPU。</div>
+    <button type="button" id="btnStart">开始游戏</button>
+  </div>
   <div id="toast"></div>
   <div id="gameover">
     <div class="go-title">游戏结束</div>
@@ -804,14 +814,23 @@ function draw() {
 }
 
 let last = performance.now(), acc = 0;
+let running = false;
+let rafId = 0;
+function shouldRun() {
+  if (!running) return false;
+  if (document.hidden) return false;
+  return true;
+}
 function loop(t) {
+  rafId = 0;
+  if (!shouldRun()) { draw(); return; }
   const frame = Math.min(0.05, (t - last) / 1000);
   last = t;
   if (!gameOver) {
     acc += frame;
-    const dt = 1 / 120;
+    const dt = 1 / 60;
     let n = 0;
-    while (acc >= dt && n < 8) { step(dt); acc -= dt; n++; }
+    while (acc >= dt && n < 4) { step(dt); acc -= dt; n++; }
     // 投放器冷却到点，下一颗就位
     if (!dropper.ready && t >= dropper.readyAt) dropper.ready = true;
     // 结束判定：有水果顶越过红线且基本停稳，计时；离开红线则计时回落（被抓着的不算）
@@ -824,7 +843,18 @@ function loop(t) {
     if (overTimer >= OVER_TIME) endGame();
   }
   draw();
-  requestAnimationFrame(loop);
+  if (shouldRun()) rafId = requestAnimationFrame(loop);
+}
+function kickLoop() {
+  if (!shouldRun()) return;
+  if (rafId) return;
+  last = performance.now();
+  rafId = requestAnimationFrame(loop);
+}
+function setRunning(on) {
+  running = !!on;
+  if (running) kickLoop();
+  else if (rafId) { cancelAnimationFrame(rafId); rafId = 0; draw(); }
 }
 
 function pos(e) {
@@ -954,7 +984,61 @@ window.addEventListener('resize', resize);
 
 resize();
 reset();
-requestAnimationFrame(loop);
+draw();
+
+const startGate = document.getElementById('startGate');
+const btnStart = document.getElementById('btnStart');
+function beginPlay(ev) {
+  if (ev) ev.preventDefault();
+  if (running) return;
+  startGate.classList.add('hide');
+  setRunning(true);
+  ensureAudio();
+  bloop(520, 0.08, 0.08);
+}
+btnStart.addEventListener('click', beginPlay);
+startGate.addEventListener('click', beginPlay);
+startGate.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' || e.key === ' ') beginPlay(e);
+});
+
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) {
+    if (rafId) { cancelAnimationFrame(rafId); rafId = 0; }
+  } else if (running) {
+    kickLoop();
+  }
+});
+
+// 嵌入设计页 iframe 时：滚出视口就停，滚回来且已开始才继续
+if (window.IntersectionObserver) {
+  const io = new IntersectionObserver((entries) => {
+    const seen = entries.some((e) => e.isIntersecting && e.intersectionRatio > 0.15);
+    if (!seen) {
+      if (rafId) { cancelAnimationFrame(rafId); rafId = 0; }
+    } else if (running) {
+      kickLoop();
+    }
+  }, { threshold: [0, 0.15, 0.5] });
+  io.observe(document.getElementById('stage'));
+}
+
+// 再来一局后保持运行（不回到开始遮罩）
+const _endGame = endGame;
+endGame = function() {
+  _endGame();
+};
+const btnAgain = document.getElementById('btnAgain');
+if (btnAgain) {
+  btnAgain.addEventListener('click', () => {
+    if (!running) {
+      startGate.classList.add('hide');
+      setRunning(true);
+    } else {
+      kickLoop();
+    }
+  });
+}
 </script>
 </body>
 </html>

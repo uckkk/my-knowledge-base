@@ -29,8 +29,9 @@
 - `data/tokens.json` 从源码提取的令牌
 - `data/coverage.json` 覆盖清单
 - `media/` 颗粒瓦片，以及已有的 kiss-v5 / gaze-v8 / flow-v9 参考录像与静帧
-- `fruit-goo-playground.html` 果合大作战可玩游戏（自包含，约 8MB）
+- `fruit-goo-playground.html` 果合大作战可玩游戏（自包含，约 8MB；需点击开始才跑循环，离开视口/标签暂停；物理 60Hz）
 - `fruit-goo/` 19 种水果主图（按进化链顺序）
+- 统一页内游戏改为按钮按需加载，避免一进设计页就下载 8MB 并占满本机 CPU
 
 ## 覆盖
 
