@@ -605,12 +605,36 @@ html.reduce-motion .btn .spin { animation: none !important; }
 }
 
 /* 统一页新增：糖胶水果与规范补录（沿用本页令牌与圆角） */
-.game-frame {
-  width: 100%; height: 860px;
+.game-frame-host {
+  position: relative;
+  width: 100%;
+  min-height: 240px;
   border: var(--hairline) solid var(--c-hairline);
   border-radius: var(--radius-lg);
   background: var(--c-sunken);
+  overflow: hidden;
 }
+.game-frame {
+  display: block;
+  width: 100%; height: 860px;
+  border: 0;
+  background: var(--c-sunken);
+}
+.game-frame[hidden] { display: none; }
+.game-load-btn {
+  display: block;
+  margin: 72px auto;
+  padding: 12px 20px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--c-text);
+  color: var(--c-bg, #fff);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.game-load-btn[hidden] { display: none; }
 .fruit-grid {
   display: grid; gap: var(--space-4); justify-items: center;
   grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));

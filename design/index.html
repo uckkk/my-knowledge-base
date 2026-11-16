@@ -584,9 +584,12 @@
 
           <div class="block" id="fg-play">
             <h3>可玩游戏 <span class="badge badge-web">Web 等价</span></h3>
-            <p class="note">直接玩：投放器只投 5 种最小水果，带内按住拖动瞄准、松手掉落；同种一碰就合；结束线、最高分、进化链都在。手机上点开就能玩。</p>
-            <iframe class="game-frame" src="fruit-goo-playground.html" loading="lazy" title="果合大作战可玩演示"></iframe>
-            <p class="fx-caption"><a href="fruit-goo-playground.html" target="_blank" rel="noopener">全屏打开游戏 ↗</a> · 最高分存在本机浏览器里</p>
+            <p class="note">按需加载：先点下方按钮再下载游戏（约 8MB）。未加载时本页不跑游戏循环。投放器只投 5 种最小水果；同种一碰就合。</p>
+            <div class="game-frame-host" id="fgGameHost">
+              <button type="button" class="game-load-btn" id="fgLoadBtn">加载并试玩果合大作战</button>
+              <iframe class="game-frame" id="fgGameFrame" title="果合大作战可玩演示" hidden></iframe>
+            </div>
+            <p class="fx-caption"><a href="fruit-goo-playground.html" target="_blank" rel="noopener">全屏打开游戏 ↗</a> · 最高分存在本机浏览器里 · 离开标签或切走标签会自动暂停</p>
           </div>
 
           <div class="block" id="fg-atlas">
@@ -843,6 +846,19 @@ iOS 可直接复用 IstoneDesign Swift package。Web 必须按同一 Token 重�
       try { document.execCommand('copy'); } catch (e) {}
       document.body.removeChild(ta); done();
     }
+    // 果合游戏：点击后再挂 src，避免设计页一打开就拉 8MB 并占 CPU
+    (function () {
+      var btn = document.getElementById('fgLoadBtn');
+      var frame = document.getElementById('fgGameFrame');
+      if (!btn || !frame) return;
+      btn.addEventListener('click', function () {
+        if (frame.dataset.loaded === '1') return;
+        frame.dataset.loaded = '1';
+        frame.hidden = false;
+        frame.src = 'fruit-goo-playground.html';
+        btn.hidden = true;
+      });
+    })();
   </script>
 </body>
 </html>
