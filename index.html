@@ -8579,6 +8579,7 @@ function renderNav(){
   let html = '<button class="nav-all" data-actions="1" style="font-weight:700;color:var(--accent)">我的行动页</button>' +
     '<a class="nav-all" href="/monitor/" style="font-weight:700;color:var(--accent);text-decoration:none">监控入口</a>' +
     '<a class="nav-all" href="/design/" style="font-weight:700;color:var(--accent);text-decoration:none">设计效果页</a>' +
+    '<a class="nav-all" href="/samples/" style="font-weight:700;color:var(--accent);text-decoration:none">爆款样本库</a>' +
     '<button class="nav-all' + (activeCat === "全部" ? " active" : "") + '" data-all="1">全部条目<span class="nav-count">' + ENTRIES.length + "</span></button>" + weekBtn;
   cats.forEach(c => {
     const n = ENTRIES.filter(e => e.category === c).length;
