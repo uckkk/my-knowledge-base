@@ -296,6 +296,65 @@
 const ENTRIES = [
  {
   "category": "实用技巧",
+  "core": "枢纽加对端两台机，流量、资源、节点、终端、IP 纯净度一页看全；istone.cc 上的监控页是入口，地址只存浏览器本地。",
+  "date": "2026-11-16",
+  "detail": [
+   {
+    "h": "一页看什么",
+    "items": [
+     "到期与年费，充值与官网链接来自配置；流量进度条与重置日，超 100% 会标超额量。",
+     "资源：负载、内存、交换、磁盘；IP 纯净度只枢纽有，含评分、类型、位置、ASN、公司、滥用。",
+     "操作：机场启停、重启机场、重启服务器、关机；关机要点两次确认，关机后本页无法开机。",
+     "节点二维码与一键导入；终端流量排行最多 30 条，带城市与运营商中文，每分钟自动刷新。"
+    ]
+   },
+   {
+    "h": "两台机器怎么分工",
+    "items": [
+     "枢纽是主入口，统一控制台可切换两台；对端走 agent，失败时 VPS 信息可回退厂商接口，页面标离线。",
+     "枢纽每分钟跑一次采集记账，终端流量按 IP 累加；IP 纯净度由枢纽自己查，不经过对端。",
+     "后端是 Python 标准库单文件服务，无第三方依赖；采集靠系统流量计数，不是估算。"
+    ]
+   },
+   {
+    "h": "监控页怎么用",
+    "items": [
+     "打开 istone.cc/monitor/，第一次粘贴控制台地址（带 token、带尾斜杠），只存浏览器本地，不进仓库、不发给任何服务器。",
+     "地址是 https 嵌进页内看；http 只能点开新标签，因为浏览器不许加密页嵌明文页。",
+     "换地址或清除保存都在页内点一下；换浏览器或清掉网站数据后要重新贴一次。"
+    ]
+   },
+   {
+    "h": "安全红线",
+    "items": [
+     "token 等于口令：知道地址就能读订阅、看终端 IP、开关机场、重启或关机；绝不把带 token 的地址写进公开仓库、聊天记录或前端源码。",
+     "停止机场会禁用开机自启，机器重启后机场不会自己起来，要再点启动。",
+     "控制台目前是明文 http，token 会进浏览器历史与代理日志；想更稳要上 https 反代。"
+    ]
+   }
+  ],
+  "id": "bwhmon-vpn-monitor",
+  "points": [
+   "流量资源节点终端一页看全，每分钟自动刷新",
+   "监控入口在 istone.cc/monitor/，地址只存浏览器本地",
+   "token 等于口令，绝不写进公开仓库"
+  ],
+  "sources": [
+   {
+    "label": "监控入口",
+    "url": "https://istone.cc/monitor/"
+   }
+  ],
+  "subtopic": "服务器",
+  "tags": [
+   "监控",
+   "服务器",
+   "科学上网"
+  ],
+  "title": "科学上网监控控制台：两台服务器一页看全"
+ },
+ {
+  "category": "实用技巧",
   "core": "自家 iOS 小工具共用的一套视觉与交互规范：16 组 Token、四个弹簧、gaze-v8 注视，数值以源码为准。",
   "date": "2026-11-16",
   "detail": [
@@ -8039,6 +8098,14 @@ const DIGESTS = {
      "胶颈方向已作废：Q 弹在水果本身，水果之间不加元素；路线已改走设计系统仓库直接开发。",
      "参考素材是连连看已验收软胶（kiss-v5、gaze-v8），不是果合成品。"
     ]
+   },
+   {
+    "h": "服务器：bwhmon 监控",
+    "items": [
+     "两台机一页看全：流量、资源、节点、终端、IP 纯净度，每分钟自动刷新。",
+     "入口在 istone.cc/monitor/，地址只存浏览器本地，不进仓库；http 地址只能点开新标签。",
+     "token 等于口令，绝不写进公开仓库；关机后本页无法开机，停机场会禁用自启。"
+    ]
    }
   ],
   "basedOn": [
@@ -8485,6 +8552,7 @@ function renderNav(){
   const issues = weeklyIssues();
   const weekBtn = issues.length ? '<button class="nav-all" data-weekly="1">技术周报<span class="nav-count">' + issues.length + ' 期</span></button>' : "";
   let html = '<button class="nav-all" data-actions="1" style="font-weight:700;color:var(--accent)">我的行动页</button>' +
+    '<a class="nav-all" href="/monitor/" style="font-weight:700;color:var(--accent);text-decoration:none">监控入口</a>' +
     '<button class="nav-all' + (activeCat === "全部" ? " active" : "") + '" data-all="1">全部条目<span class="nav-count">' + ENTRIES.length + "</span></button>" + weekBtn;
   cats.forEach(c => {
     const n = ENTRIES.filter(e => e.category === c).length;
