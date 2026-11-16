@@ -637,3 +637,24 @@ html.reduce-motion .btn .spin { animation: none !important; }
 .do-list { list-style: none; padding: 0; margin: 0 0 var(--space-3); }
 .do-list li { padding: 6px 0 6px 22px; position: relative; font-size: 14px; }
 .do-list li::before { content: "·"; position: absolute; left: 6px; color: var(--c-text-3); font-weight: 700; }
+
+/* 分类：左栏子项缩进、分隔带、首页分类卡 */
+.nav-sub { padding-left: 24px !important; font-size: 13.5px; }
+.cat-band {
+  display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap;
+  margin: 8px 0 24px; padding: 14px 18px;
+  background: var(--c-sunken); border-radius: 14px;
+  scroll-margin-top: calc(var(--header-h) + 16px);
+}
+.cat-name { font-size: 20px; font-weight: 700; }
+.cat-desc { font-size: 13px; color: var(--c-text-2); }
+.cat-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-top: 20px; }
+.cat-card {
+  display: block; padding: 16px; border-radius: 14px;
+  background: var(--c-raised); border: var(--hairline) solid var(--c-hairline);
+  text-decoration: none; color: inherit;
+}
+.cat-card:hover { border-color: var(--accent); }
+.cat-card-name { display: block; font-size: 17px; font-weight: 700; margin-bottom: 4px; }
+.cat-card-desc { display: block; font-size: 13px; color: var(--c-text-2); }
+.cat-card-note { display: block; font-size: 12.5px; color: var(--c-text-3); margin-top: 8px; line-height: 1.5; }
