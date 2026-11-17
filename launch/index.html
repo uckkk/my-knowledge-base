@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>上架助手 · 个人开发发布导航</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: #FAF6EF; color: #2B2620; font-size: 17px; line-height: 1.6;
+    padding-bottom: 56px;
+  }
+  .wrap { max-width: 560px; margin: 0 auto; padding: 0 16px; }
+
+  header { padding: 26px 0 6px; }
+  h1 { font-size: 28px; line-height: 1.3; letter-spacing: 1px; }
+  .sub { color: #7A7268; font-size: 15px; margin-top: 6px; }
+
+  /* 顶部导航：今天 / 路线 */
+  .nav { display: flex; gap: 8px; margin: 16px 0; }
+  .nav button {
+    flex: 1; border: none; border-radius: 12px; padding: 13px 4px;
+    font-size: 17px; font-weight: 600; cursor: pointer;
+    background: #EDE6D8; color: #5A5245;
+  }
+  .nav button.active { background: #2B2620; color: #fff; }
+
+  .card {
+    background: #fff; border-radius: 16px; padding: 18px; margin-bottom: 14px;
+    box-shadow: 0 2px 10px rgba(90,70,40,.08);
+  }
+  .card h2 { font-size: 19px; margin-bottom: 4px; }
+  .card h3 { font-size: 17px; margin-bottom: 2px; }
+  .muted { color: #7A7268; font-size: 15px; }
+  .small { font-size: 14px; color: #8A8175; }
+
+  /* 今天：下一步卡 */
+  .next-tag {
+    display: inline-block; font-size: 13px; font-weight: 700; color: #fff;
+    background: #2E7D32; border-radius: 6px; padding: 2px 8px; margin-bottom: 8px;
+  }
+  .next-tag.doing { background: #1565C0; }
+  .wait-tag {
+    display: inline-block; font-size: 13px; font-weight: 700; color: #fff;
+    background: #E65100; border-radius: 6px; padding: 2px 8px; margin-bottom: 8px;
+  }
+  .proj-name { font-size: 14px; color: #8A8175; margin-bottom: 4px; }
+  .deadline { color: #C62828; font-weight: 700; font-size: 15px; margin-top: 8px; }
+
+  .btn-row { display: flex; gap: 10px; margin-top: 14px; }
+  .jump {
+    flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px;
+    background: #2E7D32; color: #fff; text-decoration: none; text-align: center;
+    border-radius: 12px; padding: 13px 8px; font-size: 16px; font-weight: 600; min-height: 50px;
+  }
+  .jump:active { background: #256B28; }
+  .btn {
+    flex: 1; border: 1.5px solid #2E7D32; background: #fff; color: #2E7D32;
+    border-radius: 12px; padding: 13px 8px; font-size: 16px; font-weight: 600;
+    cursor: pointer; min-height: 50px;
+  }
+  .btn:active { background: #E8F5E9; }
+  .btn.dark { background: #2B2620; border-color: #2B2620; color: #fff; }
+  .btn.ghost { border-color: #DDD3BE; color: #5A5245; }
+
+  /* 最快时间线 */
+  .timeline-box {
+    background: #FFF8E1; border: 1px solid #F0E2B6; border-radius: 12px;
+    padding: 14px; margin-bottom: 14px; font-size: 15px; color: #6D5B1F;
+  }
+  .timeline-box b { color: #4A3A10; }
+  .timeline-box p { margin-bottom: 6px; }
+  .timeline-box p:last-child { margin-bottom: 0; }
+
+  /* 项目栏 */
+  .proj-bar { display: flex; gap: 8px; align-items: center; margin: 4px 0 16px; flex-wrap: wrap; }
+  .proj-chip {
+    border: 1.5px solid #DDD3BE; background: #fff; color: #2B2620;
+    border-radius: 999px; padding: 8px 14px; font-size: 15px; cursor: pointer;
+  }
+  .proj-chip.active { background: #2E7D32; border-color: #2E7D32; color: #fff; font-weight: 600; }
+  .proj-add {
+    border: 1.5px dashed #C9BC9F; background: transparent; color: #7A7268;
+    border-radius: 999px; padding: 8px 14px; font-size: 15px; cursor: pointer;
+  }
+  .proj-tools { margin-left: auto; display: flex; gap: 6px; }
+  .mini-btn { border: none; background: none; color: #8A8175; font-size: 14px; padding: 8px 6px; cursor: pointer; }
+
+  /* 阶段 */
+  .phase { margin: 20px 0 8px; }
+  .phase h2 { font-size: 20px; }
+  .phase p { font-size: 14px; color: #7A7268; margin-top: 2px; }
+
+  /* 步骤卡 */
+  .step {
+    background: #fff; border-radius: 16px; padding: 16px 18px; margin-bottom: 12px;
+    box-shadow: 0 2px 10px rgba(90,70,40,.08);
+  }
+  .step.done-card { opacity: .8; }
+  .step-head { display: flex; gap: 12px; align-items: flex-start; cursor: pointer; }
+  .step-no {
+    flex: none; width: 30px; height: 30px; border-radius: 50%;
+    background: #2E7D32; color: #fff; font-size: 15px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; margin-top: 1px;
+  }
+  .step-no.waiting { background: #E65100; }
+  .step-no.doing { background: #1565C0; }
+  .step-no.todo { background: #BDB5A4; }
+  .step-title { font-size: 18px; font-weight: 700; line-height: 1.4; flex: 1; }
+  .step.done-card .step-title { color: #8A8175; }
+  .chev { color: #BDB5A4; font-size: 18px; flex: none; margin-top: 2px; }
+  .tag-row { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+  .tag {
+    font-size: 13px; background: #F5F1E8; color: #5A5245;
+    border-radius: 6px; padding: 2px 8px;
+  }
+  .tag.red { background: #FFEBEE; color: #C62828; font-weight: 700; }
+  .tag.blue { background: #E3F2FD; color: #1565C0; }
+
+  /* 状态四选 */
+  .states { display: flex; gap: 6px; margin-top: 12px; }
+  .states button {
+    flex: 1; border: 1.5px solid #E5DDC8; background: #fff; color: #7A7268;
+    border-radius: 10px; padding: 9px 2px; font-size: 14px; cursor: pointer;
+  }
+  .states button.on-todo { border-color: #8A8175; color: #2B2620; font-weight: 700; }
+  .states button.on-doing { border-color: #1565C0; background: #E3F2FD; color: #1565C0; font-weight: 700; }
+  .states button.on-waiting { border-color: #E65100; background: #FFF3E0; color: #E65100; font-weight: 700; }
+  .states button.on-done { border-color: #2E7D32; background: #E8F5E9; color: #2E7D32; font-weight: 700; }
+
+  .step-body { display: none; margin-top: 12px; border-top: 1px solid #F0EAD9; padding-top: 12px; }
+  .step.open .step-body { display: block; }
+  .step-do { font-size: 16px; }
+  .need-box {
+    margin-top: 10px; background: #F5F1E8; border-radius: 10px;
+    padding: 10px 12px; font-size: 15px; color: #5A5245;
+  }
+  .need-box b { color: #2B2620; }
+  .need-box ul { margin: 6px 0 0 18px; }
+  .need-box li { margin-bottom: 4px; }
+  .step-tip { margin-top: 10px; font-size: 14px; color: #B26A00; }
+
+  /* 隐私政策生成器 */
+  .gen-box {
+    margin-top: 12px; background: #E8F5E9; border-radius: 12px; padding: 14px;
+  }
+  .gen-box h4 { font-size: 16px; margin-bottom: 8px; }
+  .gen-box label { font-size: 14px; color: #5A5245; display: block; margin-top: 8px; }
+  .gen-box input[type="text"], .gen-box input[type="email"] {
+    width: 100%; border: 1.5px solid #C8E6C9; border-radius: 10px;
+    padding: 11px 12px; font-size: 16px; margin-top: 4px; background: #fff;
+  }
+  .lang-row { display: flex; gap: 8px; margin-top: 10px; }
+  .lang-row button {
+    flex: 1; border: 1.5px solid #C8E6C9; background: #fff; color: #5A5245;
+    border-radius: 10px; padding: 9px 4px; font-size: 15px; cursor: pointer;
+  }
+  .lang-row button.on { background: #2E7D32; border-color: #2E7D32; color: #fff; font-weight: 600; }
+  .gen-out {
+    width: 100%; min-height: 180px; border: 1.5px solid #C8E6C9; border-radius: 10px;
+    padding: 10px 12px; font-size: 14px; line-height: 1.6; margin-top: 10px;
+    background: #fff; white-space: pre-wrap; font-family: inherit;
+  }
+
+  /* 新项目问卷 */
+  .q-group { margin-bottom: 20px; }
+  .q-group h3 { font-size: 18px; margin-bottom: 10px; }
+  .q-group .hint { font-size: 14px; color: #7A7268; margin-bottom: 10px; }
+  .choice {
+    display: block; width: 100%; text-align: left;
+    border: 1.5px solid #DDD3BE; background: #fff; color: #2B2620;
+    border-radius: 12px; padding: 14px; font-size: 16px; cursor: pointer; margin-bottom: 8px;
+  }
+  .choice small { display: block; font-size: 14px; color: #7A7268; margin-top: 2px; }
+  .choice.on { border-color: #2E7D32; background: #E8F5E9; font-weight: 700; }
+  .choice.on small { font-weight: 400; }
+  .name-input {
+    width: 100%; border: 1.5px solid #DDD3BE; border-radius: 12px;
+    padding: 13px 14px; font-size: 17px; background: #fff;
+  }
+
+  .empty {
+    background: #fff; border-radius: 16px; padding: 28px 18px; text-align: center;
+    color: #7A7268; margin-bottom: 14px; box-shadow: 0 2px 10px rgba(90,70,40,.08);
+  }
+  .empty b { color: #2E7D32; font-size: 19px; display: block; margin-bottom: 6px; }
+
+  footer { margin-top: 28px; color: #8A8175; font-size: 13px; line-height: 1.7; }
+  footer p { margin-bottom: 6px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>上架助手</h1>
+    <p class="sub">先做什么、等什么、带什么材料，一眼看清。</p>
+  </header>
+
+  <div class="nav" id="nav">
+    <button id="navToday" onclick="goView('today')">今天</button>
+    <button id="navRoute" onclick="goView('route')">路线</button>
+  </div>
+
+  <div id="main"></div>
+
+  <footer>
+    <p>费用与时间以官方页面为准；平台规则会变，跳转后按页面提示走。</p>
+    <p>进度只存在你这台设备的浏览器里，不用账号，换设备不会同步。</p>
+    <p>本站只做导航、跳转与进度记录，不能代办备案、注册等步骤。</p>
+  </footer>
+</div>
+
+<script>
+/* ============ 步骤库：只用已核实过的事实，不编数字 ============ */
+/* phase: p0 第一天就启动 / p1 和开发并行 / p2 开发完成前准备 / p3 提交与上架
+   wait: [最小天数, 最大天数]，等待中步骤的预计出结果范围（日历天）
+   reactive: 等通知后才做的步骤，不进「今天要做的事」，挂在等待项下提醒 */
+
+var PHASES = [
+  { id: "p0", name: "第一天就启动", sub: "这些最慢，先走，和开发并行" },
+  { id: "p1", name: "和开发并行", sub: "开发期间抽空做" },
+  { id: "p2", name: "开发完成前准备", sub: "开发收尾时备齐" },
+  { id: "p3", name: "提交与上架", sub: "按顺序走完就上架" }
+];
+
+var STEPS = {
+  licenseGame: {
+    title: "申请游戏版号", phase: "p0", rank: 0,
+    todo: "向国家新闻出版署申请网络游戏出版物号。周期通常 2 到 6 个月，和开发同步启动，不要等开发完。",
+    need: ["游戏内容说明", "软著证书", "防沉迷系统说明（以官方要求为准）"],
+    time: "通常 2–6 个月", parallel: true, wait: [60, 180],
+    tip: "版号是游戏上中国区最长的关键路径，第一天就要启动。",
+    link: { label: "去国家新闻出版署官网", url: "https://www.nppa.gov.cn" },
+    targets: ["cn", "wx"], kinds: ["game"], entities: ["individual", "company"],
+    condNote: { wx: "只有做内购才需要版号；纯广告不用。" }
+  },
+  domain: {
+    title: "买一个能备案的域名", phase: "p0", rank: 1,
+    todo: "在阿里云注册域名，并完成个人实名认证。域名后缀要选能备案的。",
+    need: ["身份证", "域名不一定真要在 App 里用，但备案必须有"],
+    time: "约 30 分钟", parallel: true,
+    link: { label: "去阿里云官网", url: "https://www.aliyun.com" },
+    targets: ["cn"], kinds: ["tool", "game"], entities: ["individual", "company"]
+  },
+  server: {
+    title: "买一台国内云轻量服务器", phase: "p0", rank: 2,
+    todo: "满足备案最低配置就行，不用真的用它跑东西。域名加服务器一共 300 多元。",
+    need: ["300 多元预算", "服务器要在国内地域"],
+    time: "约 30 分钟", parallel: true,
+    link: { label: "去阿里云官网", url: "https://www.aliyun.com" },
+    targets: ["cn"], kinds: ["tool", "game"], entities: ["individual", "company"]
+  },
+  icpSubmit: {
+    title: "提交 ICP 备案，等拿备案号", phase: "p0", rank: 3,
+    todo: "在阿里云备案控制台填资料，关联域名和服务器，做人脸认证后提交。提交后状态改成「等待中」，等管局审核。",
+    need: ["身份证", "App 名称", "Bundle ID", "分发证书公钥与指纹"],
+    time: "填表约 1 小时；审核 2–3 周", parallel: true, wait: [14, 21],
+    tip: "这是工具类上中国区最长的卡点，越早启动越好。备案号形如沪 ICP 备…号-XA。",
+    link: { label: "去阿里云备案控制台", url: "https://beian.aliyun.com" },
+    targets: ["cn"], kinds: ["tool", "game"], entities: ["individual", "company"],
+    chainNote: "提交后等待期间会发生两件事：接审核电话、工信部短信核验（见下面两步）。"
+  },
+  icpCall: {
+    title: "接审核电话", phase: "p0", rank: 4, reactive: true,
+    todo: "阿里云审核专员会打电话核实信息，保持手机畅通，注意陌生来电。",
+    need: ["备案时填的手机号保持畅通"],
+    time: "几分钟", parallel: true,
+    targets: ["cn"], kinds: ["tool", "game"], entities: ["individual", "company"]
+  },
+  icpSms: {
+    title: "工信部短信核验", phase: "p0", rank: 5, reactive: true,
+    todo: "收到工信部短信后，去官网核验。",
+    need: ["短信里的验证码", "手机号", "身份证后 6 位"],
+    time: "几分钟", parallel: true,
+    deadline: "收到短信后 1 天内必须核验，过期会被退回，前面白等。",
+    link: { label: "去工信部备案系统", url: "https://beian.miit.gov.cn" },
+    targets: ["cn"], kinds: ["tool", "game"], entities: ["individual", "company"]
+  },
+  wxCopyright: {
+    title: "准备软著材料并申请", phase: "p0", rank: 6,
+    todo: "源代码 60 页（前 30 页加后 30 页）与操作说明书，在中国版权保护中心申请。",
+    need: ["60 页源代码", "操作说明书", "身份证"],
+    time: "准备约半天；审批约 30–40 个工作日", parallel: true, wait: [42, 56],
+    tip: "官方口径是按情形提交，提审时看后台要不要；普通件免官费。",
+    link: { label: "去中国版权保护中心", url: "https://register.ccopyright.com.cn" },
+    targets: ["wx"], kinds: ["tool", "game"], entities: ["individual", "company"]
+  },
+  wxFiling: {
+    title: "小游戏备案", phase: "p0", rank: 7,
+    todo: "在公众平台后台提交备案，和软著同步启动，不用等。",
+    need: ["主体信息", "游戏信息"],
+    time: "填表约 1 小时；审核 10–20 个工作日", parallel: true, wait: [14, 28],
+    link: { label: "去微信公众平台", url: "https://mp.weixin.qq.com" },
+    targets: ["wx"], kinds: ["tool", "game"], entities: ["individual", "company"]
+  },
+  wxMoney: {
+    title: "决定变现方式：广告还是内购", phase: "p0", rank: 8,
+    todo: "企业主体可以开通虚拟支付做内购，但内购必须有版号；纯广告不用版号。先定好，再决定要不要申请版号。",
+    need: ["想清楚就行"],
+    time: "想清楚就行", parallel: true,
+    tip: "如果做内购，版号申请要第一天就启动（见本路线第一步）。",
+    targets: ["wx"], kinds: ["tool", "game"], entities: ["company"]
+  },
+  devAcct: {
+    title: "注册苹果开发者账号", phase: "p1", rank: 0,
+    todo: "加入苹果开发者计划，年费 688 元，个人可以注册。信息要和身份证一致。",
+    need: ["Apple ID", "身份证", "能收短信的手机号"],
+    time: "约 30 分钟", parallel: true,
+    link: { label: "去苹果开发者官网", url: "https://developer.apple.com" },
+    targets: ["cn", "oversea"], kinds: ["tool", "game"], entities: ["individual", "company"]
+  },
+  wxReg: {
+    title: "注册小游戏账号", phase: "p1", rank: 1,
+    todo: "微信公众平台注册，选小游戏，个人主体免费，实名加人脸即可。",
+    need: ["没注册过公众平台的邮箱", "身份证", "本人微信扫码"],
+    time: "约 30 分钟", parallel: true,
+    tip: "拿到 AppID 记下来，开发要用。",
+    link: { label: "去微信公众平台", url: "https://mp.weixin.qq.com" },
+    targets: ["wx"], kinds: ["tool", "game"], entities: ["individual", "company"]
+  },
+  dev: {
+    title: "开发与测试", phase: "p1", rank: 2,
+    todo: "把应用做出来，真机测一遍。备案、软著这些慢步骤不用等开发，现在就和开发并行走。",
+    need: ["开发工具", "真机测试"],
+    time: "看你的进度", parallel: true,
+    targets: ["cn", "oversea", "wx"], kinds: ["tool", "game"], entities: ["individual", "company"]
+  },
+  materialsCn: {
+    title: "准备上架材料", phase: "p2", rank: 0,
+    todo: "图标、截图、商店文案、隐私政策页、支持邮箱，一次备齐。",
+    need: ["图标 1024 图", "各尺寸截图（常用 1290×2796，以 Connect 页面为准）", "中文文案", "隐私政策链接（下面能直接生成）", "支持邮箱"],
+    time: "约半天", parallel: false, genPrivacy: true,
+    targets: ["cn"], kinds: ["tool", "game"], entities: ["individual", "company"]
+  },
+  materialsOv: {
+    title: "准备上架材料（英文）", phase: "p2", rank: 1,
+    todo: "图标、截图、英文文案、隐私政策页、支持邮箱，一次备齐。",
+    need: ["图标 1024 图", "各尺寸截图（常用 1290×2796，以 Connect 页面为准）", "英文文案", "隐私政策链接（下面能直接生成英文版）", "支持邮箱"],
+    time: "约半天", parallel: false, genPrivacy: true,
+    targets: ["oversea"], kinds: ["tool", "game"], entities: ["individual", "company"]
+  },
+  submitCn: {
+    title: "建应用并提交审核", phase: "p3", rank: 0,
+    todo: "在 Connect 新建 App，填备案号，定价选 1 元档，提交审核。",
+    need: ["备案号", "截图", "文案", "隐私政策链接", "支持邮箱"],
+    time: "约 1 小时", parallel: false,
+    tip: "游戏类还要版号，工具类不用。",
+    link: { label: "去 App Store Connect", url: "https://appstoreconnect.apple.com" },
+    targets: ["cn"], kinds: ["tool", "game"], entities: ["individual", "company"]
+  },
+  submitOv: {
+    title: "建应用，不勾中国大陆", phase: "p3", rank: 1,
+    todo: "在 Connect 新建 App，销售范围只选其他国家和地区。",
+    need: ["截图", "文案", "隐私政策链接", "支持邮箱"],
+    time: "约 30 分钟", parallel: false,
+    tip: "不上中国大陆，就不用备案与版号。",
+    link: { label: "去 App Store Connect", url: "https://appstoreconnect.apple.com" },
+    targets: ["oversea"], kinds: ["tool", "game"], entities: ["individual", "company"]
+  },
+  uploadOv: {
+    title: "上传构建并提交审核", phase: "p3", rank: 2,
+    todo: "上传安装包，先用 TestFlight 自己测一遍，再提交审核。",
+    need: ["构建包", "测试设备"],
+    time: "约 1 小时", parallel: false,
+    link: { label: "去 App Store Connect", url: "https://appstoreconnect.apple.com" },
+    targets: ["oversea"], kinds: ["tool", "game"], entities: ["individual", "company"]
+  },
+  wxUpload: {
+    title: "开发并上传代码", phase: "p3", rank: 3,
+    todo: "用微信开发者工具上传代码，主包不超 4MB，主包加分包总量不超 30MB。",
+    need: ["AppID", "代码包"],
+    time: "约 1 小时", parallel: false,
+    link: { label: "看小游戏开发文档", url: "https://developers.weixin.qq.com/minigame/dev/guide/" },
+    targets: ["wx"], kinds: ["tool", "game"], entities: ["individual", "company"]
+  },
+  wxReview: {
+    title: "类目与资质提审", phase: "p3", rank: 4,
+    todo: "按后台要求交软著与自审自查报告，通过类目审核。",
+    need: ["软著证书", "自审自查报告"],
+    time: "约 30 分钟", parallel: false,
+    link: { label: "去微信公众平台", url: "https://mp.weixin.qq.com" },
+    targets: ["wx"], kinds: ["tool", "game"], entities: ["individual", "company"]
+  },
+  wxPublish: {
+    title: "提审发布", phase: "p3", rank: 5,
+    todo: "提交审核，通过后发布上线。",
+    need: ["—"],
+    time: "审核约 1–7 个工作日", parallel: false, wait: [1, 9],
+    link: { label: "去微信公众平台", url: "https://mp.weixin.qq.com" },
+    targets: ["wx"], kinds: ["tool", "game"], entities: ["individual", "company"]
+  },
+  wxAds: {
+    title: "开通流量主", phase: "p3", rank: 6,
+    todo: "访客累计超过 500 后开通流量主，拿广告单元 ID 再发一版。",
+    need: ["500 以上访客"],
+    time: "约 30 分钟", parallel: false,
+    tip: "个人主体只能走广告，不能内购。",
+    link: { label: "去微信公众平台", url: "https://mp.weixin.qq.com" },
+    targets: ["wx"], kinds: ["tool", "game"], entities: ["individual", "company"]
+  },
+  liveOv: {
+    title: "审核通过后上架", phase: "p3", rank: 7,
+    todo: "审核通过，App 在选定的海外区上架。之后想进中国区，补办备案再勾选。",
+    need: ["—"],
+    time: "等审核结果", parallel: false,
+    targets: ["oversea"], kinds: ["tool", "game"], entities: ["individual", "company"]
+  }
+};
+
+var TARGET_NAMES = { cn: "苹果中国区", oversea: "苹果海外区", wx: "微信小游戏" };
+
+/* 最快上架时间线：只用已核实的耗时，不编审核时长 */
+function fastestLines(a) {
+  var lines = [];
+  if (a.targets.indexOf("cn") !== -1) {
+    if (a.kind === "game") {
+      lines.push("<b>苹果中国区（游戏）：</b>关键路径是游戏版号（通常 2–6 个月）与 ICP 备案（2–3 周），两件第一天都要启动，和开发并行。");
+    } else {
+      lines.push("<b>苹果中国区（工具）：</b>关键路径是 ICP 备案（2–3 周）。开发与备案并行，备案号到手就能提交审核。");
+    }
+  }
+  if (a.targets.indexOf("oversea") !== -1) {
+    lines.push("<b>苹果海外区：</b>没有备案与版号，开发完成即可提交审核。");
+  }
+  if (a.targets.indexOf("wx") !== -1) {
+    if (a.entity === "company") {
+      lines.push("<b>微信小游戏（企业）：</b>关键路径是小游戏备案（10–20 个工作日）；如后台要求软著，软著（约 30–40 个工作日）会更长；如做内购，版号（通常 2–6 个月）是最长的。");
+    } else {
+      lines.push("<b>微信小游戏（个人）：</b>关键路径是小游戏备案（10–20 个工作日）；如后台要求软著，软著（约 30–40 个工作日）会更长。个人只能走广告，不能内购。");
+    }
+  }
+  return lines;
+}
+
+/* 按答案生成路线：只留相关的步骤，按阶段与关键路径排好序 */
+function buildRoute(a) {
+  var list = [];
+  Object.keys(STEPS).forEach(function (id) {
+    var s = STEPS[id];
+    if (s.targets.filter(function (t) { return a.targets.indexOf(t) !== -1; }).length === 0) return;
+    if (s.kinds.indexOf(a.kind) === -1) return;
+    if (s.entities.indexOf(a.entity) === -1) return;
+    list.push({ id: id, def: s });
+  });
+  /* 微信小游戏 + 个人：版号步骤不出现（licenseGame 只在 wx+company 时需要，
+     但它的 targets 含 wx、kinds 含 game——个人游戏走纯广告不用版号，这里排除） */
+  list = list.filter(function (item) {
+    if (item.id === "licenseGame" && a.targets.indexOf("cn") === -1 && a.entity === "individual") return false;
+    if (item.id === "licenseGame" && a.targets.indexOf("cn") === -1 && a.kind === "tool") return false;
+    return true;
+  });
+  var order = { p0: 0, p1: 1, p2: 2, p3: 3 };
+  list.sort(function (x, y) {
+    var px = order[x.def.phase], py = order[y.def.phase];
+    if (px !== py) return px - py;
+    return x.def.rank - y.def.rank;
+  });
+  return list;
+}
+
+/* ============ 状态：记录真实进展，不是打卡 ============ */
+/* status: todo 未开始 / doing 进行中 / waiting 等待中 / done 已完成 */
+
+var LS_KEY = "launch-guide-v2";
+var state = load();
+var openSteps = {};   /* 展开的步骤卡：stepId -> true */
+var genLang = {};     /* 隐私政策生成器语言：stepId -> zh/en */
+
+function uid() { return "p" + Date.now().toString(36) + Math.floor(Math.random() * 1000); }
+
+function load() {
+  try {
+    var raw = localStorage.getItem(LS_KEY);
+    if (raw) {
+      var s = JSON.parse(raw);
+      if (s && s.projects) return s;
+    }
+  } catch (e) {}
+  return { projects: [], activeId: null, view: "today" };
+}
+if (!state.view) state.view = "today";
+
+function save() {
+  try { localStorage.setItem(LS_KEY, JSON.stringify(state)); } catch (e) {}
+}
+
+function activeProject() {
+  for (var i = 0; i < state.projects.length; i++) {
+    if (state.projects[i].id === state.activeId) return state.projects[i];
+  }
+  return state.projects[0] || null;
+}
+
+function getStatus(proj, stepId) {
+  var st = proj.states[stepId];
+  return st ? st.s : "todo";
+}
+
+function setStatus(proj, stepId, s) {
+  var st = proj.states[stepId] || {};
+  st.s = s;
+  if (s === "waiting") {
+    if (!st.since) st.since = Date.now();
+  } else {
+    st.since = null;
+  }
+  if (s === "done") st.doneAt = Date.now();
+  proj.states[stepId] = st;
+  save();
+  render();
+}
+
+/* ============ 日期工具 ============ */
+function fmtDate(ts) {
+  var d = new Date(ts);
+  return (d.getMonth() + 1) + " 月 " + d.getDate() + " 日";
+}
+function expectedRange(st, step) {
+  if (!step.wait || !st.since) return "等对方通知";
+  var min = new Date(st.since + step.wait[0] * 86400000);
+  var max = new Date(st.since + step.wait[1] * 86400000);
+  return "预计 " + fmtDate(min) + "–" + fmtDate(max) + "有结果";
+}
+
+/* ============ 每日下一步：每个项目只推当前一件事 ============ */
+function nextAction(proj) {
+  var route = buildRoute(proj.answers);
+  for (var i = 0; i < route.length; i++) {
+    var item = route[i];
+    if (item.def.reactive) continue; /* 等通知后才做的，不当作今天的事 */
+    var s = getStatus(proj, item.id);
+    if (s === "todo" || s === "doing") return item;
+  }
+  return null;
+}
+function waitingItems(proj) {
+  var route = buildRoute(proj.answers);
+  var out = [];
+  route.forEach(function (item) {
+    if (getStatus(proj, item.id) === "waiting") out.push(item);
+  });
+  return out;
+}
+function routeDoneCount(proj) {
+  var route = buildRoute(proj.answers);
+  var done = 0;
+  route.forEach(function (item) { if (getStatus(proj, item.id) === "done") done++; });
+  return { done: done, total: route.length };
+}
+
+/* ============ 隐私政策生成器 ============ */
+function genPrivacyText(appName, email, lang) {
+  var now = new Date();
+  var dateZh = now.getFullYear() + " 年 " + (now.getMonth() + 1) + " 月 " + now.getDate() + " 日";
+  var dateEn = now.getFullYear() + "-" + String(now.getMonth() + 1).padStart(2, "0") + "-" + String(now.getDate()).padStart(2, "0");
+  email = email || "（请填入你的支持邮箱）";
+  if (lang === "en") {
+    return "Privacy Policy for " + appName + "\n\nUpdated: " + dateEn +
+      "\n\n1. Data We Collect\nThis app does not collect any personal information. No account is required. No ads or analytics." +
+      "\n\n2. Photos and Files\nPhotos and files you open in the app are processed only on your device. Nothing is uploaded to any server." +
+      "\n\n3. Third-Party Services\nThis app uses no third-party services and shares no data with third parties." +
+      "\n\n4. Children's Privacy\nThis app does not collect information from children." +
+      "\n\n5. Contact Us\nQuestions? Contact us at " + email + "." +
+      "\n\n(This is a generic template. Adjust it to match your app. If your app connects to the internet or uses third-party services, disclose them here.)";
+  }
+  return appName + "隐私政策\n\n更新日期：" + dateZh +
+    "\n\n一、我们收集什么\n本应用不收集任何个人信息，不需要注册账号，不含广告与数据统计。" +
+    "\n\n二、照片与文件\n你在应用内打开的照片与文件，只在你的手机上处理，不会上传到任何服务器。" +
+    "\n\n三、第三方服务\n本应用不接入任何第三方服务，不向任何第三方共享数据。" +
+    "\n\n四、儿童隐私\n本应用不面向儿童收集信息。" +
+    "\n\n五、联系我们\n如有问题，请联系：" + email +
+    "\n\n（本政策为通用模板，请按你的应用实际情况修改；如应用联网或接入第三方服务，请如实补充。）";
+}
+
+function esc(s) {
+  return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+
+/* ============ 视图：今天 ============ */
+function renderToday() {
+  var main = document.getElementById("main");
+  if (!state.projects.length) { renderOnboard(); return; }
+
+  var html = "";
+  var anyAction = false, anyWaiting = false;
+
+  /* 每个项目：今天要做的事（只推一件）+ 等待中的事，汇总在一个页面 */
+  state.projects.forEach(function (proj) {
+    var next = nextAction(proj);
+    var waits = waitingItems(proj);
+    var c = routeDoneCount(proj);
+    if (next) anyAction = true;
+    if (waits.length) anyWaiting = true;
+
+    html += '<div class="card"><div class="proj-name">' + esc(proj.name) +
+      " · " + c.done + "/" + c.total + " 步已完成</div>";
+
+    if (next) {
+      var s = getStatus(proj, next.id);
+      var d = next.def;
+      html += '<span class="next-tag' + (s === "doing" ? " doing" : "") + '">' +
+        (s === "doing" ? "继续做" : "今天要做的事") + "</span>" +
+        "<h2>" + esc(d.title) + "</h2>" +
+        '<p class="muted">' + esc(d.todo) + "</p>";
+      if (d.time) html += '<div class="tag-row"><span class="tag">预计耗时：' + esc(d.time) + "</span></div>";
+      if (d.deadline) html += '<div class="deadline">' + esc(d.deadline) + "</div>";
+      html += '<div class="btn-row">';
+      if (d.link) html += '<a class="jump" href="' + d.link.url + '" target="_blank" rel="noopener">' + esc(d.link.label) + " ↗</a>";
+      if (s === "todo") {
+        html += '<button class="btn" onclick="setStatusById(\'' + proj.id + "','" + next.id + "','doing')\">开始做</button>";
+      } else {
+        html += '<button class="btn" onclick="setStatusById(\'' + proj.id + "','" + next.id + "','done')\">做完了</button>";
+      }
+      html += "</div>";
+    } else if (!waits.length) {
+      html += '<b style="color:#2E7D32">这个项目没有要做的事了，全部完成。</b>';
+    } else {
+      html += '<p class="muted">没有要做的事，在等下面这几件有结果。</p>';
+    }
+
+    waits.forEach(function (item) {
+      var d = item.def;
+      var st = proj.states[item.id];
+      html += '<div style="border-top:1px solid #F0EAD9;margin-top:14px;padding-top:12px">' +
+        '<span class="wait-tag">等待中</span>' +
+        "<h3>" + esc(d.title) + "</h3>" +
+        '<p class="muted">' + expectedRange(st, d) + "</p>";
+      if (item.id === "icpSubmit") {
+        html += '<p class="small" style="margin-top:6px">期间会发生：阿里云审核专员来电；收到工信部短信后，<b style="color:#C62828">1 天内必须核验</b>，过期退回。</p>';
+      }
+      html += '<div class="btn-row"><button class="btn ghost" onclick="setStatusById(\'' + proj.id + "','" + item.id + "','done')\">有结果了，已完成</button></div></div>";
+    });
+
+    html += "</div>";
+  });
+
+  /* 最快上架时间线：每个项目一条 */
+  html += '<div class="timeline-box"><b>最快上架时间线</b>';
+  state.projects.forEach(function (proj) {
+    fastestLines(proj.answers).forEach(function (line) {
+      html += "<p>「" + esc(proj.name) + "」" + line + "</p>";
+    });
+  });
+  html += "</div>";
+
+  if (!anyAction && !anyWaiting) {
+    html = '<div class="empty"><b>全部完成</b>所有项目都没有要做的事了。</div>' + html;
+  }
+
+  html += '<div class="btn-row"><button class="btn ghost" onclick="goView(\'route\')">看完整路线 →</button></div>';
+  main.innerHTML = html;
+}
+
+function setStatusById(projId, stepId, s) {
+  for (var i = 0; i < state.projects.length; i++) {
+    if (state.projects[i].id === projId) { setStatus(state.projects[i], stepId, s); return; }
+  }
+}
+
+/* ============ 视图：路线 ============ */
+function renderRoute() {
+  var main = document.getElementById("main");
+  if (!state.projects.length) { renderOnboard(); return; }
+  var proj = activeProject();
+  var route = buildRoute(proj.answers);
+  var c = routeDoneCount(proj);
+
+  var html = "";
+  /* 项目栏 */
+  html += '<div class="proj-bar" id="projBar">';
+  state.projects.forEach(function (p) {
+    html += '<button class="proj-chip' + (p.id === proj.id ? " active" : "") +
+      '" onclick="switchProj(\'' + p.id + '\')">' + esc(p.name) + "</button>";
+  });
+  html += '<button class="proj-add" onclick="renderOnboard()">＋ 新项目</button>';
+  html += '<span class="proj-tools"><button class="mini-btn" onclick="editRoute()">改路线</button>' +
+    '<button class="mini-btn" onclick="renameProject()">改名</button>' +
+    '<button class="mini-btn" onclick="deleteProject()">删除</button></span></div>';
+
+  /* 最快时间线 */
+  html += '<div class="timeline-box"><b>最快上架时间线</b>';
+  fastestLines(proj.answers).forEach(function (line) { html += "<p>" + line + "</p>"; });
+  html += '<p class="small" style="margin-top:8px">已完成 ' + c.done + " / 共 " + c.total + " 步 · 状态是记录真实进展，不是打卡。</p></div>";
+
+  /* 按阶段排步骤 */
+  var n = 0;
+  PHASES.forEach(function (ph) {
+    var steps = route.filter(function (item) { return item.def.phase === ph.id; });
+    if (!steps.length) return;
+    html += '<div class="phase"><h2>' + ph.name + "</h2><p>" + ph.sub + "</p></div>";
+    steps.forEach(function (item) {
+      n++;
+      html += stepCard(proj, item, n);
+    });
+  });
+
+  main.innerHTML = html;
+}
+
+var STATUS_LABELS = { todo: "未开始", doing: "进行中", waiting: "等待中", done: "已完成" };
+
+function stepCard(proj, item, n) {
+  var d = item.def;
+  var s = getStatus(proj, item.id);
+  var st = proj.states[item.id];
+  var open = openSteps[item.id] ? " open" : "";
+  var noCls = s === "waiting" ? "waiting" : (s === "doing" ? "doing" : (s === "todo" ? "todo" : ""));
+
+  var html = '<div class="step' + (s === "done" ? " done-card" : "") + open + '" id="step-' + item.id + '">' +
+    '<div class="step-head" onclick="toggleStep(\'' + item.id + '\')">' +
+    '<div class="step-no ' + noCls + '">' + (s === "done" ? "✓" : n) + "</div>" +
+    '<div class="step-title">' + esc(d.title) + "</div>" +
+    '<div class="chev">' + (open ? "▴" : "▾") + "</div></div>";
+
+  /* 标签：耗时 / 并行 / 等通知 / 时限 */
+  html += '<div class="tag-row">';
+  if (d.time) html += '<span class="tag">预计：' + esc(d.time) + "</span>";
+  if (d.parallel) html += '<span class="tag blue">可与开发并行</span>';
+  if (d.reactive) html += '<span class="tag">等通知后做</span>';
+  if (d.deadline) html += '<span class="tag red">有时限</span>';
+  if (s === "waiting") html += '<span class="tag red">' + expectedRange(st, d) + "</span>";
+  html += "</div>";
+
+  /* 状态四选 */
+  html += '<div class="states">';
+  ["todo", "doing", "waiting", "done"].forEach(function (key) {
+    html += '<button class="' + (s === key ? "on-" + key : "") +
+      '" onclick="setStatusById(\'' + proj.id + "','" + item.id + "','" + key + '\')">' +
+      STATUS_LABELS[key] + "</button>";
+  });
+  html += "</div>";
+
+  /* 展开：做什么、要带的材料、时限、跳转、隐私政策生成 */
+  html += '<div class="step-body"><div class="step-do">' + esc(d.todo) + "</div>";
+  if (d.condNote) {
+    var notes = [];
+    proj.answers.targets.forEach(function (t) { if (d.condNote[t]) notes.push(d.condNote[t]); });
+    if (notes.length) html += '<div class="step-tip">' + esc(notes.join(" ")) + "</div>";
+  }
+  if (d.need && d.need.length) {
+    html += '<div class="need-box"><b>要带的材料</b><ul>';
+    d.need.forEach(function (m) { html += "<li>" + esc(m) + "</li>"; });
+    html += "</ul></div>";
+  }
+  if (d.chainNote) html += '<div class="step-tip">' + esc(d.chainNote) + "</div>";
+  if (d.tip) html += '<div class="step-tip">提醒：' + esc(d.tip) + "</div>";
+  if (d.deadline) html += '<div class="deadline">' + esc(d.deadline) + "</div>";
+
+  if (d.genPrivacy) html += privacyGenBox(proj, item.id);
+
+  if (d.link) {
+    html += '<div class="btn-row"><a class="jump" href="' + d.link.url + '" target="_blank" rel="noopener">' + esc(d.link.label) + " ↗</a></div>";
+  }
+  html += "</div></div>";
+  return html;
+}
+
+function toggleStep(stepId) {
+  openSteps[stepId] = !openSteps[stepId];
+  var el = document.getElementById("step-" + stepId);
+  if (el) {
+    el.classList.toggle("open", !!openSteps[stepId]);
+    var ch = el.querySelector(".chev");
+    if (ch) ch.textContent = openSteps[stepId] ? "▴" : "▾";
+  }
+}
+
+function privacyGenBox(proj, stepId) {
+  var lang = genLang[stepId] || "zh";
+  return '<div class="gen-box"><h4>隐私政策当场生成</h4>' +
+    '<p class="small">填应用名，点生成，复制下来就能用。通用模板，按实际情况修改。</p>' +
+    '<label>应用名</label>' +
+    '<input type="text" id="gen-name-' + stepId + '" value="' + esc(proj.name) + '" placeholder="如：相纸翻拍">' +
+    '<label>支持邮箱（可选）</label>' +
+    '<input type="email" id="gen-email-' + stepId + '" placeholder="如：support@example.com">' +
+    '<div class="lang-row">' +
+    '<button class="' + (lang === "zh" ? "on" : "") + '" onclick="setGenLang(\'' + stepId + "','zh')\">中文版</button>" +
+    '<button class="' + (lang === "en" ? "on" : "") + '" onclick="setGenLang(\'' + stepId + "','en')\">English</button>" +
+    "</div>" +
+    '<div class="btn-row"><button class="btn" onclick="doGen(\'' + stepId + '\')">生成隐私政策</button>' +
+    '<button class="btn ghost" onclick="copyGen(\'' + stepId + '\')">复制</button></div>' +
+    '<textarea class="gen-out" id="gen-out-' + stepId + '" readonly placeholder="生成的隐私政策会出现在这里"></textarea></div>';
+}
+
+function setGenLang(stepId, lang) {
+  genLang[stepId] = lang;
+  render();
+  openSteps[stepId] = true;
+  render();
+}
+
+function doGen(stepId) {
+  var nameEl = document.getElementById("gen-name-" + stepId);
+  var emailEl = document.getElementById("gen-email-" + stepId);
+  var outEl = document.getElementById("gen-out-" + stepId);
+  var name = (nameEl && nameEl.value.trim()) || "我的应用";
+  var email = (emailEl && emailEl.value.trim()) || "";
+  outEl.value = genPrivacyText(name, email, genLang[stepId] || "zh");
+}
+
+function copyGen(stepId) {
+  var outEl = document.getElementById("gen-out-" + stepId);
+  if (!outEl || !outEl.value) { alert("先点生成。"); return; }
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(outEl.value).then(function () { alert("已复制。"); }, function () { fallbackCopy(outEl); });
+  } else {
+    fallbackCopy(outEl);
+  }
+}
+function fallbackCopy(el) {
+  el.focus(); el.select();
+  try { document.execCommand("copy"); alert("已复制。"); }
+  catch (e) { alert("复制失败，请长按选中文字手动复制。"); }
+}
+
+/* ============ 视图：新项目问卷（3 个问题生成专属路线） ============ */
+var draft = null;   /* 问卷草稿 */
+var editingId = null; /* 改路线时正在改的项目 id */
+
+function renderOnboard() {
+  state.view = "onboard";
+  editingId = null;
+  draft = { name: "", kind: "tool", targets: ["cn"], entity: "individual" };
+  renderOnboardForm();
+}
+
+function editRoute() {
+  var proj = activeProject();
+  if (!proj) return;
+  state.view = "onboard";
+  editingId = proj.id;
+  draft = {
+    name: proj.name,
+    kind: proj.answers.kind,
+    targets: proj.answers.targets.slice(),
+    entity: proj.answers.entity
+  };
+  renderOnboardForm();
+}
+
+function renderOnboardForm() {
+  document.getElementById("navToday").classList.remove("active");
+  document.getElementById("navRoute").classList.remove("active");
+  var main = document.getElementById("main");
+
+  function choice(field, value, title, sub, multi) {
+    var on = multi ? (draft[field].indexOf(value) !== -1) : (draft[field] === value);
+    return '<button class="choice' + (on ? " on" : "") + '" data-field="' + field + '" data-value="' + value + '" onclick="pick(\'' + field + "','" + value + "'," + (multi ? "true" : "false") + ')">' +
+      esc(title) + (sub ? "<small>" + esc(sub) + "</small>" : "") + "</button>";
+  }
+
+  var html = '<div class="card"><h2>' + (editingId ? "改路线" : "新项目：先回答 3 个问题") + "</h2>" +
+    '<p class="muted">按你的答案生成专属路线，只显示相关的步骤，不相关的不出现。</p></div>' +
+
+    '<div class="q-group"><h3>1. 项目叫什么？</h3>' +
+    '<input class="name-input" id="q-name" type="text" value="' + esc(draft.name) + '" placeholder="如：相纸翻拍"></div>' +
+
+    '<div class="q-group"><h3>2. 做什么？</h3>' +
+    choice("kind", "tool", "工具", "扫描、记账、提醒这类单功能应用") +
+    choice("kind", "game", "游戏", "上中国区要版号，周期最长") + "</div>" +
+
+    '<div class="q-group"><h3>3. 上哪？（可多选）</h3><div class="hint">选多个会合并成一条时间线，慢的步骤共用一次。</div>' +
+    choice("targets", "cn", "苹果 · 中国区", "工具不用版号，但要 ICP 备案（2–3 周）", true) +
+    choice("targets", "oversea", "苹果 · 海外区", "不勾中国大陆，不用备案与版号", true) +
+    choice("targets", "wx", "微信小游戏", "个人只能走广告；要备案，软著按情形交", true) + "</div>" +
+
+    '<div class="q-group"><h3>4. 什么主体？</h3>' +
+    choice("entity", "individual", "个人", "微信小游戏只能走广告，不能内购") +
+    choice("entity", "company", "企业 / 个体工商户", "微信小游戏可开通虚拟支付，但内购要版号") + "</div>" +
+
+    '<div class="btn-row"><button class="btn dark" onclick="submitOnboard()">生成我的路线</button>' +
+    (state.projects.length ? '<button class="btn ghost" onclick="goView(\'today\')">取消</button>' : "") + "</div>";
+
+  main.innerHTML = html;
+  var nameEl = document.getElementById("q-name");
+  if (nameEl) nameEl.addEventListener("input", function () { draft.name = nameEl.value; });
+}
+
+function pick(field, value, multi) {
+  if (multi) {
+    var i = draft[field].indexOf(value);
+    if (i === -1) draft[field].push(value);
+    else if (draft[field].length > 1) draft[field].splice(i, 1);
+    else { alert("至少选一个上架渠道。"); return; }
+  } else {
+    draft[field] = value;
+  }
+  renderOnboardForm();
+}
+
+function submitOnboard() {
+  var nameEl = document.getElementById("q-name");
+  var name = (nameEl ? nameEl.value.trim() : "") || draft.name.trim() || "未命名项目";
+  var answers = { kind: draft.kind, targets: draft.targets.slice(), entity: draft.entity };
+  if (editingId) {
+    for (var i = 0; i < state.projects.length; i++) {
+      if (state.projects[i].id === editingId) {
+        state.projects[i].name = name;
+        state.projects[i].answers = answers;
+        break;
+      }
+    }
+    editingId = null;
+  } else {
+    var p = { id: uid(), name: name, answers: answers, states: {}, createdAt: Date.now() };
+    state.projects.push(p);
+    state.activeId = p.id;
+  }
+  save();
+  goView("route");
+}
+
+/* ============ 项目管理与视图切换 ============ */
+function switchProj(id) {
+  state.activeId = id;
+  save();
+  render();
+}
+
+function renameProject() {
+  var proj = activeProject();
+  var name = prompt("项目改名叫什么？", proj.name);
+  if (name === null) return;
+  name = name.trim();
+  if (name) { proj.name = name; save(); render(); }
+}
+
+function deleteProject() {
+  if (state.projects.length <= 1) { alert("至少留一个项目。"); return; }
+  var proj = activeProject();
+  if (!confirm("删除项目「" + proj.name + "」？它的路线与进度会一起删掉。")) return;
+  state.projects = state.projects.filter(function (p) { return p.id !== proj.id; });
+  state.activeId = state.projects[0].id;
+  save(); render();
+}
+
+function goView(v) {
+  state.view = v;
+  save();
+  render();
+}
+
+function render() {
+  document.getElementById("navToday").classList.toggle("active", state.view === "today");
+  document.getElementById("navRoute").classList.toggle("active", state.view === "route");
+  if (state.view === "route") renderRoute();
+  else if (state.view === "onboard") renderOnboardForm();
+  else renderToday();
+}
+
+render();
+</script>
+</body>
+</html>
