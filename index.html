@@ -305,6 +305,68 @@
 <script>
 const ENTRIES = [
  {
+  "category": "开源项目",
+  "core": "两条命令把任意开源大模型改成无审查版：定向消融直接改权重，不用重新微调；4 万星，AGPL-3.0 协议。",
+  "date": "2026-11-19",
+  "detail": [
+   {
+    "h": "是什么",
+    "items": [
+     "Heretic（p-e-w/heretic），作者 Philipp Emanuel Weidmann，2025-09-21 建仓，AGPL-3.0 协议；截至 2026-11-17 约 4.1 万星、4.8 千复刻。",
+     "README 自述「全自动去审查」：默认配置压制拒答，另有针对废话、谄媚、回复长度的配置；支持多数稠密模型、多模态、多种 MoE 架构与 Qwen3.5 这类混合模型，纯状态空间模型暂不支持。",
+     "视频号 GeekTechs 2026-11-18 介绍（21 秒）：称「GitHub 上新出一个开源项目」——实际建仓已一年多，新的是热度而非项目本身。"
+    ]
+   },
+   {
+    "h": "怎么做到",
+    "items": [
+     "底层是定向消融（Arditi 等人 2024 年论文）：拒答主要由残差流里的一个方向承载，抹掉这个方向就不再拒答，不用重新训练。",
+     "Heretic 用 Optuna 的 TPE 参数优化器自动找消融参数，同时压低拒答数和与原模型的 KL 散度，参数不用手挑；支持 4-bit 加载省显存。",
+     "用法两条命令：pip install -U heretic-llm，然后 heretic 加模型名；2.0 版（2026-11-01）默认方法比经典消融更通用（ARA 任意秩消融）。"
+    ]
+   },
+   {
+    "h": "效果与提醒",
+    "items": [
+     "Gemma-3-12B-IT 实测：有害提示拒答从 97/100 降到 3/100，KL 散度 0.16（手动消融是 1.04，损伤更小）；Qwen3-4B 在 RTX 3090 上约 20–30 分钟改完。",
+     "社区已用 Heretic 发布 5000 多个去限制模型；Hugging Face 上消融版模型总数超 6000 个（2024 年约 600 个）。",
+     "提醒：去限制后的模型不再拒答有害请求，用前想清楚用途与合规；第三方发布的消融版模型来源混杂，下载前核对发布者与模型卡。"
+    ]
+   }
+  ],
+  "id": "heretic-uncensor-any-llm",
+  "points": [
+   "两条命令上手：装包加一行命令，Qwen3-4B 在 RTX 3090 上约 20–30 分钟改完",
+   "定向消融改权重：不用重训，Gemma-3-12B 拒答从 97/100 降到 3/100，能力损伤小",
+   "4 万星、AGPL-3.0，社区已用它发布 5000 多个去限制模型"
+  ],
+  "sources": [
+   {
+    "label": "GitHub：p-e-w/heretic",
+    "url": "https://github.com/p-e-w/heretic"
+   },
+   {
+    "label": "视频号：GeekTechs（2026-11-18）",
+    "url": "https://weixin.qq.com/sph/AfiBZJ2c6a"
+   },
+   {
+    "label": "定向消融论文（Arditi 等，2024）",
+    "url": "https://arxiv.org/abs/2406.11717"
+   },
+   {
+    "label": "无审查项目盘点（refusalrate）",
+    "url": "https://refusalrate.com/uncensored-ai-github"
+   }
+  ],
+  "subtopic": "本地大模型",
+  "tags": [
+   "Heretic",
+   "无审查",
+   "定向消融"
+  ],
+  "title": "Heretic：两条命令去掉大模型安全对齐，不用重训"
+ },
+ {
   "category": "实用技巧",
   "core": "阿哲Phil 独立制作 AI 商业广告片全流程分享第一篇：编导思维优先于工具，分工、理解产品、选片型、定剧本、建体系、回顾六步，Knockin' 案例贯穿；工具栈为 Claude Opus 5.5、Seedance、Remotion 等。",
   "date": "2026-11-19",
