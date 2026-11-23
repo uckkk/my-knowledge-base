@@ -306,6 +306,64 @@
 const ENTRIES = [
  {
   "category": "开源项目",
+  "core": "Blender 插件接 ComfyUI，多视角相机生成视图再反向投影上纹理；一句话还能生成带骨骼与贴图的完整 3D 资产。",
+  "date": "2026-11-23",
+  "detail": [
+   {
+    "h": "它做什么",
+    "items": [
+     "Blender 插件，Blender 管几何、相机与材质，ComfyUI 跑所有 AI 模型。",
+     "在场景里布置多视角相机，每视角按深度引导生成视图，再把结果反向投影到相机看到的每个表面；每张视图都以前面的视图作上下文，纹理全程一致，有效消除接缝与视角突变。",
+     "赛博朋克、日系动漫、折纸艺术等风格可平滑切换；还能涂一块区域只重绘那块，其余纹理不动。"
+    ]
+   },
+   {
+    "h": "从一句话到完整资产",
+    "items": [
+     "集成 TRELLIS.2 模型，一句话或一张图生成新网格；再用 SkinTokens 自动加骨骼与蒙皮权重，可直接挂 Mixamo 动画。",
+     "不用手动展开 UV 或繁琐装配，一站式输出带完整骨骼与贴图的高质量 3D 资产。",
+     "PBR 材质由 Marigold 估算反照、粗糙、金属与法线贴图，烘焙成标准贴图供其他软件用。"
+    ]
+   },
+   {
+    "h": "版本与门槛",
+    "items": [
+     "最新 0.4.0 版（2026-10-28 发布），默认用 Qwen Image 2.1 生成纹理视图；支持 Blender 4.2–4.5 与 5.1 以上，不支持 5.0。",
+     "需 ComfyUI 服务器加英伟达显卡，SDXL 约 8GB 显存、Qwen Image 需 16GB 以上，安装包 7.3–26.3GB。",
+     "插件 GPL-3.0 协议，但它调用的三个模型/节点仅限非商业使用；起源于布拉格捷克理工大学本科毕业设计（作者 Ondřej Sakala），截至 2026-11-23 约 1716 星、173 复刻。"
+    ]
+   }
+  ],
+  "id": "stablegen-blender-ai-texturing",
+  "points": [
+   "多视角生成加反向投影，纹理无缝一致",
+   "赛博朋克、日漫、折纸风格平滑切换",
+   "一句话生成带骨骼与贴图的完整资产"
+  ],
+  "sources": [
+   {
+    "label": "视频号：N维视界 原视频",
+    "url": "https://weixin.qq.com/sph/AoVIxRrXiG"
+   },
+   {
+    "label": "GitHub：sakalond/StableGen",
+    "url": "https://github.com/sakalond/StableGen"
+   },
+   {
+    "label": "ComfyUI Wiki：0.4.0 版介绍",
+    "url": "https://comfyui-wiki.com/en/news/2026-10-28-stablegen-0-4-0"
+   }
+  ],
+  "subtopic": "3D 生成",
+  "tags": [
+   "Blender",
+   "3D 纹理",
+   "ComfyUI"
+  ],
+  "title": "StableGen：在 Blender 里用 AI 给 3D 模型上纹理，还能一键生成带骨骼的资产"
+ },
+ {
+  "category": "开源项目",
   "core": "一条命令定位最慢的函数，让编程智能体只把它改写成 Rust，录制 500 次真实调用验过才替换；Python 模糊去重实测 116 倍。",
   "date": "2026-11-23",
   "detail": [
