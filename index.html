@@ -305,6 +305,64 @@
 <script>
 const ENTRIES = [
  {
+  "category": "开源项目",
+  "core": "一条命令定位最慢的函数，让编程智能体只把它改写成 Rust，录制 500 次真实调用验过才替换；Python 模糊去重实测 116 倍。",
+  "date": "2026-11-23",
+  "detail": [
+   {
+    "h": "它做什么",
+    "items": [
+     "一条命令分析 Python、Node、Ruby 等应用，找出最慢的函数，让 Claude Code 或 Codex 等编程智能体只把这几个函数改写成 Rust。",
+     "不用重写整个项目，不用等分钟级编译；每个移植函数单独成一个小包，编译只需几秒。",
+     "安装：npm i -g @el4cteo/fast-anything，或 cargo install fast-anything；用法：fast-anything go --agent claude -- python app.py。"
+    ]
+   },
+   {
+    "h": "怎么保证改不错",
+    "items": [
+     "录制最多 500 次真实调用，改完回放比对；再派生边界用例（非数值、无穷大、负零、空输入、16 倍大输入等），由原函数作答。",
+     "全部一致且确实更快才允许替换，改对但变慢了也不启用；不满意一键回滚，全程可逆。",
+     "它移植的是最外层循环，而不是被反复调用的小函数，这样应用只进一次 Rust，不用进出几百万次。"
+    ]
+   },
+   {
+    "h": "实测效果与提醒",
+    "items": [
+     "Python 模糊去重 700 个名字：4.91 秒→42 毫秒，116 倍；TypeScript 20 倍、PHP 55 倍、Go 21 倍、Ruby 14 倍、Java 3 倍、C++ 2.7 倍（均来自项目自带示例，i5-10500 实测）。",
+     "提醒：116 倍是单个示例的最高值，不是普遍收益。",
+     "项目 2026-11-21 刚开源，截至 2026-11-23 约 2562 星、158 复刻，MIT 协议。"
+    ]
+   }
+  ],
+  "id": "fast-anything-rust-port-5-percent",
+  "points": [
+   "只改最慢的 5%，不用重写整个项目",
+   "500 次真实调用加边界用例验过才替换",
+   "不满意一键回滚，全程可逆"
+  ],
+  "sources": [
+   {
+    "label": "视频号：GeekTechs 原视频",
+    "url": "https://weixin.qq.com/sph/ACt6EPhOFK"
+   },
+   {
+    "label": "GitHub：EL4CTEO/fast-anything",
+    "url": "https://github.com/EL4CTEO/fast-anything"
+   },
+   {
+    "label": "LavX：fast-anything 工具介绍",
+    "url": "https://news.lavx.hu/article/el4cteo-releases-fast-anything-a-tool-that-ports-hot-functions-to-rust"
+   }
+  ],
+  "subtopic": "性能优化",
+  "tags": [
+   "Rust",
+   "性能优化",
+   "编程智能体"
+  ],
+  "title": "fast-anything：只把最慢的 5% 代码改写成 Rust，性能最高涨 116 倍"
+ },
+ {
   "category": "财富与成长",
   "core": "别人恐惧时贪婪，但买的是好生意加定价权、靠长期持有；萧条期守则：捏住现金、保住工作、不加杠杆。",
   "date": "2026-11-23",
