@@ -305,6 +305,67 @@
 <script>
 const ENTRIES = [
  {
+  "category": "开源项目",
+  "core": "给 Claude 单独开一台轻量虚拟机，流量只走指定代理线路、断线即断网，防封号的开源沙箱，已 7.7K 星。",
+  "date": "2026-11-23",
+  "detail": [
+   {
+    "h": "它是什么",
+    "items": [
+     "Claude Cage（仓库 Lee-xeo/Claude-Cage，MIT 协议）：为 Claude 特化的轻量化虚拟机，把 Claude Code 与 Claude 桌面版装进本地虚拟机，代理路径、浏览器指纹、项目文件夹与日常环境隔离开。",
+     "2026-10-31 建仓，2026-11-23 查为 7690 星、887 复刻；视频称「狂揽 7K 的 Star」属实。",
+     "面向多订阅账号管理、远程部署、严格网络隔离的场景，底层用 agent-vm、Lima、gVisor 与 Mihomo 代理核心。"
+    ]
+   },
+   {
+    "h": "防封号怎么做",
+    "items": [
+     "虚拟机里的流量只走选好的代理线路，线路一断就断网，不会偷偷直联；时区与语言跟着出口 IP 自动换。",
+     "开机先跑 11 项网络与隔离检查，没过就不联网。",
+     "主机上原本的登录与密钥不自动导入虚拟机，只共享明确指定的工作区与项目文件夹。",
+     "支持多账号管理与手机远程批准，也能远程部署到服务器上。"
+    ]
+   },
+   {
+    "h": "用起来什么样",
+    "items": [
+     "一个窗口里完成工作：终端跑 Claude Code、编辑器看改动、内置浏览器完成登录与预览服务，连 Claude 桌面版都在虚拟机里。",
+     "工具、文件与登录状态保存在虚拟磁盘里，关闭窗口可以保留后台任务。",
+     "Win、Mac、Linux 三大系统都能部署。",
+     "提醒：社区工具，不是 Anthropic 官方产品；防封靠隔离配置，检查通过不等于官方合规保证。"
+    ]
+   }
+  ],
+  "id": "claude-cage-vm-sandbox",
+  "points": [
+   "虚拟机流量只走指定代理线路，线路一断就断网、不偷偷直联",
+   "开机先跑 11 项检查，没过就不联网",
+   "终端、浏览器、编辑器、桌面版都在虚拟机里，三系统可部署"
+  ],
+  "sources": [
+   {
+    "label": "视频号：沐飞的AI圈（2026-11-21）",
+    "url": "https://weixin.qq.com/sph/Ad4u3jkmMY"
+   },
+   {
+    "label": "GitHub：Lee-xeo/Claude-Cage",
+    "url": "https://github.com/Lee-xeo/Claude-Cage"
+   },
+   {
+    "label": "explainx：Claude Cage 评测",
+    "url": "https://explainx.ai/blog/claude-cage-vm-sandbox-claude-code-network-isolation-2026"
+   }
+  ],
+  "subtopic": "智能体沙箱",
+  "tags": [
+   "Claude",
+   "虚拟机",
+   "防封号",
+   "沙箱"
+  ],
+  "title": "Claude Cage：给 Claude 单独开一台虚拟机，防封号的开源沙箱"
+ },
+ {
   "category": "生活",
   "core": "苹果蒸 20 分钟蒸熟蒸透，加火龙果搅打细腻，果泥摊平 100 度烤 60 分钟，自制宝宝水果片，没加一点糖、酸酸甜甜，有点像果丹皮。",
   "date": "2026-11-22",
