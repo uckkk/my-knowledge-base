@@ -217,6 +217,12 @@
     letter-spacing:.02em;margin-bottom:12px;color:var(--ink);
   }
   .sec-list{list-style:none}
+  .video-box{position:relative;max-width:480px;margin:0 auto 38px;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#000}
+  .video-box img{display:block;width:100%;height:auto}
+  .video-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:8px;background:rgba(0,0,0,.28);color:#fff;font-size:17px;font-weight:600;border:0;cursor:pointer;width:100%}
+  .video-play:hover{background:rgba(0,0,0,.42)}
+  .video-box video{display:block;width:100%;height:auto}
+  .vid-badge{display:inline-block;font-size:12px;color:var(--accent);border:1px solid var(--accent-2);border-radius:4px;padding:1px 6px;margin-left:8px;vertical-align:middle}
   .sources{border-top:1px solid var(--line);padding-top:20px}
   .sources .src-label{font-size:12px;letter-spacing:.18em;color:var(--ink-3);margin-bottom:11px;font-weight:500}
   .sources a{
@@ -305,6 +311,136 @@
 <script>
 const ENTRIES = [
  {
+  "category": "实用技巧",
+  "core": "老哈推荐的 4 个设计网站：工具导航、原创字体、动态图表、审美训练，全部免费可用。",
+  "date": "2026-11-24",
+  "detail": [
+   {
+    "h": "四个网站是哪些",
+    "items": [
+     "DesignBookmark（designbookmark.com）：设计工具导航，收录 2600 多个工具，分 59 类，免费使用。",
+     "Fontzz（fontzz.vercel.app）：36 套原创字体，每套字重 100 到 900，免费商用。",
+     "Mebius（mebius.design）：62 个免费动态图表，Figma 文件和代码都有。",
+     "Taste（buildwithtaste.com）：把喜欢的设计存下来并写上批注，AI 按你的审美设计，有免费版。"
+    ]
+   },
+   {
+    "h": "怎么用",
+    "items": [
+     "找工具先上 DesignBookmark，收藏这一个就不用再到处找了。",
+     "换字体最快提质感：Fontzz 换一套，设计马上不一样。",
+     "做数据看板直接拿 Mebius 的图表，不用再自己画。",
+     "Taste 里把喜欢的设计存下来、写上它为什么好，再接入 Claude、Cursor、Figma 等 AI 工具。"
+    ]
+   },
+   {
+    "h": "提醒",
+    "items": [
+     "Taste 通过 MCP 接入你的 AI 工具，设置约一分钟。",
+     "Mebius 图表页带免费与 MIT 协议标记，商用前再确认当页授权。"
+    ]
+   }
+  ],
+  "id": "sheji-linggan-4-wangzhan-gaojigan",
+  "points": [
+   "DesignBookmark 收了 2600 多个设计工具、分 59 类，免费",
+   "Fontzz 有 36 套原创字体、字重 100 到 900、免费商用",
+   "Taste 存喜欢的设计写批注，接 AI 工具按你的审美出设计"
+  ],
+  "sources": [
+   {
+    "label": "视频号「老哈Javier」原视频",
+    "url": "https://weixin.qq.com/sph/AB0LStlM26"
+   },
+   {
+    "label": "DesignBookmark",
+    "url": "https://designbookmark.com"
+   },
+   {
+    "label": "Fontzz",
+    "url": "https://fontzz.vercel.app"
+   },
+   {
+    "label": "Mebius",
+    "url": "https://mebius.design"
+   },
+   {
+    "label": "Taste",
+    "url": "https://buildwithtaste.com"
+   }
+  ],
+  "subtopic": "设计资源",
+  "tags": [
+   "设计",
+   "工具",
+   "字体",
+   "图表",
+   "灵感"
+  ],
+  "title": "4 个网站让设计高级感翻倍：2600 个工具库、36 套免费商用字体、62 个动态图表",
+  "video": "videos/sheji-linggan-4-wangzhan-gaojigan.mp4"
+ },
+ {
+  "category": "实用技巧",
+  "core": "10 套高级质感 UI 配色，每套都是黑白灰打底加一个亮色点睛，色值齐全、直接能用。",
+  "date": "2026-11-24",
+  "detail": [
+   {
+    "h": "深色打底四套",
+    "items": [
+     "黑色 #080808＋透白 #DADADB＋亮绿 #47C86D（合规管理界面）。",
+     "炭黑 #0F0F0F＋石墨灰 #282828＋酸黄绿 #E1FD09（数据看板）。",
+     "深蓝灰 #263844＋冷灰 #A0A1A3＋亮橙 #F2743A（船舶监控）。",
+     "墨绿 #062320＋银灰 #B4B9B4＋酸绿 #58EB04（生产监控）。"
+    ]
+   },
+   {
+    "h": "浅色打底四套",
+    "items": [
+     "冷白 #EBECEE＋银灰 #BCBBBF＋正红 #D71019（机械臂监控）。",
+     "冰白 #F0F1F6＋灰蓝 #C2CADD＋柠檬黄 #FDF4A5（货运调度）。",
+     "雾绿 #DDE7DF＋森林绿 #1B412D＋亮绿 #30BD19（招聘工作台）。",
+     "暖白 #FFF8F2＋黑色 #190300＋焦橙 #FB5E0D（团队协作）。"
+    ]
+   },
+   {
+    "h": "两套多色方案",
+    "items": [
+     "浅灰 #D0D0D0＋纯白 #FFFFFF＋一组状态色（荧光黄、珊瑚红等，车辆管理）。",
+     "银灰 #DBE1E4＋雾白 #F2F7F8＋一组功能色（浅青、淡蓝紫等，航空货运）。"
+    ]
+   },
+   {
+    "h": "用法与提醒",
+    "items": [
+     "公式是黑白灰打底加一个亮色点睛，亮色只用在关键数据与操作上。",
+     "注意同名颜色在不同方案里色值不同：银灰有 #BCBBBF、#DBE1E4、#B4B9B4 三个值，亮绿有 #47C86D、#30BD19 两个值，以方案为准。",
+     "作者称配色与来源已整理成文档，视频末尾展示了 10 套的来源卡片。"
+    ]
+   }
+  ],
+  "id": "ui-gaoji-zhigan-10-peise",
+  "points": [
+   "10 套配色，每套带完整色值",
+   "黑白灰打底加亮色点睛是通用公式",
+   "每套都配了真实界面案例"
+  ],
+  "sources": [
+   {
+    "label": "视频号：宋夏天Dazzle 原视频",
+    "url": "https://weixin.qq.com/sph/AfRAp7W9Yq"
+   }
+  ],
+  "subtopic": "设计配色",
+  "tags": [
+   "设计",
+   "配色",
+   "UI"
+  ],
+  "title": "UI 高级质感 10 套配色：黑白灰打底加一个亮色，色值齐全",
+  "video": "videos/ui-gaoji-zhigan-10-peise.mp4"
+ },
+ {
   "category": "开源项目",
   "core": "智能体把参考视频拆成镜头脚本，用代码重建成带品牌风格的动效视频，输出完整可编辑工程，导出 MP4。",
   "date": "2026-11-24",
@@ -357,7 +493,8 @@ const ENTRIES = [
    "动效",
    "智能体"
   ],
-  "title": "OpenMotion：智能体驱动的开源动效视频工作室，参考片变可编辑工程"
+  "title": "OpenMotion：智能体驱动的开源动效视频工作室，参考片变可编辑工程",
+  "video": "videos/openmotion-agent-motion-video.mp4"
  },
  {
   "category": "开源项目",
@@ -413,7 +550,8 @@ const ENTRIES = [
    "P2P",
    "自托管"
   ],
-  "title": "CrossDesk：开源免费的跨平台远程桌面，P2P 直联跑满带宽"
+  "title": "CrossDesk：开源免费的跨平台远程桌面，P2P 直联跑满带宽",
+  "video": "videos/crossdesk-p2p-remote-desktop.mp4"
  },
  {
   "category": "开源项目",
@@ -471,7 +609,8 @@ const ENTRIES = [
    "3D 纹理",
    "ComfyUI"
   ],
-  "title": "StableGen：在 Blender 里用 AI 给 3D 模型上纹理，还能一键生成带骨骼的资产"
+  "title": "StableGen：在 Blender 里用 AI 给 3D 模型上纹理，还能一键生成带骨骼的资产",
+  "video": "videos/stablegen-blender-ai-texturing.mp4"
  },
  {
   "category": "开源项目",
@@ -529,7 +668,8 @@ const ENTRIES = [
    "性能优化",
    "编程智能体"
   ],
-  "title": "fast-anything：只把最慢的 5% 代码改写成 Rust，性能最高涨 116 倍"
+  "title": "fast-anything：只把最慢的 5% 代码改写成 Rust，性能最高涨 116 倍",
+  "video": "videos/fast-anything-rust-port-5-percent.mp4"
  },
  {
   "category": "财富与成长",
@@ -1102,7 +1242,8 @@ const ENTRIES = [
    "防封号",
    "沙箱"
   ],
-  "title": "Claude Cage：给 Claude 单独开一台虚拟机，防封号的开源沙箱"
+  "title": "Claude Cage：给 Claude 单独开一台虚拟机，防封号的开源沙箱",
+  "video": "videos/claude-cage-vm-sandbox.mp4"
  },
  {
   "category": "生活",
@@ -1150,7 +1291,8 @@ const ENTRIES = [
    "水果片",
    "宝宝零食"
   ],
-  "title": "火龙果苹果片：苹果加火龙果，100 度烤一小时"
+  "title": "火龙果苹果片：苹果加火龙果，100 度烤一小时",
+  "video": "videos/huolongguo-pingguo-pian.mp4"
  },
  {
   "category": "生活",
@@ -1200,7 +1342,8 @@ const ENTRIES = [
    "米饼",
    "宝宝零食"
   ],
-  "title": "苹果米饼：米饭加苹果自制米饼，酥脆无添加"
+  "title": "苹果米饼：米饭加苹果自制米饼，酥脆无添加",
+  "video": "videos/pingguo-mibing.mp4"
  },
  {
   "category": "生活",
@@ -1251,7 +1394,8 @@ const ENTRIES = [
    "饼干",
    "宝宝零食"
   ],
-  "title": "山药苹果花朵饼干：不加糖，150 度烤 20 分钟"
+  "title": "山药苹果花朵饼干：不加糖，150 度烤 20 分钟",
+  "video": "videos/shanyao-pingguo-huaduo-binggan.mp4"
  },
  {
   "category": "生活",
@@ -1302,7 +1446,8 @@ const ENTRIES = [
    "扭扭棒",
    "宝宝零食"
   ],
-  "title": "香蕉扭扭棒：半根香蕉做一盘，无盐无糖"
+  "title": "香蕉扭扭棒：半根香蕉做一盘，无盐无糖",
+  "video": "videos/xiangjiao-niuniu-bang.mp4"
  },
  {
   "category": "生活",
@@ -1353,7 +1498,8 @@ const ENTRIES = [
    "水果条",
    "宝宝零食"
   ],
-  "title": "火龙果苹果条：自制宝宝水果条，酸酸甜甜零添加"
+  "title": "火龙果苹果条：自制宝宝水果条，酸酸甜甜零添加",
+  "video": "videos/huolongguo-pingguo-tiao.mp4"
  },
  {
   "category": "生活",
@@ -1402,7 +1548,8 @@ const ENTRIES = [
    "水果片",
    "宝宝零食"
   ],
-  "title": "百香果苹果片：两样水果做宝宝水果片，100 度烤两小时"
+  "title": "百香果苹果片：两样水果做宝宝水果片，100 度烤两小时",
+  "video": "videos/baixiangguo-pingguo-pian.mp4"
  },
  {
   "category": "AI与商业化",
@@ -1640,7 +1787,8 @@ const ENTRIES = [
    "心理学",
    "无聊"
   ],
-  "title": "孩子无聊时做什么，暴露什么性格"
+  "title": "孩子无聊时做什么，暴露什么性格",
+  "video": "videos/haizi-wuliao-xingwei-kan-xingge.mp4"
  },
  {
   "category": "AI与商业化",
@@ -1703,7 +1851,8 @@ const ENTRIES = [
    "就业",
    "杨波斯基"
   ],
-  "title": "杨波斯基：到2030年只剩五类工作，失业率或达99%"
+  "title": "杨波斯基：到2030年只剩五类工作，失业率或达99%",
+  "video": "videos/yampolskiy-5-jobs-2030.mp4"
  },
  {
   "category": "生活",
@@ -1815,7 +1964,8 @@ const ENTRIES = [
    "无审查",
    "定向消融"
   ],
-  "title": "Heretic：两条命令去掉大模型安全对齐，不用重训"
+  "title": "Heretic：两条命令去掉大模型安全对齐，不用重训",
+  "video": "videos/heretic-uncensor-any-llm.mp4"
  },
  {
   "category": "实用技巧",
@@ -2820,7 +2970,8 @@ const ENTRIES = [
    "注销",
    "清税"
   ],
-  "title": "营业执照网上注销三步走：先清税、后工商，个体户与公司不一样"
+  "title": "营业执照网上注销三步走：先清税、后工商，个体户与公司不一样",
+  "video": "videos/yingye-zhizhao-wangshang-zhuxiao.mp4"
  },
  {
   "category": "实用技巧",
@@ -3106,7 +3257,8 @@ const ENTRIES = [
    {
     "h": "怎么用",
     "items": [
-     "本机部署直接跑，或走 Comfy 合作节点云接口，不用自己配环境。"
+     "本机部署直接跑，或走 Comfy 合作节点云接口，不用自己配环境。",
+     "文生图与参考图编辑是同一个模型：接上图片就是编辑，不接就是文生图；编辑时要连上 VAE。"
     ]
    }
   ],
@@ -3151,13 +3303,15 @@ const ENTRIES = [
    {
     "h": "注意",
     "items": [
-     "云端运行，需账号积分，不用下载本地模型。"
+     "云端运行，需账号积分，不用下载本地模型。",
+     "AlphaGen 暂无模板，需从节点库手动添加并自己接 LoadVideo；输出不保留音频。"
     ]
    },
    {
     "h": "对管线有什么用",
     "items": [
-     "已有成片快速出遮罩，做合成、替换、特效的前置步骤。"
+     "已有成片快速出遮罩，做合成、替换、特效的前置步骤。",
+     "同系列还有重构画幅、超分、SDR 转 HDR 三个节点，都是对成片做后期，不重新生成。"
     ]
    }
   ],
@@ -3191,7 +3345,8 @@ const ENTRIES = [
    {
     "h": "澄清",
     "items": [
-     "这次是 ComfyUI 新增 GPT Image V3 节点与 SVG 节点，不是新模型；更新日志里「新模型」的说法以节点文档为准。"
+     "这次是 ComfyUI 新增 GPT Image V3 节点与 SVG 节点，不是新模型；更新日志里「新模型」的说法以节点文档为准。",
+     "两个节点都是 ComfyUI 内置节点，调用 OpenAI 的 GPT Image 模型出图，不是本地模型。"
     ]
    },
    {
@@ -3204,7 +3359,8 @@ const ENTRIES = [
    {
     "h": "对管线有什么用",
     "items": [
-     "SVG 节点直接出矢量图，图标与界面素材可进矢量流程。"
+     "SVG 节点直接出矢量图，图标与界面素材可进矢量流程。",
+     "生成的是矢量标记，形状与文字在矢量编辑器里还能继续改，不是死图。"
     ]
    }
   ],
@@ -3253,13 +3409,15 @@ const ENTRIES = [
    {
     "h": "怎么用",
     "items": [
-     "抱脸 Comfy-Org/UltraTex 为官方重打包文件；已进 ComfyUI v0.45.0。"
+     "抱脸 Comfy-Org/UltraTex 为官方重打包文件；已进 ComfyUI v0.45.0。",
+     "底模是 FLUX.2-klein-9B，另有反照率与金属粗糙度两套 LoRA，文件按扩散模型、嵌入、LoRA、VAE 四类分放。"
     ]
    },
    {
     "h": "对管线有什么用",
     "items": [
-     "贴图改完不用手工重贴，直接回烘到模型上，改材质流程变短。"
+     "贴图改完不用手工重贴，直接回烘到模型上，改材质流程变短。",
+     "官方给了现成工作流模板「UltraTex: Texture a 3D Model」，可直接套用。"
     ]
    }
   ],
@@ -3297,7 +3455,8 @@ const ENTRIES = [
    {
     "h": "版本与日期（北京时间）",
     "items": [
-     "45.3.0 在 11-11、45.3.1 在 11-12、45.3.2 在 11-13、45.3.3 在 11-15。"
+     "45.3.0 在 11-11、45.3.1 在 11-12、45.3.2 在 11-13、45.3.3 在 11-15。",
+     "45.3.0 的修复清单全是崩溃与挂起类补丁，无新功能。"
     ]
    },
    {
@@ -3310,7 +3469,8 @@ const ENTRIES = [
    {
     "h": "注意",
     "items": [
-     "官方发布页显示美区日期，比北京时间晚一天，对日期时以北京时间为准。"
+     "官方发布页显示美区日期，比北京时间晚一天，对日期时以北京时间为准。",
+     "部分修复同时进了 43、44、46 三条线，跨版本升级时留意同一问题是否已在你用的版本修好。"
     ]
    }
   ],
@@ -4585,7 +4745,7 @@ const ENTRIES = [
   "sources": [
    {
     "label": "佛罗里达大学农业推广·冰箱食物安全",
-    "url": "https://edis.ifas.ufl.edu/publication/FS269"
+    "url": "https://ask.ifas.ufl.edu/publication/FS269"
    },
    {
     "label": "微科普·冰箱食物安全",
@@ -4653,7 +4813,8 @@ const ENTRIES = [
    "应用接口",
    "AI应用开发"
   ],
-  "title": "DeepSeek 开放全家桶应用接口：开几个参数就能 1:1 复刻完整应用"
+  "title": "DeepSeek 开放全家桶应用接口：开几个参数就能 1:1 复刻完整应用",
+  "video": "videos/deepseek-app-api-2026-11-13.mp4"
  },
  {
   "category": "财富与成长",
@@ -4709,7 +4870,8 @@ const ENTRIES = [
    "做客礼仪",
    "话外音"
   ],
-  "title": "看破不说破：主家五句客气话，听懂是体面，听不懂下次没人请"
+  "title": "看破不说破：主家五句客气话，听懂是体面，听不懂下次没人请",
+  "video": "videos/guanguren-kanpo-bushuopo-2026-11-10.mp4"
  },
  {
   "category": "生活",
@@ -4761,7 +4923,8 @@ const ENTRIES = [
    "确权",
    "农村"
   ],
-  "title": "农村宅基地办确权：别只找村委会，认准三个部门"
+  "title": "农村宅基地办确权：别只找村委会，认准三个部门",
+  "video": "videos/xinxinshuojin-zhaijidi-quequan-2026-10-18.mp4"
  },
  {
   "category": "财富与成长",
@@ -4813,7 +4976,8 @@ const ENTRIES = [
    "沟通",
    "情商"
   ],
-  "title": "会聊天的终极秘诀：别聊自己，接对方上一句"
+  "title": "会聊天的终极秘诀：别聊自己，接对方上一句",
+  "video": "videos/longtenghanlang-chat-secret-7day-2026-11-12.mp4"
  },
  {
   "category": "AI与商业化",
@@ -5032,7 +5196,8 @@ const ENTRIES = [
    "政策",
    "账号"
   ],
-  "title": "Anthropic 新规：11 月 12 日起人在中国不能用 Claude，三条禁令都冲着中国"
+  "title": "Anthropic 新规：11 月 12 日起人在中国不能用 Claude，三条禁令都冲着中国",
+  "video": "videos/anthropic-supported-regions-policy-2026-11-12.mp4"
  },
  {
   "category": "AI与商业化",
@@ -5365,7 +5530,8 @@ const ENTRIES = [
    "Remotion",
    "产品宣传片"
   ],
-  "title": "Video Shotcraft：124 张镜头配方卡，让 AI 用代码做发布会级产品动效"
+  "title": "Video Shotcraft：124 张镜头配方卡，让 AI 用代码做发布会级产品动效",
+  "video": "videos/video-shotcraft-remotion.mp4"
  },
  {
   "category": "AI与商业化",
@@ -5427,7 +5593,8 @@ const ENTRIES = [
    "跨Agent",
    "盛大"
   ],
-  "title": "EverMe：你的记忆和知识库，跨设备跨 Agent 持续更新"
+  "title": "EverMe：你的记忆和知识库，跨设备跨 Agent 持续更新",
+  "video": "videos/everme-cross-agent-memory.mp4"
  },
  {
   "category": "开源项目",
@@ -5801,7 +5968,8 @@ const ENTRIES = [
    "AI导演",
    "影视"
   ],
-  "title": "Story2Board：前字节团队的 AI 分镜 Agent，27 万+ 电影镜头当参考"
+  "title": "Story2Board：前字节团队的 AI 分镜 Agent，27 万+ 电影镜头当参考",
+  "video": "videos/story2board-ai-storyboard.mp4"
  },
  {
   "category": "开源项目",
@@ -5969,7 +6137,8 @@ const ENTRIES = [
    "设计系统",
    "AI编程"
   ],
-  "title": "Meta Astryx 开源：内部 8 年的设计系统，专给 AI 编程 Agent 用"
+  "title": "Meta Astryx 开源：内部 8 年的设计系统，专给 AI 编程 Agent 用",
+  "video": "videos/astryx-meta-design-system.mp4"
  },
  {
   "category": "AI与商业化",
@@ -6035,7 +6204,8 @@ const ENTRIES = [
    "AI编程",
    "上架"
   ],
-  "title": "AirBuild：不用 Mac 做 iOS 应用，AI 智能体包办开发与过审"
+  "title": "AirBuild：不用 Mac 做 iOS 应用，AI 智能体包办开发与过审",
+  "video": "videos/airbuild-ios-app-builder.mp4"
  },
  {
   "category": "开源项目",
@@ -6102,7 +6272,8 @@ const ENTRIES = [
    "Qwen",
    "本地部署"
   ],
-  "title": "DeepSeek-V4-Pro 蒸馏 Qwen3.5 9B 去限制版：复杂提示只拒 3%，5.6GB 本地跑"
+  "title": "DeepSeek-V4-Pro 蒸馏 Qwen3.5 9B 去限制版：复杂提示只拒 3%，5.6GB 本地跑",
+  "video": "videos/deepseek-v4-pro-qwen35-9b-uncensored.mp4"
  },
  {
   "category": "开源项目",
@@ -6218,7 +6389,8 @@ const ENTRIES = [
    "蒸馏加速",
    "MiniMax-H3"
   ],
-  "title": "DMAD：4 步生成有声视频的 MiniMax-H3 蒸馏模型"
+  "title": "DMAD：4 步生成有声视频的 MiniMax-H3 蒸馏模型",
+  "video": "videos/dmad-minimax-h3.mp4"
  },
  {
   "category": "AI与商业化",
@@ -6372,7 +6544,8 @@ const ENTRIES = [
    "动效",
    "设计资源"
   ],
-  "title": "ReactDrops：免费 React 动效组件，液态玻璃 Logo 最抢眼"
+  "title": "ReactDrops：免费 React 动效组件，液态玻璃 Logo 最抢眼",
+  "video": "videos/reactdrops.mp4"
  },
  {
   "category": "实用技巧",
@@ -6949,7 +7122,8 @@ const ENTRIES = [
    "技能",
    "手绘"
   ],
-  "title": "手绘风格 Skill 全套：365 种画风、170 个版式、36 种主题色，报编号出图"
+  "title": "手绘风格 Skill 全套：365 种画风、170 个版式、36 种主题色，报编号出图",
+  "video": "videos/handraw-style.mp4"
  },
  {
   "category": "开源项目",
@@ -7016,7 +7190,8 @@ const ENTRIES = [
    "设备软件",
    "智能体"
   ],
-  "title": "craft-anything：能不能逆向设备控制软件，要看具体情况"
+  "title": "craft-anything：能不能逆向设备控制软件，要看具体情况",
+  "video": "videos/craft-anything.mp4"
  },
  {
   "category": "开源项目",
@@ -10074,7 +10249,8 @@ const ENTRIES = [
      "真正的关键，是产品本身值不值得用户付费"
     ]
    }
-  ]
+  ],
+  "video": "videos/vibe-pay.mp4"
  }
 ];
 
@@ -11172,7 +11348,7 @@ function renderList(){
   } else {
     html += '<div class="entry-list">' + list.map(e =>
       '<article class="entry-row" data-open="' + esc(e.id) + '">' +
-        '<div class="row-meta"><span class="date">' + fmtDate(e.date) + '</span><span class="cat-chip">' + esc(e.category) + "</span></div>" +
+        '<div class="row-meta"><span class="date">' + fmtDate(e.date) + '</span><span class="cat-chip">' + esc(e.category) + "</span>" + (e.video ? '<span class="vid-badge">▶ 视频</span>' : "") + "</div>" +
         "<h2>" + hl(e.title) + "</h2>" +
         '<p class="core">' + hl(e.core) + "</p>" +
         '<div class="tags">' + e.tags.map(t => '<span class="tag">' + hl(t) + "</span>").join("") + "</div>" +
@@ -11220,6 +11396,7 @@ function renderEntry(id){
     e.tags.map(t => '<span class="tag">' + hl(t) + "</span>").join("") + '<button class="copy-link" id="copyLink" type="button">复制链接</button></div>' +
     '<p class="lead">' + hl(e.core) + "</p>" +
     '<ul class="points">' + e.points.slice(0, 3).map(p => "<li>" + hl(p) + "</li>").join("") + "</ul>" +
+    (e.video ? '<div class="video-box" id="videoBox"><img src="' + esc(e.video.replace(/\.mp4$/, ".jpg")) + '" alt="原视频封面" loading="lazy"><button class="video-play" id="videoPlay" type="button">▶ 播放原视频</button></div>' : "") +
     (e.detail ? e.detail.map(sec =>
       '<div class="detail-sec"><h3>' + esc(sec.h) + '</h3><ul class="sec-list">' +
       sec.items.map(i => "<li>" + hl(i) + "</li>").join("") + "</ul></div>"
@@ -11229,6 +11406,11 @@ function renderEntry(id){
     prevNext(id) +
     '<a class="back-link" id="backLink">← 返回列表</a></div>';
   document.getElementById("backLink").addEventListener("click", () => { location.hash = "#/"; });
+  const vp = document.getElementById("videoPlay");
+  if(vp) vp.addEventListener("click", () => {
+    const box = document.getElementById("videoBox");
+    box.innerHTML = '<video controls autoplay playsinline src="' + esc(e.video) + '"></video>';
+  });
   const cl = main.querySelector("[data-cat-link]");
   if(cl) cl.addEventListener("click", ev => { ev.preventDefault(); activeCat = cl.getAttribute("data-cat-link"); location.hash = "#/"; render(); });
   const copyBtn = document.getElementById("copyLink");
