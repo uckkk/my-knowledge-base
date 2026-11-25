@@ -311,6 +311,69 @@
 <script>
 const ENTRIES = [
  {
+  "category": "开源项目",
+  "core": "把真 Linux 内核编译成单个 WebAssembly 模块，浏览器打开就是一台 Linux 电脑，开机不到半秒。",
+  "date": "2026-11-25",
+  "detail": [
+   {
+    "h": "是什么",
+    "items": [
+     "unkernel（pithings/unkernel）把 Linux 7.x 内核编译成单个 WebAssembly 模块，带真实内存管理单元。",
+     "内核（系统调用、调度、内存管理、ext4、TCP/IP）是编译后的代码、原生执行，不模拟硬件。",
+     "只有用户态程序交给 CPU 模拟器 kwemu 执行，跑的是未经修改的 aarch64 二进制，Alpine 与 Debian 的软件包直接能用。",
+     "打开 unkernel.dev 就有一台 Linux：终端、包管理器、持久磁盘、联网，桌面与浏览器全有，全程本地运行、不用装任何东西。"
+    ]
+   },
+   {
+    "h": "快在哪",
+    "items": [
+     "视频实测开机 0.47 秒；项目官方称内核约 70 毫秒到 /init，Alpine 提示符约 0.3 秒出现，页面下载约 10MB。",
+     "最简单的系统调用：真机 110 纳秒，unkernel 172 纳秒，全系统模拟要 1662 纳秒。",
+     "早期做法是模拟整台电脑，系统调用每次都要过模拟硬件，所以慢；unkernel 的系统调用直接交回内核，不经过模拟硬件。"
+    ]
+   },
+   {
+    "h": "怎么用与提醒",
+    "items": [
+     "浏览器直接开 unkernel.dev；命令行 npx unkernel，另有零依赖 TypeScript 软件包可嵌进自己的应用。",
+     "最直接的用处是给 AI 一个免费的代码沙箱：代码跑在浏览器沙箱里，不花服务器的钱，也访问不到本地文件。",
+     "同名仓库不止一个，安装只认 pithings/unkernel。",
+     "已知限制（项目自述）：单核无多核、没有 IPv6、没有入站网络连接。"
+    ]
+   }
+  ],
+  "id": "unkernel-linux-wasm-browser",
+  "points": [
+   "真 Linux 7.x 内核编译成 WebAssembly，不是模拟整台电脑",
+   "视频实测开机 0.47 秒，系统调用 172 纳秒、接近真机 110 纳秒",
+   "打开 unkernel.dev 就能用，代码跑浏览器沙箱里、不花服务器钱"
+  ],
+  "sources": [
+   {
+    "label": "视频号「xueshi.dev」原视频",
+    "url": "https://weixin.qq.com/sph/A8n8eUwEHf"
+   },
+   {
+    "label": "GitHub 仓库 pithings/unkernel",
+    "url": "https://github.com/pithings/unkernel"
+   },
+   {
+    "label": "unkernel.dev 在线体验",
+    "url": "https://unkernel.dev"
+   }
+  ],
+  "subtopic": "浏览器 Linux",
+  "tags": [
+   "Linux",
+   "WebAssembly",
+   "浏览器",
+   "沙箱",
+   "开源"
+  ],
+  "title": "unkernel：真 Linux 内核编译成 WebAssembly，浏览器里开机 0.47 秒",
+  "video": "videos/unkernel-linux-wasm-browser.mp4"
+ },
+ {
   "category": "实用技巧",
   "core": "老哈推荐的 4 个设计网站：工具导航、原创字体、动态图表、审美训练，全部免费可用。",
   "date": "2026-11-24",
