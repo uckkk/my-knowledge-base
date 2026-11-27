@@ -311,6 +311,74 @@
 <script>
 const ENTRIES = [
  {
+  "category": "开源项目",
+  "core": "不用动捕服、不用多机位、不用订阅费：一段普通视频丢进去，本地就能提出人形 3D 动画，还能重定向到二次元角色身上。",
+  "date": "2026-11-27",
+  "detail": [
+   {
+    "h": "是什么",
+    "items": [
+     "来源：X 作者 TechVerser（@realfxw，认证账号）2026-11-27 发帖介绍，帖子 684 点赞、3.3 万浏览。",
+     "仓库：toyxyz/toyxyz_RGBMocap，Windows 原生应用，把视频转成可编辑的人形动画，AI 全程本地跑；GitHub 3858 星、506 复刻，2026-10-26 建仓（2026-11-28 核实）。",
+     "纠正：帖子正文给的链接 github.com/toyxyz3/RGBMocap 打不开（404）；正确地址是作者评论区卡片里的 toyxyz/toyxyz_RGBMocap，帖子正文与评论卡片给的地址不一致，别照正文里的敲。"
+    ]
+   },
+   {
+    "h": "能做什么",
+    "items": [
+     "丢一段普通拍摄视频进去，本地提取并生成流畅的人形 3D 动画；演示里双人跳舞视频，右边 3D 视口的二次元角色和玩偶模型实时同步复刻动作。",
+     "双人同框捕捉、角色动作重定向都支持；动作可重定向到 Mixamo FBX、VRM、PMX 人形角色。",
+     "自带动作修正：地面接触锁定、地板高度偏移可调，脚底打滑压得很死（帖子称实测比 Rokoko 和 DeepMotion 还稳——这是帖子说法）。",
+     "导出 FBX、BVH、VMD；能把骨骼实时串流到 Blender 烘焙成动作，也能串流到 UE5 与 MetaHuman；另有独立的实时追踪仓库 rgbmocap_live。"
+    ]
+   },
+   {
+    "h": "三个硬门槛",
+    "items": [
+     "硬件只支持英伟达显卡，RTX 30、40、50 系能带，最低 4GB 显存（帖子说法）。",
+     "本地模型文件不小，硬盘至少腾出约 70GB（帖子说法）。",
+     "仅限个人学习与非商业用途：帖子称外层应用是 MIT 协议，但内置底层 AI 动作模型各自带非商用限制；仓库 LICENSE 文件 GitHub 未识别为 MIT（显示 NOASSERTION），用前先读仓库的 LICENSE 与各模型提供方条款；真要接商业项目，帖子建议看支持商用的 SAM3D。"
+    ]
+   },
+   {
+    "h": "上手",
+    "items": [
+     "装法：克隆仓库后跑 install.cmd 装运行环境，再用模型管理器下模型，最后跑 RGBMoCap.cmd 启动（仓库自述）。",
+     "嫌麻烦：社区开发者 PixelArtistry 做了傻瓜式一键安装程序，下载解压就能跑（仓库 pixelartistry/PixelArtistry-RGBMoCap，2026-11-19 建仓）。",
+     "A 卡补充：帖子说 A 卡用户只能干瞪眼，但社区已有 ROCm 移植（herman6888/rgbmocap-rocm-port，自称在 RX 9070XT 上验证过），非官方、没亲自验证。"
+    ]
+   }
+  ],
+  "id": "rgbmocap-video-to-3d-mocap",
+  "points": [
+   "单目视频转 3D 动画，本地跑、0 订阅",
+   "双人同框、脚底打滑修正、重定向都带",
+   "只认英伟达显卡，模型要占约 70GB 硬盘"
+  ],
+  "sources": [
+   {
+    "label": "X @realfxw 原帖",
+    "url": "https://x.com/realfxw/status/2126133909524246818"
+   },
+   {
+    "label": "GitHub toyxyz/toyxyz_RGBMocap",
+    "url": "https://github.com/toyxyz/toyxyz_RGBMocap"
+   },
+   {
+    "label": "GitHub 一键安装程序",
+    "url": "https://github.com/pixelartistry/PixelArtistry-RGBMoCap"
+   }
+  ],
+  "subtopic": "动作捕捉",
+  "tags": [
+   "开源",
+   "动捕",
+   "3D动画",
+   "Blender"
+  ],
+  "title": "RGB MoCap：一段普通视频，本地生成人形 3D 动捕动画"
+ },
+ {
   "category": "生活",
   "core": "数学天赋不是天生的：散步估一估、蒙眼走一走，两个小游戏就能练孩子脑子里的数学区。",
   "date": "2026-11-27",
